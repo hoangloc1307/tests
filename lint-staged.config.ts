@@ -1,0 +1,9 @@
+import type { Configuration } from 'lint-staged';
+
+const lintStagedConfig: Configuration = {
+  'fe/**/*.{js,jsx,ts,tsx,cjs,mjs}': ['pnpm --filter fe exec eslint --no-warn-ignored --fix'],
+  'be/**/*.{js,jsx,ts,tsx,cjs,mjs}': ['pnpm --filter be exec eslint --no-warn-ignored --fix'],
+  '*.{js,jsx,ts,tsx,cjs,mjs,json,md,html,css,scss}': ['prettier --write'],
+};
+
+export default lintStagedConfig;
