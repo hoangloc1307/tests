@@ -1,0 +1,13 @@
+{
+  "toggleTheme": "Chuyển đổi giao diện",
+  "light": "Sáng",
+  "dark": "Tối",
+  "logout": "Đăng xuất",
+  "login": "Đăng nhập",
+
+  "menu": {
+    "guide": "Hướng dẫn sử dụng",
+    "support": "Hỗ trợ, báo lỗi",
+    "version_history": "Lịch sử cập nhật"
+  }
+}
