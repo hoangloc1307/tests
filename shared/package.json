@@ -1,0 +1,14 @@
+{
+  "name": "shared",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./schemas/*": "./src/schemas/*.ts",
+    "./constants/*": "./src/constants/*.ts",
+    "./types/*": "./src/types/*.ts"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  }
+}
