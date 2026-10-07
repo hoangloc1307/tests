@@ -1,12 +1,18 @@
 import { Outlet } from 'react-router';
+import { AppSidebar } from '~/components/app-sidebar';
+import { SiteHeader } from '~/components/site-header';
+import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar';
 
 export default function SidebarLayout() {
   return (
-    <div className='grid grid-cols-12'>
-      <div className='col-span-2'>sidebar</div>
-      <div className='col-span-10'>
-        <Outlet />
-      </div>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <SiteHeader />
+        <div className='flex-1 p-4'>
+          <Outlet />
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

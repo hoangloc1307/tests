@@ -1,0 +1,35 @@
+import { useId, type ComponentProps } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Field, FieldError, FieldLabel } from '~/components/ui/field';
+import { Input } from '~/components/ui/input';
+import { useFieldContext } from '~/hooks/use-app-form';
+
+type TextFieldProps = Omit<ComponentProps<'input'>, 'value' | 'onChange' | 'onBlur'> & {
+  label?: string;
+  required?: boolean;
+};
+
+export const TextField = ({ label, required, ...props }: TextFieldProps) => {
+  const id = useId();
+  const { t } = useTranslation();
+  const field = useFieldContext<string>();
+  const isInvalid = field.state.meta.isTouched && field.state.meta.errors.length > 0;
+
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={id}>
+        {label}
+        {required && <span className='text-destructive'>*</span>}
+      </FieldLabel>
+      <Input
+        id={id}
+        value={field.state.value ?? ''}
+        onChange={(e) => field.handleChange(e.target.value)}
+        onBlur={field.handleBlur}
+        aria-invalid={isInvalid}
+        {...props}
+      />
+      {isInvalid && <FieldError>{t(field.state.meta.errors[0].message)}</FieldError>}
+    </Field>
+  );
+};
