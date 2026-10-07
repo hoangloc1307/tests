@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router';
 import PATHS from '~/constants/paths';
 import RejectedRoute from '~/router/guards/RejectedRoute';
+import AuthLayout from '~/views/layouts/auth';
 import SidebarLayout from '~/views/layouts/sidebar';
 import LoginPage from '~/views/pages/auth/login/login';
 
@@ -19,8 +20,13 @@ const router = createBrowserRouter([
     element: <RejectedRoute />,
     children: [
       {
-        path: PATHS.LOGIN,
-        element: <LoginPage />,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: PATHS.LOGIN,
+            element: <LoginPage />,
+          },
+        ],
       },
     ],
   },
