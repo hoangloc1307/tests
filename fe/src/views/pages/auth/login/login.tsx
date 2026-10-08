@@ -30,20 +30,22 @@ export default function LoginPage() {
       }}
     >
       <div className='flex flex-col items-center gap-2 text-center'>
-        <h2 className='text-2xl font-bold'>{t('welcome')}</h2>
-        <p className='text-muted-foreground text-balance'>{t('loginToVNN')}</p>
+        <h2 className='text-2xl font-bold capitalize'>{t('auth:welcome_back')}</h2>
+        <p className='text-muted-foreground text-balance'>{t('auth:login_to_vnn')}.</p>
       </div>
       <FieldGroup className='mt-4'>
         <form.AppField
           name='username'
-          children={(field) => <field.TextField label={t('username')} />}
+          children={(field) => <field.TextField label={t('auth:username')} required />}
         />
         <form.AppField
           name='password'
-          children={(field) => <field.TextField label={t('password')} type='password' />}
+          children={(field) => (
+            <field.TextField label={t('auth:password')} required type='password' />
+          )}
         />
         <form.AppForm>
-          <form.SubmitButton>{t('login')}</form.SubmitButton>
+          <form.SubmitButton>{t('auth:login')}</form.SubmitButton>
         </form.AppForm>
       </FieldGroup>
     </form>

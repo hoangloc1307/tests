@@ -16,7 +16,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    ns: ['common'],
+    ns: ['common', 'auth', 'navigation'],
     defaultNS: 'common',
     detection: {
       caches: ['localStorage'],

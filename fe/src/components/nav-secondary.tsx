@@ -20,7 +20,7 @@ export function NavSecondary({
 }: {
   items: NavSecondaryItem[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
-  const { t } = useTranslation();
+  const { t } = useTranslation('navigation');
 
   return (
     <SidebarGroup {...props}>

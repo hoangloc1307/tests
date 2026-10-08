@@ -2,17 +2,17 @@ import { IconBook2, IconHelp, IconTimeline } from '@tabler/icons-react';
 
 const SECONDARY_MENU = [
   {
-    title: 'menu.guide',
+    title: 'guide',
     url: '/',
     icon: IconBook2,
   },
   {
-    title: 'menu.support',
+    title: 'support',
     url: '/',
     icon: IconHelp,
   },
   {
-    title: 'menu.version_history',
+    title: 'version_history',
     url: '/',
     icon: IconTimeline,
   },

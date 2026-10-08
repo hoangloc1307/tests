@@ -1,4 +1,4 @@
-import { IconLogout2, IconUserCircle, IconLogin2 } from '@tabler/icons-react';
+import { IconLogin2, IconLogout2, IconUserCircle, IconUserQuestion } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
@@ -11,21 +11,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
+import PATHS from '~/constants/paths';
 import { useAuthStore } from '~/stores/auth';
 
 export default function UserOption() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
-  const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate('/login');
+    navigate(PATHS.LOGIN);
   };
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate(PATHS.LOGIN);
   };
 
   return (
@@ -34,11 +35,11 @@ export default function UserOption() {
         <Avatar className='overflow-hidden'>
           <AvatarImage
             src={`https://v033.nok.com.vn/shared/images/${user?.username}.jpg`}
-            alt={user?.name ?? 'Anonymous User'}
+            alt={user?.name ?? t('auth:guest_user')}
             className='object-fill'
           />
           <AvatarFallback className='rounded-lg'>
-            {user?.name?.slice(0, 2).toUpperCase() ?? 'AU'}
+            {user?.name?.slice(0, 2).toUpperCase() ?? <IconUserQuestion className='size-5' />}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -51,24 +52,29 @@ export default function UserOption() {
         <DropdownMenuGroup>
           <DropdownMenuLabel>
             <div className='text-popover-foreground grid flex-1 text-left text-sm leading-tight'>
-              <span className='truncate font-medium'>{user?.name ?? 'Anonymous User'}</span>
-              <span className='truncate text-xs font-normal'>{user?.username}</span>
+              <span className='truncate font-medium capitalize'>
+                {user?.name ?? t('auth:guest_user')}
+              </span>
+              <span className='truncate text-xs font-normal italic'>
+                {user?.username ?? t('auth:login_for_full_access')}
+              </span>
             </div>
           </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
+
         {user && (
           <>
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => navigate('/profile')}>
+              <DropdownMenuItem onClick={() => navigate(PATHS.PROFILE)}>
                 <IconUserCircle />
-                {t('profile')}
+                {t('auth:profile')}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               <IconLogout2 />
-              {t('logout')}
+              {t('auth:logout')}
             </DropdownMenuItem>
           </>
         )}
@@ -76,7 +82,7 @@ export default function UserOption() {
         {!user && (
           <DropdownMenuItem onClick={handleLogin}>
             <IconLogin2 />
-            {t('login')}
+            {t('auth:login')}
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>
