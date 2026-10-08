@@ -19,9 +19,17 @@ export default function UserOption() {
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
+  const setAuth = useAuthStore((s) => s.setAuth);
 
   const handleLogin = () => {
     navigate(PATHS.LOGIN);
+    setAuth({
+      token: '123',
+      user: {
+        name: 'Trần Nguyễn Hoàng Lộc',
+        username: '12314092',
+      },
+    });
   };
 
   const handleLogout = () => {
