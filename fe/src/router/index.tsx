@@ -6,6 +6,7 @@ import AuthLayout from '~/views/layouts/auth';
 import SidebarLayout from '~/views/layouts/sidebar';
 import LoginPage from '~/views/pages/auth/login';
 import ProfilePage from '~/views/pages/auth/profile';
+import VersionHistoryPage from '~/views/pages/version-history';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: PATHS.HOME,
         element: <div>Hello</div>,
+      },
+      {
+        path: PATHS.VERSION_HISTORY,
+        element: <VersionHistoryPage />,
       },
 
       // =============== PROTECTED ROUTES ===============

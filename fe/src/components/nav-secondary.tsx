@@ -1,5 +1,6 @@
 import type { TablerIcon } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -28,7 +29,7 @@ export function NavSecondary({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton size='sm' render={<a href={item.url} />}>
+              <SidebarMenuButton size='sm' render={<Link to={item.url} />}>
                 {item.icon && <item.icon />}
                 <span className='capitalize'>{t(item.title)}</span>
               </SidebarMenuButton>

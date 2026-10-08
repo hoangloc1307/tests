@@ -1,4 +1,5 @@
 import { IconBook2, IconHelp, IconTimeline } from '@tabler/icons-react';
+import PATHS from '~/constants/paths';
 
 const SECONDARY_MENU = [
   {
@@ -13,7 +14,7 @@ const SECONDARY_MENU = [
   },
   {
     title: 'version_history',
-    url: '/',
+    url: PATHS.VERSION_HISTORY,
     icon: IconTimeline,
   },
 ];
