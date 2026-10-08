@@ -17,9 +17,11 @@ export const TextField = ({ label, required, ...props }: TextFieldProps) => {
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={id}>
+      <FieldLabel
+        htmlFor={id}
+        className={required ? "after:text-destructive after:-ml-1 after:content-['*']" : undefined}
+      >
         {label}
-        {required && <span className='text-destructive'>*</span>}
       </FieldLabel>
       <Input
         id={id}
