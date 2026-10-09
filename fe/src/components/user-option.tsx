@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
+import CONFIG from '~/configs/app';
 import PATHS from '~/constants/paths';
 import { useAuthStore } from '~/stores/auth';
 
@@ -42,7 +43,7 @@ export default function UserOption() {
       <DropdownMenuTrigger>
         <Avatar className='overflow-hidden'>
           <AvatarImage
-            src={`https://v033.nok.com.vn/shared/images/${user?.username}.jpg`}
+            src={`${CONFIG.EMPLOYEE_IMAGE_URL}/${user?.username}.jpg`}
             alt={user?.name ?? t('auth:guest_user')}
             className='object-fill'
           />

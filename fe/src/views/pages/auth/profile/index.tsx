@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { Badge } from '~/components/ui/badge';
+import CONFIG from '~/configs/app';
 import ChangePassword from '~/views/pages/auth/profile/change-password';
 
 export default function ProfilePage() {
@@ -31,7 +32,7 @@ export default function ProfilePage() {
           <div className='mt-6 flex items-center gap-4'>
             <Avatar className='h-16 w-16'>
               <AvatarImage
-                src={`https://v033.nok.com.vn/shared/images/${profile?.username}.jpg`}
+                src={`${CONFIG.EMPLOYEE_IMAGE_URL}/${profile?.username}.jpg`}
                 alt={profile?.name}
                 className='object-fill'
               />

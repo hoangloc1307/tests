@@ -6,6 +6,9 @@ import z from 'zod';
 
 const envSchema = z.object({
   VITE_MAIN_API: z.url({ message: 'VITE_MAIN_API phải là một URL hợp lệ' }),
+  VITE_EMPLOYEE_IMAGE_URL: z
+    .url({ message: 'VITE_EMPLOYEE_IMAGE_URL phải là một URL hợp lệ' })
+    .optional(),
   VITE_APP_VERSION: z.string({ message: 'VITE_APP_VERSION là bắt buộc' }).regex(/^\d+\.\d+\.\d+$/, {
     message: 'VITE_APP_VERSION phải theo định dạng semver (vd: 1.0.0)',
   }),
