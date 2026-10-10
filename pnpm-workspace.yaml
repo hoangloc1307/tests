@@ -4,6 +4,7 @@ packages:
   - 'shared'
 
 allowBuilds:
+  argon2: true
   esbuild: true
 
 catalog:
