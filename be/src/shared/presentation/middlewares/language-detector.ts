@@ -1,5 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
-import { changeLanguage, DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from '~/i18n';
+import {
+  changeLanguage,
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+} from '~/shared/infrastructure/i18n/i18next';
 
 export const languageDetector = (req: Request, _res: Response, next: NextFunction) => {
   const header = req.headers['accept-language'] || '';

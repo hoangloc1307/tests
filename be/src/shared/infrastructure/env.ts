@@ -4,6 +4,7 @@ import z from 'zod';
 
 const envSchema = z.object({
   // ==================== APP ====================
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   HOST: z.url({ error: 'Must be a valid URL.' }),
   PORT: z.coerce
     .number({ error: 'Must be a number.' })
@@ -12,10 +13,10 @@ const envSchema = z.object({
     .max(65535, { error: 'Must be less than 65536.' }),
 
   // ==================== AUTH ====================
-  //   JWT_SECRET: z.string().min(1, { error: 'JWT_SECRET is required.' }),
-  //   JWT_REFRESH_SECRET: z.string().min(1, { error: 'JWT_REFRESH_SECRET is required.' }),
-  //   JWT_ACCESS_EXPIRY: z.string().min(1, { error: 'JWT_ACCESS_EXPIRY is required.' }),
-  //   JWT_REFRESH_EXPIRY: z.string().min(1, { error: 'JWT_REFRESH_EXPIRY is required.' }),
+  JWT_SECRET: z.string().min(1, { error: 'JWT_SECRET is required.' }),
+  JWT_REFRESH_SECRET: z.string().min(1, { error: 'JWT_REFRESH_SECRET is required.' }),
+  JWT_ACCESS_EXPIRY: z.string().min(1, { error: 'JWT_ACCESS_EXPIRY is required.' }),
+  JWT_REFRESH_EXPIRY: z.string().min(1, { error: 'JWT_REFRESH_EXPIRY is required.' }),
 
   // ==================== DATABASE ====================
   //   DATABASE_URL: z.url({ error: 'Must be a valid URL.' }),

@@ -10,7 +10,7 @@ i18next.use(backend).init({
   lng: 'vi',
   fallbackLng: 'vi',
   supportedLngs: SUPPORTED_LANGUAGES,
-  ns: ['common'],
+  ns: ['common', 'auth'],
   defaultNS: 'common',
   backend: {
     loadPath: path.join(import.meta.dirname, 'locales/{{lng}}/{{ns}}.json'),
@@ -19,10 +19,6 @@ i18next.use(backend).init({
     escapeValue: false,
   },
 });
-
-export function t(key: string, options?: Record<string, unknown>): string {
-  return i18next.t(key, options);
-}
 
 export function changeLanguage(lng: string) {
   return i18next.changeLanguage(lng);

@@ -1,0 +1,10 @@
+{
+  "error": {
+    "title": "An error occurred",
+    "notFound": "Resource not found",
+    "internal": "Internal server error"
+  },
+  "validation": {
+    "invalid": "Invalid input"
+  }
+}

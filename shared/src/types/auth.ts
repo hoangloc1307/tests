@@ -7,3 +7,7 @@ export interface LoginResponse {
   token: string;
   user: UserInfo;
 }
+
+export interface RefreshResponse {
+  token: string;
+}

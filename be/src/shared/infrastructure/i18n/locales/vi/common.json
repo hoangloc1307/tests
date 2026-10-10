@@ -1,0 +1,10 @@
+{
+  "error": {
+    "title": "Đã xảy ra lỗi",
+    "notFound": "Không tìm thấy tài nguyên",
+    "internal": "Lỗi máy chủ nội bộ"
+  },
+  "validation": {
+    "invalid": "Dữ liệu không hợp lệ"
+  }
+}
