@@ -30,7 +30,7 @@ export class LoginUseCase {
     return {
       accessToken,
       refreshToken,
-      user: { username: user.username, name: user.name },
+      user: { username: user.username, name: user.displayName ?? user.username },
     };
   }
 }

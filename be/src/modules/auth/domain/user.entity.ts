@@ -1,27 +1,31 @@
 export interface UserProps {
+  accountId: string;
   username: string;
-  name: string;
-  email: string;
+  displayName: string | null;
+  email: string | null;
   passwordHash: string;
-  isActive: boolean;
+  status: number | null;
 }
 
 export class User {
+  readonly accountId: string;
   readonly username: string;
-  readonly name: string;
-  readonly email: string;
+  readonly displayName: string | null;
+  readonly email: string | null;
   readonly passwordHash: string;
-  readonly isActive: boolean;
+  readonly status: number | null;
 
   constructor(props: UserProps) {
+    this.accountId = props.accountId;
     this.username = props.username;
-    this.name = props.name;
+    this.displayName = props.displayName;
     this.email = props.email;
     this.passwordHash = props.passwordHash;
-    this.isActive = props.isActive;
+    this.status = props.status;
   }
 
   canAuthenticate(): boolean {
-    return this.isActive;
+    // Status 0 = active, other values may indicate locked/disabled
+    return this.status === 0;
   }
 }

@@ -1,0 +1,37 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  previewFeatures = ["partialIndexes"]
+}
+
+datasource db {
+  provider = "sqlserver"
+}
+
+model SystemAccount {
+  accountId              String    @id(map: "PK_SystemAccounts") @default(dbgenerated("newid()"), map: "DF_SystemAccounts_AccountId") @map("AccountId") @db.UniqueIdentifier
+  username               String    @unique(map: "UK_SystemAccounts") @map("Username") @db.VarChar(30)
+  passwordHash           String    @map("PasswordHash") @db.VarChar(Max)
+  securityStamp          String?   @map("SecurityStamp") @db.VarChar(Max)
+  displayName            String?   @map("DisplayName") @db.NVarChar(200)
+  avatar                 String?   @map("Avatar") @db.VarChar(Max)
+  type                   Int       @map("Type") @db.TinyInt
+  accessFailedCount      Int?      @map("AccessFailedCount") @db.SmallInt
+  email                  String?   @map("Email") @db.VarChar(100)
+  isEmailConfirmed       Boolean?  @map("IsEmailConfirmed")
+  phoneNumber            String?   @map("PhoneNumber") @db.VarChar(50)
+  isPhoneNumberConfirmed Boolean?  @map("IsPhoneNumberConfirmed")
+  twoFactorEnabled       Boolean?  @map("TwoFactorEnabled")
+  sessionId              String?   @map("SessionId") @db.UniqueIdentifier
+  status                 Int?      @default(0, map: "DF_SystemAccounts_Status") @map("Status") @db.TinyInt
+  privateKey             String?   @map("PrivateKey") @db.VarChar(Max)
+  isFirstTimeLogin       Boolean?  @default(true, map: "DF_SystemAccounts_IsFirstTimeLogin") @map("IsFirstTimeLogin")
+  isHRReference          Boolean?  @map("IsHRReference")
+  session                String?   @map("Session") @db.VarChar(Max)
+  createdDate            DateTime  @map("CreatedDate")
+  createdBy              String    @map("CreatedBy") @db.VarChar(30)
+  updatedDate            DateTime? @map("UpdatedDate")
+  updatedBy              String?   @map("UpdatedBy") @db.VarChar(30)
+
+  @@map("SystemAccounts")
+}

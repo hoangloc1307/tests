@@ -19,8 +19,11 @@ const envSchema = z.object({
   JWT_REFRESH_EXPIRY: z.string().min(1, { error: 'JWT_REFRESH_EXPIRY is required.' }),
 
   // ==================== DATABASE ====================
-  //   DATABASE_URL: z.url({ error: 'Must be a valid URL.' }),
-  //   APP_DATABASE_URL: z.url({ error: 'Must be a valid URL.' }),
+  DATABASE_URL: z.string().min(1, { error: 'DATABASE_URL is required.' }),
+  DB_SERVER: z.string().min(1, { error: 'DB_SERVER is required.' }),
+  DB_NAME: z.string().min(1, { error: 'DB_NAME is required.' }),
+  DB_USER: z.string().min(1, { error: 'DB_USER is required.' }),
+  DB_PASSWORD: z.string().min(1, { error: 'DB_PASSWORD is required.' }),
 
   // ==================== SMTP ====================
   //   SMTP_HOST: z.string().min(1, { error: 'SMTP_HOST is required.' }),

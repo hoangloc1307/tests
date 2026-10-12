@@ -15,3 +15,6 @@ node_modules/
 # Frontend
 /fe/dist/
 
+# Backend - Prisma generated
+/be/generated/
+

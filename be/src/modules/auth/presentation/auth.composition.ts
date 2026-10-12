@@ -4,8 +4,8 @@ import { ChangePasswordUseCase } from '~/modules/auth/application/change-passwor
 import { LoginUseCase } from '~/modules/auth/application/login.usecase';
 import { RefreshUseCase } from '~/modules/auth/application/refresh.usecase';
 import { Argon2PasswordHasher } from '~/modules/auth/infrastructure/argon2-password.hasher';
-import { InMemoryUserRepository } from '~/modules/auth/infrastructure/in-memory-user.repository';
 import { JwtTokenService } from '~/modules/auth/infrastructure/jwt-token.service';
+import { PrismaUserRepository } from '~/modules/auth/infrastructure/prisma-user.repository';
 import { AuthController } from '~/modules/auth/presentation/auth.controller';
 import { authenticate } from '~/modules/auth/presentation/middlewares/authenticate';
 import { I18nextTranslator } from '~/shared/infrastructure/i18n/i18next.translator';
@@ -15,7 +15,7 @@ export const createAuthRouter = async (): Promise<Router> => {
   const hasher = new Argon2PasswordHasher();
   const tokenService = new JwtTokenService();
   const translator = new I18nextTranslator();
-  const userRepository = await InMemoryUserRepository.seeded(hasher);
+  const userRepository = new PrismaUserRepository();
 
   const loginUseCase = new LoginUseCase(userRepository, hasher, tokenService);
   const refreshUseCase = new RefreshUseCase(userRepository, tokenService);
