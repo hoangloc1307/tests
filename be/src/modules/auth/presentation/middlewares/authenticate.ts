@@ -4,7 +4,6 @@ import { JwtTokenService } from '~/modules/auth/infrastructure/jwt-token.service
 
 const tokenService = new JwtTokenService();
 
-/** Verifies the Bearer access token and attaches the user to the request. */
 export const authenticate = (req: Request, _res: Response, next: NextFunction) => {
   const header = req.headers.authorization;
 

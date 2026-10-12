@@ -1,21 +1,17 @@
 import type { Request, Response } from 'express';
 import type { LoginResponse, RefreshResponse } from 'shared/types/auth';
-import { AppError } from '~/shared/domain/app-error';
-import type { Translator } from '~/shared/application/translator';
-import { env } from '~/shared/infrastructure/env';
-import { ApiResponse } from '~/shared/presentation/api-response';
+import type { ChangePasswordUseCase } from '~/modules/auth/application/change-password.usecase';
 import type { LoginUseCase } from '~/modules/auth/application/login.usecase';
 import type { RefreshUseCase } from '~/modules/auth/application/refresh.usecase';
-import type { ChangePasswordUseCase } from '~/modules/auth/application/change-password.usecase';
+import type { Translator } from '~/shared/application/translator';
+import { AppError } from '~/shared/domain/app-error';
+import { isProd } from '~/shared/infrastructure/env';
+import { ApiResponse } from '~/shared/presentation/api-response';
 
-const REFRESH_TOKEN_COOKIE = 'refreshToken';
+const REFRESH_TOKEN_COOKIE = 'rt';
 const REFRESH_COOKIE_PATH = '/api/auth/refresh';
 const REFRESH_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
 
-/**
- * Presentation adapter. Translates HTTP <-> use cases. It holds no business
- * logic; it only parses the request, invokes a use case, and shapes the response.
- */
 export class AuthController {
   constructor(
     private readonly loginUseCase: LoginUseCase,
@@ -29,17 +25,13 @@ export class AuthController {
 
     res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
+      secure: isProd(),
       sameSite: 'lax',
       maxAge: REFRESH_MAX_AGE,
       path: REFRESH_COOKIE_PATH,
     });
 
-    ApiResponse.ok<LoginResponse>(
-      res,
-      { token: accessToken, user },
-      this.i18n.t('auth:loginSuccess'),
-    );
+    ApiResponse.ok<LoginResponse>(res, { token: accessToken, user });
   };
 
   refresh = async (req: Request, res: Response) => {

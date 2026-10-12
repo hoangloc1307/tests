@@ -8,10 +8,6 @@ interface ModuleConfig {
   isPublic?: boolean;
 }
 
-/**
- * Builds the list of mounted modules. Module routers are produced by their
- * composition roots (which wire use cases to infrastructure), so this is async.
- */
 export const buildModules = async (): Promise<ModuleConfig[]> => {
   const authRouter = await createAuthRouter();
 

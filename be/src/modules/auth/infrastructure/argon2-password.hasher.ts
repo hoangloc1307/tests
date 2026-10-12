@@ -1,7 +1,6 @@
 import argon2 from 'argon2';
 import type { PasswordHasher } from '~/modules/auth/domain/password-hasher';
 
-/** argon2 adapter implementing the PasswordHasher port. */
 export class Argon2PasswordHasher implements PasswordHasher {
   hash(plain: string): Promise<string> {
     return argon2.hash(plain, { type: argon2.argon2id });

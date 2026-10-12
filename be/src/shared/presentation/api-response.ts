@@ -1,20 +1,30 @@
 import type { Response } from 'express';
-import type { ApiResponse as ApiResponseBody } from 'shared/types/api';
-import { HTTP_STATUS } from '~/shared/presentation/http-status';
+import type { ApiResponse as ApiResponseBody, Pagination } from 'shared/types/api';
+import { HTTP_STATUS, type HttpStatus } from '~/shared/presentation/http-status';
 
-/**
- * Serializes successful responses into the shared API envelope.
- * Lives in the presentation layer — it depends on Express.
- */
+const send = <T>(
+  res: Response,
+  status: HttpStatus,
+  message: string,
+  data?: T | null,
+  pagination?: Pagination,
+) => {
+  const body: ApiResponseBody<T> = {
+    success: true,
+    message,
+    data: data ?? null,
+    ...(pagination && { pagination }),
+  };
+  return res.status(status).json(body);
+};
+
 export const ApiResponse = {
-  ok<T>(res: Response, data: T | null = null, message = 'OK') {
-    const body: ApiResponseBody<T> = { success: true, message, data };
-    return res.status(HTTP_STATUS.OK).json(body);
+  ok<T>(res: Response, data?: T | null, message = 'OK') {
+    return send(res, HTTP_STATUS.OK, message, data);
   },
 
-  created<T>(res: Response, data: T | null = null, message = 'Created') {
-    const body: ApiResponseBody<T> = { success: true, message, data };
-    return res.status(HTTP_STATUS.CREATED).json(body);
+  created<T>(res: Response, data?: T | null, message = 'Created') {
+    return send(res, HTTP_STATUS.CREATED, message, data);
   },
 
   deleted(res: Response) {
@@ -27,15 +37,9 @@ export const ApiResponse = {
     pagination: { page: number; limit: number; totalItems: number },
     message = 'OK',
   ) {
-    const body: ApiResponseBody<T> = {
-      success: true,
-      message,
-      data,
-      pagination: {
-        ...pagination,
-        totalPages: Math.ceil(pagination.totalItems / pagination.limit),
-      },
-    };
-    return res.status(HTTP_STATUS.OK).json(body);
+    return send(res, HTTP_STATUS.OK, message, data, {
+      ...pagination,
+      totalPages: Math.ceil(pagination.totalItems / pagination.limit),
+    });
   },
 };

@@ -2,11 +2,11 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { type Express } from 'express';
 import helmet from 'helmet';
+import { authenticate } from '~/modules/auth/presentation/middlewares/authenticate';
+import { buildModules } from '~/router';
 import { corsConfig } from '~/shared/presentation/cors.config';
 import { helmetConfig } from '~/shared/presentation/helmet.config';
 import { errorHandler, languageDetector, notFoundHandler } from '~/shared/presentation/middlewares';
-import { authenticate } from '~/modules/auth/presentation/middlewares';
-import { buildModules } from '~/router';
 
 export const createApp = async (): Promise<Express> => {
   const app = express();
