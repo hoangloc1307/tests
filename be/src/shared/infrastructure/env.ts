@@ -26,11 +26,19 @@ const envSchema = z.object({
   DB_PASSWORD: z.string().min(1, { error: 'DB_PASSWORD is required.' }),
 
   // ==================== SMTP ====================
-  //   SMTP_HOST: z.string().min(1, { error: 'SMTP_HOST is required.' }),
-  //   SMTP_PORT: z.coerce.number({ error: 'SMTP_PORT must be a number.' }),
-  //   SMTP_USER: z.string().optional(),
-  //   SMTP_PASS: z.string().optional(),
-  //   SMTP_FROM: z.string().min(1, { error: 'SMTP_FROM is required.' }),
+  SMTP_ENABLED: z
+    .string()
+    .default('true')
+    .transform((val) => val === 'true'),
+  SMTP_HOST: z.string().min(1, { error: 'SMTP_HOST is required.' }),
+  SMTP_PORT: z.coerce.number({ error: 'SMTP_PORT must be a number.' }),
+  SMTP_SECURE: z
+    .string()
+    .default('false')
+    .transform((val) => val === 'true'),
+  SMTP_USER: z.string().optional(),
+  SMTP_PASS: z.string().optional(),
+  SMTP_FROM: z.string().min(1, { error: 'SMTP_FROM is required.' }),
 });
 
 const NODE_ENV = process.env.NODE_ENV;
