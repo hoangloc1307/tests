@@ -1,7 +1,9 @@
 import jwt, { type SignOptions } from 'jsonwebtoken';
+import { injectable } from 'tsyringe';
 import type { TokenPayload, TokenService } from '~/modules/auth/domain/token-service';
 import { env } from '~/shared/infrastructure/env';
 
+@injectable()
 export class JwtTokenService implements TokenService {
   signAccessToken(payload: TokenPayload): string {
     return jwt.sign(payload, env.JWT_SECRET, {

@@ -1,15 +1,18 @@
 import type { LoginInput } from 'shared/schemas/auth';
+import { inject, injectable } from 'tsyringe';
 import type { LoginResult } from '~/modules/auth/application/dto';
 import type { PasswordHasher } from '~/modules/auth/domain/password-hasher';
 import type { TokenService } from '~/modules/auth/domain/token-service';
 import type { UserRepository } from '~/modules/auth/domain/user.repository';
 import { AppError } from '~/shared/domain/app-error';
+import { TOKENS } from '~/shared/infrastructure/di/tokens';
 
+@injectable()
 export class LoginUseCase {
   constructor(
-    private readonly users: UserRepository,
-    private readonly hasher: PasswordHasher,
-    private readonly tokens: TokenService,
+    @inject(TOKENS.UserRepository) private readonly users: UserRepository,
+    @inject(TOKENS.PasswordHasher) private readonly hasher: PasswordHasher,
+    @inject(TOKENS.TokenService) private readonly tokens: TokenService,
   ) {}
 
   async execute(input: LoginInput): Promise<LoginResult> {

@@ -25,7 +25,6 @@ export class User {
   }
 
   canAuthenticate(): boolean {
-    // Status 0 = active, other values may indicate locked/disabled
     return this.status === 0;
   }
 }

@@ -1,6 +1,8 @@
 import argon2 from 'argon2';
+import { injectable } from 'tsyringe';
 import type { PasswordHasher } from '~/modules/auth/domain/password-hasher';
 
+@injectable()
 export class Argon2PasswordHasher implements PasswordHasher {
   hash(plain: string): Promise<string> {
     return argon2.hash(plain, { type: argon2.argon2id });

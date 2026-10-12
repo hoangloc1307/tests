@@ -5,7 +5,3 @@ export interface LoginResult {
   refreshToken: string;
   user: UserInfo;
 }
-
-export interface RefreshResult {
-  accessToken: string;
-}

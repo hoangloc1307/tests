@@ -1,10 +1,17 @@
+import { inject, injectable } from 'tsyringe';
+
 import { User } from '~/modules/auth/domain/user.entity';
 import type { UserRepository } from '~/modules/auth/domain/user.repository';
-import { prisma } from '~/shared/infrastructure/prisma';
+import { TOKENS } from '~/shared/infrastructure/di/tokens';
 
+import type { PrismaClient } from '~/shared/infrastructure/prisma';
+
+@injectable()
 export class PrismaUserRepository implements UserRepository {
+  constructor(@inject(TOKENS.PrismaClient) private prisma: PrismaClient) {}
+
   async findByUsername(username: string): Promise<User | null> {
-    const account = await prisma.systemAccount.findUnique({
+    const account = await this.prisma.systemAccount.findUnique({
       where: { username },
       select: {
         accountId: true,
@@ -31,7 +38,7 @@ export class PrismaUserRepository implements UserRepository {
   }
 
   async updatePasswordHash(username: string, passwordHash: string): Promise<void> {
-    await prisma.systemAccount.update({
+    await this.prisma.systemAccount.update({
       where: { username },
       data: {
         passwordHash,

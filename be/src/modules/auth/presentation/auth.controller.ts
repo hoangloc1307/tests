@@ -1,10 +1,9 @@
 import type { Request, Response } from 'express';
-import type { LoginResponse, RefreshResponse } from 'shared/types/auth';
-import type { ChangePasswordUseCase } from '~/modules/auth/application/change-password.usecase';
-import type { LoginUseCase } from '~/modules/auth/application/login.usecase';
-import type { RefreshUseCase } from '~/modules/auth/application/refresh.usecase';
+import type { LoginResponse } from 'shared/types/auth';
+import { inject, injectable } from 'tsyringe';
+import { LoginUseCase } from '~/modules/auth/application/login.usecase';
 import type { Translator } from '~/shared/application/translator';
-import { AppError } from '~/shared/domain/app-error';
+import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import { isProd } from '~/shared/infrastructure/env';
 import { ApiResponse } from '~/shared/presentation/api-response';
 
@@ -12,12 +11,11 @@ const REFRESH_TOKEN_COOKIE = 'rt';
 const REFRESH_COOKIE_PATH = '/api/auth/refresh';
 const REFRESH_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
 
+@injectable()
 export class AuthController {
   constructor(
     private readonly loginUseCase: LoginUseCase,
-    private readonly refreshUseCase: RefreshUseCase,
-    private readonly changePasswordUseCase: ChangePasswordUseCase,
-    private readonly i18n: Translator,
+    @inject(TOKENS.Translator) private readonly i18n: Translator,
   ) {}
 
   login = async (req: Request, res: Response) => {
@@ -34,25 +32,8 @@ export class AuthController {
     ApiResponse.ok<LoginResponse>(res, { token: accessToken, user });
   };
 
-  refresh = async (req: Request, res: Response) => {
-    const refreshToken = req.cookies?.[REFRESH_TOKEN_COOKIE] as string | undefined;
-
-    if (!refreshToken) {
-      throw AppError.unauthorized('auth:tokenExpired');
-    }
-
-    const { accessToken } = await this.refreshUseCase.execute(refreshToken);
-    ApiResponse.ok<RefreshResponse>(res, { token: accessToken });
-  };
-
   logout = (_req: Request, res: Response) => {
     res.clearCookie(REFRESH_TOKEN_COOKIE, { path: REFRESH_COOKIE_PATH });
     ApiResponse.ok(res, null, this.i18n.t('auth:logoutSuccess'));
-  };
-
-  changePassword = async (req: Request, res: Response) => {
-    const username = req.user!.username;
-    await this.changePasswordUseCase.execute(username, req.body);
-    ApiResponse.ok(res, null, this.i18n.t('auth:changePasswordSuccess'));
   };
 }

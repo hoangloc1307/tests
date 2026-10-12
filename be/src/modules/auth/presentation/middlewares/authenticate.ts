@@ -1,10 +1,11 @@
 import type { NextFunction, Request, Response } from 'express';
+import type { TokenService } from '~/modules/auth/domain/token-service';
 import { AppError } from '~/shared/domain/app-error';
-import { JwtTokenService } from '~/modules/auth/infrastructure/jwt-token.service';
-
-const tokenService = new JwtTokenService();
+import { container } from '~/shared/infrastructure/di/container';
+import { TOKENS } from '~/shared/infrastructure/di/tokens';
 
 export const authenticate = (req: Request, _res: Response, next: NextFunction) => {
+  const tokenService = container.resolve<TokenService>(TOKENS.TokenService);
   const header = req.headers.authorization;
 
   if (!header?.startsWith('Bearer ')) {
