@@ -1,14 +1,17 @@
 import type { NextFunction, Request, Response } from 'express';
 import type { ApiResponse } from 'shared/types/api';
+import type { Translator } from '~/shared/application/translator';
 import { AppError } from '~/shared/domain/app-error';
 import { ERROR_CODES } from '~/shared/domain/error-codes';
-import { I18nextTranslator } from '~/shared/infrastructure/i18n/i18next.translator';
-import { logger } from '~/shared/infrastructure/logger';
+import type { Logger } from '~/shared/domain/logger';
+import { container } from '~/shared/infrastructure/di/container';
+import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import { HTTP_STATUS } from '~/shared/presentation/http-status';
 
-const translator = new I18nextTranslator();
-
 export const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  const translator = container.resolve<Translator>(TOKENS.Translator);
+  const logger = container.resolve<Logger>(TOKENS.Logger);
+
   if (err instanceof AppError) {
     const body: ApiResponse<null> = {
       success: false,

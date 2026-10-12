@@ -8,7 +8,7 @@ import { corsConfig } from '~/shared/presentation/cors.config';
 import { helmetConfig } from '~/shared/presentation/helmet.config';
 import { errorHandler, languageDetector, notFoundHandler } from '~/shared/presentation/middlewares';
 
-export const createApp = async (): Promise<Express> => {
+export const createApp = (): Express => {
   const app = express();
 
   app.use(helmet(helmetConfig));
@@ -18,7 +18,7 @@ export const createApp = async (): Promise<Express> => {
   app.use(languageDetector);
 
   // Mount modules
-  const modules = await buildModules();
+  const modules = buildModules();
   modules.forEach(({ path, router, isPublic }) => {
     if (isPublic) {
       app.use(`/api${path}`, router);

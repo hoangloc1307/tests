@@ -8,8 +8,8 @@ interface ModuleConfig {
   isPublic?: boolean;
 }
 
-export const buildModules = async (): Promise<ModuleConfig[]> => {
-  const authRouter = await createAuthRouter();
+export const buildModules = (): ModuleConfig[] => {
+  const authRouter = createAuthRouter();
 
   return [{ path: ENDPOINTS.AUTH, router: authRouter, isPublic: true }];
 };
