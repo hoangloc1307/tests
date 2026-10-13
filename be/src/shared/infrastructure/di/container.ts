@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import type { PasswordHasher } from '~/modules/auth/domain/password-hasher';
+import type { PasswordVerifier } from '~/modules/auth/domain/password-hasher';
 import type { TokenService } from '~/modules/auth/domain/token-service';
 import type { UserRepository } from '~/modules/auth/domain/user.repository';
-import { Argon2PasswordHasher } from '~/modules/auth/infrastructure/argon2-password.hasher';
+import { CryptoPasswordVerifier } from '~/modules/auth/infrastructure/crypto-password.verifier';
 import { JwtTokenService } from '~/modules/auth/infrastructure/jwt-token.service';
 import { PrismaUserRepository } from '~/modules/auth/infrastructure/prisma-user.repository';
 import type { Translator } from '~/shared/application/translator';
@@ -25,7 +25,7 @@ container.registerSingleton<TemplateRenderer>(TOKENS.TemplateRenderer, Handlebar
 container.registerInstance<PrismaClient>(TOKENS.PrismaClient, prisma);
 
 // Register auth services
-container.registerSingleton<PasswordHasher>(TOKENS.PasswordHasher, Argon2PasswordHasher);
+container.registerSingleton<PasswordVerifier>(TOKENS.PasswordVerifier, CryptoPasswordVerifier);
 container.registerSingleton<TokenService>(TOKENS.TokenService, JwtTokenService);
 container.registerSingleton<UserRepository>(TOKENS.UserRepository, PrismaUserRepository);
 

@@ -1,9 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-
 import { User } from '~/modules/auth/domain/user.entity';
 import type { UserRepository } from '~/modules/auth/domain/user.repository';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
-
 import type { PrismaClient } from '~/shared/infrastructure/prisma';
 
 @injectable()
@@ -19,6 +17,7 @@ export class PrismaUserRepository implements UserRepository {
         displayName: true,
         email: true,
         passwordHash: true,
+        securityStamp: true,
         status: true,
       },
     });
@@ -33,6 +32,7 @@ export class PrismaUserRepository implements UserRepository {
       displayName: account.displayName,
       email: account.email,
       passwordHash: account.passwordHash,
+      securityStamp: account.securityStamp,
       status: account.status,
     });
   }

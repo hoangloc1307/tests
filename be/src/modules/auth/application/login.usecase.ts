@@ -1,7 +1,7 @@
 import type { LoginInput } from 'shared/schemas/auth';
 import { inject, injectable } from 'tsyringe';
 import type { LoginResult } from '~/modules/auth/application/dto';
-import type { PasswordHasher } from '~/modules/auth/domain/password-hasher';
+import type { PasswordVerifier } from '~/modules/auth/domain/password-hasher';
 import type { TokenService } from '~/modules/auth/domain/token-service';
 import type { UserRepository } from '~/modules/auth/domain/user.repository';
 import { AppError } from '~/shared/domain/app-error';
@@ -11,7 +11,7 @@ import { TOKENS } from '~/shared/infrastructure/di/tokens';
 export class LoginUseCase {
   constructor(
     @inject(TOKENS.UserRepository) private readonly users: UserRepository,
-    @inject(TOKENS.PasswordHasher) private readonly hasher: PasswordHasher,
+    @inject(TOKENS.PasswordVerifier) private readonly verifier: PasswordVerifier,
     @inject(TOKENS.TokenService) private readonly tokens: TokenService,
   ) {}
 
@@ -22,7 +22,11 @@ export class LoginUseCase {
       throw AppError.unauthorized('auth:invalidCredentials');
     }
 
-    const passwordMatches = await this.hasher.verify(user.passwordHash, input.password);
+    const passwordMatches = this.verifier.verify(
+      user.passwordHash,
+      user.securityStamp,
+      input.password,
+    );
     if (!passwordMatches) {
       throw AppError.unauthorized('auth:invalidCredentials');
     }

@@ -1,4 +1,3 @@
-export interface PasswordHasher {
-  hash(plain: string): Promise<string>;
-  verify(hash: string, plain: string): Promise<boolean>;
+export interface PasswordVerifier {
+  verify(hash: string, securityStamp: string, plain: string): boolean;
 }

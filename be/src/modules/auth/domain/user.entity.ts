@@ -4,6 +4,7 @@ export interface UserProps {
   displayName: string | null;
   email: string | null;
   passwordHash: string;
+  securityStamp: string;
   status: number | null;
 }
 
@@ -13,6 +14,7 @@ export class User {
   readonly displayName: string | null;
   readonly email: string | null;
   readonly passwordHash: string;
+  readonly securityStamp: string;
   readonly status: number | null;
 
   constructor(props: UserProps) {
@@ -21,6 +23,7 @@ export class User {
     this.displayName = props.displayName;
     this.email = props.email;
     this.passwordHash = props.passwordHash;
+    this.securityStamp = props.securityStamp;
     this.status = props.status;
   }
 

@@ -10,6 +10,6 @@ export const TOKENS = {
   UserRepository: Symbol.for('UserRepository'),
 
   // Auth services
-  PasswordHasher: Symbol.for('PasswordHasher'),
+  PasswordVerifier: Symbol.for('PasswordVerifier'),
   TokenService: Symbol.for('TokenService'),
 } as const;

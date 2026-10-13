@@ -12,7 +12,7 @@ model SystemAccount {
   accountId              String    @id(map: "PK_SystemAccounts") @default(dbgenerated("newid()"), map: "DF_SystemAccounts_AccountId") @map("AccountId") @db.UniqueIdentifier
   username               String    @unique(map: "UK_SystemAccounts") @map("Username") @db.VarChar(30)
   passwordHash           String    @map("PasswordHash") @db.VarChar(Max)
-  securityStamp          String?   @map("SecurityStamp") @db.VarChar(Max)
+  securityStamp          String   @map("SecurityStamp") @db.VarChar(Max)
   displayName            String?   @map("DisplayName") @db.NVarChar(200)
   avatar                 String?   @map("Avatar") @db.VarChar(Max)
   type                   Int       @map("Type") @db.TinyInt
