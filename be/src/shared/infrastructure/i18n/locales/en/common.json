@@ -6,5 +6,13 @@
   },
   "validation": {
     "invalid": "Invalid input"
+  },
+  "upload": {
+    "required": "{{field}} is required",
+    "minCount": "{{field}} needs at least {{min}} file(s)",
+    "maxCount": "{{field}} exceeds the maximum of {{max}} file(s)",
+    "tooLarge": "{{field}} is too large (max {{max}} bytes)",
+    "invalidType": "{{field}} has an invalid type",
+    "unsupportedMediaType": "Unsupported media type"
   }
 }

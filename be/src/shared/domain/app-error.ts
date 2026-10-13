@@ -56,6 +56,24 @@ export class AppError extends Error {
     );
   }
 
+  static contentTooLarge(translationKey: string, metadata?: Record<string, string>) {
+    return new AppError(
+      HTTP_STATUS.CONTENT_TOO_LARGE,
+      ERROR_CODES.CONTENT_TOO_LARGE,
+      translationKey,
+      metadata,
+    );
+  }
+
+  static unsupportedMediaType(translationKey: string, metadata?: Record<string, string>) {
+    return new AppError(
+      HTTP_STATUS.UNSUPPORTED_MEDIA_TYPE,
+      ERROR_CODES.UNSUPPORTED_MEDIA_TYPE,
+      translationKey,
+      metadata,
+    );
+  }
+
   static server(translationKey: string, metadata?: Record<string, string>) {
     return new AppError(
       HTTP_STATUS.INTERNAL_SERVER_ERROR,

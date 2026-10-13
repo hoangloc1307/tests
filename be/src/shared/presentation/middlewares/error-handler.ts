@@ -15,7 +15,7 @@ export const errorHandler = (err: unknown, _req: Request, res: Response, _next: 
   if (err instanceof AppError) {
     const body: ApiResponse<null> = {
       success: false,
-      message: translator.t(err.translationKey),
+      message: translator.t(err.translationKey, err.metadata),
       data: null,
       errorCode: err.errorCode,
       metadata: err.metadata,

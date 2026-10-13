@@ -6,5 +6,13 @@
   },
   "validation": {
     "invalid": "Dữ liệu không hợp lệ"
+  },
+  "upload": {
+    "required": "{{field}} là bắt buộc",
+    "minCount": "{{field}} cần tối thiểu {{min}} tệp",
+    "maxCount": "{{field}} vượt quá số lượng tối đa {{max}} tệp",
+    "tooLarge": "{{field}} quá lớn (tối đa {{max}} bytes)",
+    "invalidType": "{{field}} có định dạng không hợp lệ",
+    "unsupportedMediaType": "Định dạng tệp không được hỗ trợ"
   }
 }
