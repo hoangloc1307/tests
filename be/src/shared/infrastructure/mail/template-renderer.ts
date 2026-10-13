@@ -2,7 +2,7 @@ import fs from 'fs';
 import Handlebars from 'handlebars';
 import path from 'path';
 import { injectable } from 'tsyringe';
-import type { TemplateRenderer } from '~/shared/domain/template-renderer';
+import type { TemplateRenderer } from '~/shared/application/template-renderer';
 
 @injectable()
 export class HandlebarsTemplateRenderer implements TemplateRenderer {

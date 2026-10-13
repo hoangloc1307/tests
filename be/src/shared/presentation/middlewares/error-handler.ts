@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
 import type { ApiResponse } from 'shared/types/api';
+import type { Logger } from '~/shared/application/logger';
 import type { Translator } from '~/shared/application/translator';
 import { AppError } from '~/shared/domain/app-error';
 import { ERROR_CODES } from '~/shared/domain/error-codes';
-import type { Logger } from '~/shared/domain/logger';
 import { container } from '~/shared/infrastructure/di/container';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import { HTTP_STATUS } from '~/shared/presentation/http-status';

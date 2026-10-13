@@ -1,9 +1,8 @@
 import nodemailer, { Transporter } from 'nodemailer';
 import { inject, injectable } from 'tsyringe';
-
-import type { Logger } from '~/shared/domain/logger';
-import type { MailOptions, MailService } from '~/shared/domain/mail-service';
-import type { TemplateRenderer } from '~/shared/domain/template-renderer';
+import type { Logger } from '~/shared/application/logger';
+import type { MailOptions, MailService } from '~/shared/application/mail-service';
+import type { TemplateRenderer } from '~/shared/application/template-renderer';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import { env } from '~/shared/infrastructure/env';
 

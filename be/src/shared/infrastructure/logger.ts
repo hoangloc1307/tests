@@ -1,6 +1,6 @@
 import pino from 'pino';
 import { injectable } from 'tsyringe';
-import type { Logger } from '~/shared/domain/logger';
+import type { Logger } from '~/shared/application/logger';
 import { env, isDev } from '~/shared/infrastructure/env';
 
 @injectable()
