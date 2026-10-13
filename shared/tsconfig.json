@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2023",
-    "module": "esnext",
+    "target": "ES2022",
+    "module": "ESNext",
     "moduleResolution": "bundler",
+    "esModuleInterop": true,
     "strict": true,
-    "noEmit": true,
     "skipLibCheck": true,
-    "verbatimModuleSyntax": true
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "include": ["src"]
 }

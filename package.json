@@ -4,7 +4,11 @@
     "prepare": "husky",
     "commit": "git-cz",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "build": "pnpm -r run build",
+    "build:shared": "pnpm --filter shared build",
+    "build:fe": "pnpm --filter fe build",
+    "build:be": "pnpm --filter be build"
   },
   "config": {
     "commitizen": {
