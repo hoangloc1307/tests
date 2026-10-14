@@ -6,10 +6,8 @@ export const TOKENS = {
   TemplateRenderer: Symbol.for('TemplateRenderer'),
   PrismaClient: Symbol.for('PrismaClient'),
 
-  // Repositories
-  UserRepository: Symbol.for('UserRepository'),
-
   // Auth services
-  PasswordVerifier: Symbol.for('PasswordVerifier'),
+  AuthClient: Symbol.for('AuthClient'),
+  PermissionClient: Symbol.for('PermissionClient'),
   TokenService: Symbol.for('TokenService'),
 } as const;

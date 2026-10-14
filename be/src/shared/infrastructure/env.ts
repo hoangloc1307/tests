@@ -12,18 +12,15 @@ const envSchema = z.object({
     .min(1, { error: 'Must be greater than 0.' })
     .max(65535, { error: 'Must be less than 65536.' }),
 
-  // ==================== AUTH ====================
+  // ==================== THIRD PARTY ====================
+  AUTH_ENDPOINT: z.url({ error: 'AUTH_ENDPOINT must be a valid URL.' }),
+  VNN_MASTER_ENDPOINT: z.url({ error: 'VNN_MASTER_ENDPOINT must be a valid URL.' }),
+
+  // ==================== JWT ====================
   JWT_SECRET: z.string().min(1, { error: 'JWT_SECRET is required.' }),
   JWT_REFRESH_SECRET: z.string().min(1, { error: 'JWT_REFRESH_SECRET is required.' }),
   JWT_ACCESS_EXPIRY: z.string().min(1, { error: 'JWT_ACCESS_EXPIRY is required.' }),
   JWT_REFRESH_EXPIRY: z.string().min(1, { error: 'JWT_REFRESH_EXPIRY is required.' }),
-
-  // ==================== DATABASE ====================
-  DATABASE_URL: z.string().min(1, { error: 'DATABASE_URL is required.' }),
-  DB_SERVER: z.string().min(1, { error: 'DB_SERVER is required.' }),
-  DB_NAME: z.string().min(1, { error: 'DB_NAME is required.' }),
-  DB_USER: z.string().min(1, { error: 'DB_USER is required.' }),
-  DB_PASSWORD: z.string().min(1, { error: 'DB_PASSWORD is required.' }),
 
   // ==================== SMTP ====================
   SMTP_ENABLED: z
