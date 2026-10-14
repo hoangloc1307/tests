@@ -1,0 +1,27 @@
+info:
+  name: Login
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:5000/api/auth/login
+  body:
+    type: json
+    data: |-
+      {
+          "username": "12314092",
+          "password": "0000000"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: bru.setEnvVar("TOKEN", res('data.token'));
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

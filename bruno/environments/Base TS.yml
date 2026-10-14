@@ -1,0 +1,4 @@
+name: Base TS
+variables:
+  - secret: true
+    name: TOKEN
