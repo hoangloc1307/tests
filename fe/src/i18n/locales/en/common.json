@@ -1,5 +1,7 @@
 {
   "toggleTheme": "Toggle theme",
   "light": "Light",
-  "dark": "Dark"
+  "dark": "Dark",
+  "or": "or",
+  "processing": "Processing"
 }

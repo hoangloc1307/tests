@@ -5,6 +5,7 @@ import RejectedRoute from '~/router/guards/rejected';
 import AuthLayout from '~/views/layouts/auth';
 import SidebarLayout from '~/views/layouts/sidebar';
 import LoginPage from '~/views/pages/auth/login';
+import LoginWithCardPage from '~/views/pages/auth/login-with-card';
 import ProfilePage from '~/views/pages/auth/profile';
 import VersionHistoryPage from '~/views/pages/version-history';
 
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
           {
             path: PATHS.LOGIN,
             element: <LoginPage />,
+          },
+          {
+            path: PATHS.LOGIN_WITH_CARD,
+            element: <LoginWithCardPage />,
           },
         ],
       },

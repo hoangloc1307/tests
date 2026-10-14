@@ -7,15 +7,8 @@ export const loginSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 
-export const changePasswordSchema = z
-  .object({
-    currentPassword: z.string().min(6),
-    newPassword: z.string().min(6),
-    confirmPassword: z.string().min(6),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: 'auth:validation.confirmPasswordMismatch',
-    path: ['confirmPassword'],
-  });
+export const loginWithCardSchema = z.object({
+  cardNumber: z.string().nonempty(),
+});
 
-export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+export type LoginWithCardInput = z.infer<typeof loginWithCardSchema>;

@@ -1,5 +1,7 @@
 {
   "toggleTheme": "Chuyển đổi giao diện",
   "light": "Sáng",
-  "dark": "Tối"
+  "dark": "Tối",
+  "or": "hoặc",
+  "processing": "Đang xử lý"
 }
