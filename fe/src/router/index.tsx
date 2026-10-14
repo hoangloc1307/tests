@@ -10,25 +10,22 @@ import VersionHistoryPage from '~/views/pages/version-history';
 
 const router = createBrowserRouter([
   {
-    element: <SidebarLayout />,
+    element: <ProtectedRoute />,
     children: [
-      // =============== PUBLIC ROUTES ===============
       {
-        path: PATHS.HOME,
-        element: <div>Hello</div>,
-      },
-      {
-        path: PATHS.VERSION_HISTORY,
-        element: <VersionHistoryPage />,
-      },
-
-      // =============== PROTECTED ROUTES ===============
-      {
-        element: <ProtectedRoute />,
+        element: <SidebarLayout />,
         children: [
+          {
+            path: PATHS.HOME,
+            element: <div>Hello</div>,
+          },
           {
             path: PATHS.PROFILE,
             element: <ProfilePage />,
+          },
+          {
+            path: PATHS.VERSION_HISTORY,
+            element: <VersionHistoryPage />,
           },
         ],
       },
