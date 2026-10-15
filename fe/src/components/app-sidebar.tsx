@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-
 import { Link } from 'react-router';
+import { NavMain } from '~/components/nav-main';
 import { NavSecondary } from '~/components/nav-secondary';
 import {
   Sidebar,
@@ -35,7 +35,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       <SidebarContent>
-        {/* <NavMain items={data.navMain} /> */}
+        <NavMain items={MENU.MAIN_MENU} />
         <NavSecondary items={MENU.SECONDARY_MENU} className='mt-auto' />
       </SidebarContent>
     </Sidebar>

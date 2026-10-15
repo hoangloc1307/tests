@@ -18,11 +18,12 @@ interface AuthState {
   setAuth: (data: AuthData) => void;
   setToken: (token: string) => void;
   logout: () => void;
+  hasPermission: (feature: string, action?: string) => boolean;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       token: null,
       user: null,
       roles: [],
@@ -30,6 +31,13 @@ export const useAuthStore = create<AuthState>()(
       setAuth: ({ token, user, roles, permissions }) => set({ token, user, roles, permissions }),
       setToken: (token) => set({ token }),
       logout: () => set({ token: null, user: null, roles: [], permissions: [] }),
+      hasPermission: (feature, action) => {
+        const { permissions } = get();
+        if (action) {
+          return permissions.includes(`${feature}:${action}`);
+        }
+        return permissions.some((p) => p.startsWith(`${feature}:`));
+      },
     }),
     { name: STORAGE_KEYS.AUTH },
   ),
