@@ -7,8 +7,51 @@
   "issue_code": "Issue code",
   "issue_code_placeholder": "Generated after submission",
   "create_success": "Anomaly issued successfully",
+  "category": "Category",
+  "category_placeholder": "Select category",
+  "category_options": {
+    "SAFETY": "Safety",
+    "QUALITY": "Quality",
+    "2S": "2S",
+    "EQUIPMENT": "Equipment"
+  },
+  "detection_type": "Detected on",
+  "detection_type_placeholder": "Select detection type",
+  "detection_type_options": {
+    "PRODUCT": "Product",
+    "METAL_CASE": "Metal case",
+    "SPRING": "Spring",
+    "RUBBER": "Rubber",
+    "OTHER": "Other"
+  },
+  "product_code": "Product code",
+  "product_code_placeholder": "Enter product code",
+  "lot_no": "Lot no",
+  "lot_no_placeholder": "Enter lot no",
+  "line": "Line",
+  "line_placeholder": "Enter line",
+  "machine": "Machine",
+  "machine_placeholder": "Enter machine",
+  "glue": "Glue",
+  "glue_placeholder": "Enter glue",
+  "rubber": "Rubber",
+  "rubber_placeholder": "Enter rubber",
+  "batch": "Batch",
+  "batch_placeholder": "Enter batch",
+  "quantity": "Quantity",
+  "quantity_placeholder": "Enter quantity",
   "validation": {
     "section_required": "Please select issuing section",
-    "issue_date_required": "Please select issue date"
+    "issue_date_required": "Please select issue date",
+    "category_required": "Please select category",
+    "detection_type_required": "Please select detection type",
+    "product_code_required": "Please enter product code",
+    "lot_no_required": "Please enter lot no",
+    "line_required": "Please enter line",
+    "machine_required": "Please enter machine",
+    "glue_required": "Please enter glue",
+    "rubber_required": "Please enter rubber",
+    "batch_required": "Please enter batch",
+    "quantity_required": "Please enter quantity"
   }
 }

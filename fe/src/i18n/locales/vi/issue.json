@@ -7,8 +7,51 @@
   "issue_code": "Mã phiếu",
   "issue_code_placeholder": "Phát sinh sau khi tạo phiếu",
   "create_success": "Phát hành bất thường thành công",
+  "category": "Phân loại",
+  "category_placeholder": "Chọn phân loại",
+  "category_options": {
+    "SAFETY": "An toàn",
+    "QUALITY": "Chất lượng",
+    "2S": "2S",
+    "EQUIPMENT": "Thiết bị"
+  },
+  "detection_type": "Phát hiện trên",
+  "detection_type_placeholder": "Chọn loại phát hiện",
+  "detection_type_options": {
+    "PRODUCT": "Sản phẩm",
+    "METAL_CASE": "Metal case",
+    "SPRING": "Lò xo",
+    "RUBBER": "Cao su",
+    "OTHER": "Khác"
+  },
+  "product_code": "Mã sản phẩm",
+  "product_code_placeholder": "Nhập mã sản phẩm",
+  "lot_no": "Lot no",
+  "lot_no_placeholder": "Nhập lot no",
+  "line": "Line",
+  "line_placeholder": "Nhập line",
+  "machine": "Máy",
+  "machine_placeholder": "Nhập máy",
+  "glue": "Keo",
+  "glue_placeholder": "Nhập keo",
+  "rubber": "Cao su",
+  "rubber_placeholder": "Nhập cao su",
+  "batch": "Batch",
+  "batch_placeholder": "Nhập batch",
+  "quantity": "Số lượng",
+  "quantity_placeholder": "Nhập số lượng",
   "validation": {
     "section_required": "Vui lòng chọn bộ phận phát hành",
-    "issue_date_required": "Vui lòng chọn ngày phát hành"
+    "issue_date_required": "Vui lòng chọn ngày phát hành",
+    "category_required": "Vui lòng chọn phân loại",
+    "detection_type_required": "Vui lòng chọn loại phát hiện",
+    "product_code_required": "Vui lòng nhập mã sản phẩm",
+    "lot_no_required": "Vui lòng nhập lot no",
+    "line_required": "Vui lòng nhập line",
+    "machine_required": "Vui lòng nhập máy",
+    "glue_required": "Vui lòng nhập keo",
+    "rubber_required": "Vui lòng nhập cao su",
+    "batch_required": "Vui lòng nhập batch",
+    "quantity_required": "Vui lòng nhập số lượng"
   }
 }

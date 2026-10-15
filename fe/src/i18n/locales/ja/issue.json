@@ -7,8 +7,51 @@
   "issue_code": "票コード",
   "issue_code_placeholder": "作成後に発行されます",
   "create_success": "異常発行が完了しました",
+  "category": "分類",
+  "category_placeholder": "分類を選択",
+  "category_options": {
+    "SAFETY": "安全",
+    "QUALITY": "品質",
+    "2S": "2S",
+    "EQUIPMENT": "設備"
+  },
+  "detection_type": "検出対象",
+  "detection_type_placeholder": "検出タイプを選択",
+  "detection_type_options": {
+    "PRODUCT": "製品",
+    "METAL_CASE": "メタルケース",
+    "SPRING": "バネ",
+    "RUBBER": "ゴム",
+    "OTHER": "その他"
+  },
+  "product_code": "製品コード",
+  "product_code_placeholder": "製品コードを入力",
+  "lot_no": "Lot no",
+  "lot_no_placeholder": "Lot noを入力",
+  "line": "ライン",
+  "line_placeholder": "ラインを入力",
+  "machine": "機械",
+  "machine_placeholder": "機械を入力",
+  "glue": "接着剤",
+  "glue_placeholder": "接着剤を入力",
+  "rubber": "ゴム",
+  "rubber_placeholder": "ゴムを入力",
+  "batch": "バッチ",
+  "batch_placeholder": "バッチを入力",
+  "quantity": "数量",
+  "quantity_placeholder": "数量を入力",
   "validation": {
     "section_required": "発行部門を選択してください",
-    "issue_date_required": "発行日を選択してください"
+    "issue_date_required": "発行日を選択してください",
+    "category_required": "分類を選択してください",
+    "detection_type_required": "検出タイプを選択してください",
+    "product_code_required": "製品コードを入力してください",
+    "lot_no_required": "Lot noを入力してください",
+    "line_required": "ラインを入力してください",
+    "machine_required": "機械を入力してください",
+    "glue_required": "接着剤を入力してください",
+    "rubber_required": "ゴムを入力してください",
+    "batch_required": "バッチを入力してください",
+    "quantity_required": "数量を入力してください"
   }
 }
