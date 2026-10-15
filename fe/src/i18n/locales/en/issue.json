@@ -1,0 +1,14 @@
+{
+  "section": "Issuing section",
+  "section_placeholder": "Select section",
+  "info_title": "1. Issue information",
+  "recorder": "Recorder",
+  "issue_date": "Issue date",
+  "issue_code": "Issue code",
+  "issue_code_placeholder": "Generated after submission",
+  "create_success": "Anomaly issued successfully",
+  "validation": {
+    "section_required": "Please select issuing section",
+    "issue_date_required": "Please select issue date"
+  }
+}

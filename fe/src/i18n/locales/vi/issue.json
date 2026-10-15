@@ -1,0 +1,14 @@
+{
+  "section": "Bộ phận phát hành",
+  "section_placeholder": "Chọn bộ phận",
+  "info_title": "1. Thông tin phát hành",
+  "recorder": "Nhân viên ghi nhận",
+  "issue_date": "Ngày phát hành",
+  "issue_code": "Mã phiếu",
+  "issue_code_placeholder": "Phát sinh sau khi tạo phiếu",
+  "create_success": "Phát hành bất thường thành công",
+  "validation": {
+    "section_required": "Vui lòng chọn bộ phận phát hành",
+    "issue_date_required": "Vui lòng chọn ngày phát hành"
+  }
+}

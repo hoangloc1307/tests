@@ -1,0 +1,14 @@
+{
+  "section": "発行部門",
+  "section_placeholder": "部門を選択",
+  "info_title": "1. 発行情報",
+  "recorder": "記録者",
+  "issue_date": "発行日",
+  "issue_code": "票コード",
+  "issue_code_placeholder": "作成後に発行されます",
+  "create_success": "異常発行が完了しました",
+  "validation": {
+    "section_required": "発行部門を選択してください",
+    "issue_date_required": "発行日を選択してください"
+  }
+}

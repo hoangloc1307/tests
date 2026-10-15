@@ -1,5 +1,8 @@
 {
   "toggleTheme": "テーマを切り替える",
   "light": "ライト",
-  "dark": "ダーク"
+  "dark": "ダーク",
+  "or": "または",
+  "processing": "処理中",
+  "save": "保存"
 }
