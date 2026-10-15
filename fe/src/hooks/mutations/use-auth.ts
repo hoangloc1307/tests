@@ -16,6 +16,8 @@ export function useLogin() {
         setAuth({
           token: data.data.token,
           user: data.data.user,
+          roles: data.data.roles,
+          permissions: data.data.permissions,
         });
         navigate(PATHS.HOME, { replace: true });
       }
@@ -34,6 +36,8 @@ export function useLoginWithCard() {
         setAuth({
           token: data.data.token,
           user: data.data.user,
+          roles: data.data.roles,
+          permissions: data.data.permissions,
         });
         navigate(PATHS.HOME, { replace: true });
       }
