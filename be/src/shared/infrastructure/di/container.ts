@@ -1,9 +1,11 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import type { AuthClient } from '~/modules/auth/domain/auth-client';
+import type { HrClient } from '~/modules/auth/domain/hr-client';
 import type { PermissionClient } from '~/modules/auth/domain/permission-client';
 import type { TokenService } from '~/modules/auth/domain/token-service';
 import { HttpAuthClient } from '~/modules/auth/infrastructure/http-auth.client';
+import { HttpHrClient } from '~/modules/auth/infrastructure/http-hr.client';
 import { HttpPermissionClient } from '~/modules/auth/infrastructure/http-permission.client';
 import { JwtTokenService } from '~/modules/auth/infrastructure/jwt-token.service';
 import type { Logger } from '~/shared/application/logger';
@@ -26,6 +28,7 @@ container.registerInstance<PrismaClient>(TOKENS.PrismaClient, prisma);
 
 // Register auth services
 container.registerSingleton<AuthClient>(TOKENS.AuthClient, HttpAuthClient);
+container.registerSingleton<HrClient>(TOKENS.HrClient, HttpHrClient);
 container.registerSingleton<PermissionClient>(TOKENS.PermissionClient, HttpPermissionClient);
 container.registerSingleton<TokenService>(TOKENS.TokenService, JwtTokenService);
 

@@ -14,7 +14,10 @@ const envSchema = z.object({
 
   // ==================== THIRD PARTY ====================
   AUTH_ENDPOINT: z.url({ error: 'AUTH_ENDPOINT must be a valid URL.' }),
+  HR_ENDPOINT: z.url({ error: 'HR_ENDPOINT must be a valid URL.' }),
   VNN_MASTER_ENDPOINT: z.url({ error: 'VNN_MASTER_ENDPOINT must be a valid URL.' }),
+  A5_TENANT_ID: z.string().uuid({ error: 'A5_TENANT_ID must be a valid UUID.' }),
+  A5_WORKER_ID: z.string().uuid({ error: 'A5_WORKER_ID must be a valid UUID.' }),
 
   // ==================== JWT ====================
   JWT_SECRET: z.string().min(1, { error: 'JWT_SECRET is required.' }),

@@ -34,6 +34,7 @@
     "reflect-metadata": "^0.2.2",
     "shared": "workspace:*",
     "tsyringe": "^4.10.0",
+    "undici": "^8.11.2",
     "zod": "catalog:"
   },
   "devDependencies": {

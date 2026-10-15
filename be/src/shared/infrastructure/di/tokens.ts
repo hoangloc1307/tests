@@ -8,6 +8,7 @@ export const TOKENS = {
 
   // Auth services
   AuthClient: Symbol.for('AuthClient'),
+  HrClient: Symbol.for('HrClient'),
   PermissionClient: Symbol.for('PermissionClient'),
   TokenService: Symbol.for('TokenService'),
 } as const;

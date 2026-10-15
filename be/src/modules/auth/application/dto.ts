@@ -4,4 +4,6 @@ export interface LoginResult {
   accessToken: string;
   refreshToken: string;
   user: UserInfo;
+  roles: string[];
+  permissions: string[];
 }

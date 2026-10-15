@@ -16,7 +16,7 @@ export class LoginUseCase {
 
   async execute(input: LoginInput): Promise<LoginResult> {
     const account = await this.authClient.login(input);
-    const permission = await this.permissionClient.getUserPermissions(account.id);
+    const permissions = await this.permissionClient.getUserPermissions(account.id);
 
     const accessToken = this.tokens.signAccessToken({ username: account.username });
     const refreshToken = this.tokens.signRefreshToken({ username: account.username });
@@ -28,6 +28,8 @@ export class LoginUseCase {
         username: account.username,
         name: account.displayName,
       },
+      roles: permissions?.[0]?.roles ?? [],
+      permissions: permissions?.[0]?.permissions ?? [],
     };
   }
 }

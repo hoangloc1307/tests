@@ -6,6 +6,8 @@ export interface UserInfo {
 export interface LoginResponse {
   token: string;
   user: UserInfo;
+  roles: string[];
+  permissions: string[];
 }
 
 export interface RefreshResponse {

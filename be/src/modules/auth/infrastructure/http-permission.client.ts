@@ -23,12 +23,15 @@ export class HttpPermissionClient implements PermissionClient {
   }
 
   async getUserPermissions(accountId: string): Promise<UserPermission[]> {
-    const response = await fetch(`${this.baseUrl}/api/v1/user-tenant/${accountId}/tenants`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${this.baseUrl}/api/v1/user-tenant/${accountId}/tenants?tenant=${env.A5_TENANT_ID}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       throw AppError.server('auth:fetchPermissionsFailed');
