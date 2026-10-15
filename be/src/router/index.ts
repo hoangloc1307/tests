@@ -11,5 +11,5 @@ interface ModuleConfig {
 export const buildModules = (): ModuleConfig[] => {
   const authRouter = createAuthRouter();
 
-  return [{ path: ENDPOINTS.AUTH, router: authRouter, isPublic: true }];
+  return [{ path: ENDPOINTS.AUTH.PREFIX, router: authRouter, isPublic: true }];
 };
