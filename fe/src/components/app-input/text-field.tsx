@@ -9,7 +9,7 @@ type TextFieldProps = Omit<ComponentProps<'input'>, 'value' | 'onChange' | 'onBl
   required?: boolean;
 };
 
-export const TextField = ({ label, required, ...props }: TextFieldProps) => {
+export const TextField = ({ label, required, readOnly, ...props }: TextFieldProps) => {
   const id = useId();
   const { t } = useTranslation();
   const field = useFieldContext<string>();
@@ -29,6 +29,8 @@ export const TextField = ({ label, required, ...props }: TextFieldProps) => {
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
         aria-invalid={isInvalid}
+        readOnly={readOnly}
+        className={readOnly ? 'text-input-readonly cursor-default' : undefined}
         {...props}
       />
       {isInvalid && <FieldError>{t(field.state.meta.errors[0].message)}</FieldError>}
