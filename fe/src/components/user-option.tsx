@@ -1,6 +1,7 @@
 import { IconLogin2, IconLogout2, IconUserCircle, IconUserQuestion } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { authApi } from '~/apis/auth';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import {
   DropdownMenu,
@@ -33,9 +34,13 @@ export default function UserOption() {
     });
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate(PATHS.LOGIN);
+  const handleLogout = async () => {
+    try {
+      await authApi.logout();
+    } finally {
+      logout();
+      navigate(PATHS.LOGIN);
+    }
   };
 
   return (

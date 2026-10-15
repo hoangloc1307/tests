@@ -10,7 +10,11 @@ const login = async (payload: LoginInput): Promise<ApiResponse<LoginResponse>> =
 const loginWithCard = async (payload: LoginWithCardInput): Promise<ApiResponse<LoginResponse>> =>
   await api.post<ApiResponse<LoginResponse>>(`${ENDPOINTS.AUTH}/login-with-card`, payload);
 
+const logout = async (): Promise<ApiResponse<null>> =>
+  await api.post<ApiResponse<null>>(`${ENDPOINTS.AUTH}/logout`);
+
 export const authApi = {
   login,
   loginWithCard,
+  logout,
 };
