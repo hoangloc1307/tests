@@ -1,4 +1,6 @@
 {
+  "issue": "Anomaly",
+  "issue_create": "Issue anomaly",
   "guide": "User guide",
   "support": "Support & report issues",
   "version_history": "Version history"

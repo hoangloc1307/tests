@@ -1,4 +1,6 @@
 {
+  "issue": "異常",
+  "issue_create": "異常発行",
   "guide": "使い方ガイド",
   "support": "サポート・不具合報告",
   "version_history": "更新履歴"

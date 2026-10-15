@@ -1,5 +1,22 @@
-import { IconBook2, IconHelp, IconTimeline } from '@tabler/icons-react';
+import { IconBook2, IconFileAlert, IconHelp, IconTimeline } from '@tabler/icons-react';
+import { FEATURES } from 'shared/constants/features';
+import type { NavItem } from '~/components/nav-main';
 import PATHS from '~/constants/paths';
+
+const MAIN_MENU: NavItem[] = [
+  {
+    title: 'navigation:issue',
+    url: '',
+    icon: IconFileAlert,
+    children: [
+      {
+        title: 'navigation:issue_create',
+        url: PATHS.NEW_ISSUE,
+        featureCode: FEATURES.ISSUE,
+      },
+    ],
+  },
+];
 
 const SECONDARY_MENU = [
   {
@@ -19,6 +36,6 @@ const SECONDARY_MENU = [
   },
 ];
 
-const MENU = { SECONDARY_MENU };
+const MENU = { MAIN_MENU, SECONDARY_MENU };
 
 export default MENU;
