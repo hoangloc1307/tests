@@ -60,7 +60,7 @@ export default function UserOption() {
       >
         <DropdownMenuGroup>
           <DropdownMenuLabel>
-            <div className='text-popover-foreground grid flex-1 text-left text-sm leading-tight'>
+            <div className='text-popover-foreground grid flex-1 text-left text-sm'>
               <span className='truncate font-medium capitalize'>
                 {user?.name ?? t('auth:guest_user')}
               </span>

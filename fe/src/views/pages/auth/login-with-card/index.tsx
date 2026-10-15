@@ -1,90 +1,61 @@
-import { IconBarcode, IconLogin2, IconScan } from '@tabler/icons-react';
+import { IconAperture, IconLogin2, IconScan } from '@tabler/icons-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { useZxing } from 'react-zxing';
+import { Link } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { useLoginWithCard } from '~/hooks/mutations/use-auth';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '~/components/ui/dialog';
-
-// Tách camera scanner ra component riêng để chỉ mount khi dialog mở
-function CameraScanner({ onScan }: { onScan: (value: string) => void }) {
-  const { ref } = useZxing({
-    onDecodeResult: (result) => {
-      const value = result.rawValue;
-      if (value) {
-        onScan(value);
-      }
-    },
-  });
-
-  return (
-    <div className='aspect-square overflow-hidden rounded-lg bg-black'>
-      <video ref={ref} className='size-full object-cover' />
-    </div>
-  );
-}
+import { CameraScanner } from '~/views/pages/auth/login-with-card/camera-scanner';
 
 export default function LoginWithCardPage() {
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useLoginWithCard();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [cameraOpen, setCameraOpen] = useState(false);
+  const [mode, setMode] = useState<'scanner' | 'camera'>('scanner');
   const [cardNumber, setCardNumber] = useState('');
 
-  // Focus hidden input on mount
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  // Re-focus when dialog closes
-  useEffect(() => {
-    if (!cameraOpen) {
+  // Focus input helper
+  const focusInput = useCallback(() => {
+    if (mode === 'scanner' && !cardNumber.trim()) {
       inputRef.current?.focus();
     }
-  }, [cameraOpen]);
+  }, [mode, cardNumber]);
 
-  // Always keep focus on hidden input when not in camera mode
+  // Focus hidden input when in scanner mode
+  useEffect(() => {
+    focusInput();
+  }, [focusInput]);
+
+  // Keep focus on blur (with delay to avoid conflict)
   const handleBlur = useCallback(() => {
-    if (!cameraOpen) {
-      // Delay để tránh conflict với dialog trigger
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 0);
-    }
-  }, [cameraOpen]);
+    setTimeout(focusInput, 0);
+  }, [focusInput]);
 
-  // Re-focus when clicking on scan area
-  const handleScanAreaClick = useCallback(() => {
-    inputRef.current?.focus();
-  }, []);
+  const submitCardNumber = useCallback(
+    async (value: string) => {
+      try {
+        const cardNumber = value.replace('*', '');
+        await mutateAsync({ cardNumber });
+      } finally {
+        setCardNumber('');
+      }
+    },
+    [mutateAsync],
+  );
 
-  // Handle scanner input (barcode scanner sends data as keystrokes ending with Enter)
   const handleKeyDown = useCallback(
     async (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && cardNumber.trim()) {
         e.preventDefault();
-        await mutateAsync({ cardNumber: cardNumber.trim() });
-        setCardNumber('');
+        await submitCardNumber(cardNumber.trim());
       }
     },
-    [mutateAsync, cardNumber],
+    [submitCardNumber, cardNumber],
   );
 
-  // Handle camera scan result
-  const handleCameraScan = useCallback(
-    async (value: string) => {
-      setCameraOpen(false);
-      await mutateAsync({ cardNumber: value });
-    },
-    [mutateAsync],
-  );
+  // Toggle between scanner and camera mode
+  const toggleMode = useCallback(() => {
+    setMode((prev) => (prev === 'scanner' ? 'camera' : 'scanner'));
+  }, []);
 
   return (
     <div className='p-6 md:p-8'>
@@ -94,52 +65,54 @@ export default function LoginWithCardPage() {
       </div>
 
       <div className='mt-10 flex flex-col gap-6'>
-        {/* Scanner area - hidden input for barcode scanner */}
-        <div
-          className='bg-muted/30 border-border hover:border-primary/50 focus-within:border-primary flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 transition-colors'
-          onClick={handleScanAreaClick}
-        >
-          <IconScan className='text-muted-foreground mb-4 size-16' />
-          <p className='text-foreground font-medium'>{t('auth:scan_card_instruction')}</p>
-          <p className='text-muted-foreground mt-1 text-sm'>{t('auth:scan_card_hint')}</p>
+        {/* Scanner mode */}
+        {mode === 'scanner' && (
+          <div
+            className='bg-muted/30 border-border hover:border-primary/50 focus-within:border-primary flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 transition-colors'
+            onClick={focusInput}
+          >
+            <IconScan className='text-muted-foreground mb-4 size-16' />
+            <p className='text-foreground font-medium'>{t('auth:scan_card_instruction')}</p>
+            <p className='text-muted-foreground mt-1 text-sm'>{t('auth:scan_card_hint')}</p>
 
-          {/* Hidden input - nhận dữ liệu từ scanner USB/Bluetooth */}
-          <input
-            ref={inputRef}
-            type='text'
-            className='sr-only'
-            value={cardNumber}
-            onChange={(e) => setCardNumber(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onBlur={handleBlur}
-            disabled={isPending}
-            aria-label={t('auth:card_number')}
-          />
+            {/* Hidden input - nhận dữ liệu từ scanner USB/Bluetooth */}
+            <input
+              ref={inputRef}
+              type='text'
+              className='sr-only'
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+              onKeyDown={handleKeyDown}
+              onBlur={handleBlur}
+              disabled={isPending}
+              aria-label={t('auth:card_number')}
+            />
 
-          {isPending && (
-            <p className='text-primary mt-4 animate-pulse text-sm font-medium'>
-              {t('common:processing')}...
-            </p>
+            {isPending && (
+              <p className='text-primary mt-4 animate-pulse text-sm font-medium'>
+                {t('common:processing')}...
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Camera mode */}
+        {mode === 'camera' && <CameraScanner onScan={submitCardNumber} />}
+
+        {/* Toggle button */}
+        <Button variant='outline' className='w-full' disabled={isPending} onClick={toggleMode}>
+          {mode === 'scanner' ? (
+            <>
+              <IconAperture data-icon='inline-start' />
+              {t('auth:scan_with_camera')}
+            </>
+          ) : (
+            <>
+              <IconScan data-icon='inline-start' />
+              {t('auth:scan_with_scanner')}
+            </>
           )}
-        </div>
-
-        {/* Camera scan button */}
-        <Dialog open={cameraOpen} onOpenChange={setCameraOpen}>
-          <DialogTrigger
-            render={
-              <Button variant='outline' className='w-full' disabled={isPending}>
-                <IconBarcode data-icon='inline-start' />
-                {t('auth:scan_with_camera')}
-              </Button>
-            }
-          />
-          <DialogContent className='sm:max-w-md'>
-            <DialogHeader>
-              <DialogTitle>{t('auth:scan_card')}</DialogTitle>
-            </DialogHeader>
-            {cameraOpen && <CameraScanner onScan={handleCameraScan} />}
-          </DialogContent>
-        </Dialog>
+        </Button>
 
         {/* Divider */}
         <div className='relative text-center text-sm'>
@@ -156,7 +129,7 @@ export default function LoginWithCardPage() {
           render={
             <Link to='/login' className='flex items-center gap-1'>
               <IconLogin2 />
-              {t('auth:login_vnn')}
+              {t('auth:login_vnn_full')}
             </Link>
           }
         />
