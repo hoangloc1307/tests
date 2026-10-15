@@ -94,11 +94,11 @@ const api = new HttpClient(
 );
 
 // ============================================================
-// API bên thứ 3: JSONPlaceholder (fake)
+// HR API
 // ============================================================
 
-export const jsonPlaceholderApi = new HttpClient({
-  baseURL: 'https://jsonplaceholder.typicode.com',
+export const hrApi = new HttpClient({
+  baseURL: CONFIG.HR_API_URL,
 });
 
 // ============================================================
