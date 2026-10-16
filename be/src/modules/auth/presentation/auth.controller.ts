@@ -21,9 +21,8 @@ export class AuthController {
   ) {}
 
   login = async (req: Request, res: Response) => {
-    const { accessToken, refreshToken, user, roles, permissions } = await this.loginUseCase.execute(
-      req.body,
-    );
+    const { accessToken, refreshToken, user, roles, permissions, vnnToken } =
+      await this.loginUseCase.execute(req.body);
 
     res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, {
       httpOnly: true,
@@ -33,11 +32,11 @@ export class AuthController {
       path: REFRESH_COOKIE_PATH,
     });
 
-    ApiResponse.ok<LoginResponse>(res, { token: accessToken, user, roles, permissions });
+    ApiResponse.ok<LoginResponse>(res, { token: accessToken, user, roles, permissions, vnnToken });
   };
 
   loginWithCard = async (req: Request, res: Response) => {
-    const { accessToken, refreshToken, user, roles, permissions } =
+    const { accessToken, refreshToken, user, roles, permissions, vnnToken } =
       await this.loginWithCardUseCase.execute(req.body);
 
     res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, {
@@ -48,7 +47,7 @@ export class AuthController {
       path: REFRESH_COOKIE_PATH,
     });
 
-    ApiResponse.ok<LoginResponse>(res, { token: accessToken, user, roles, permissions });
+    ApiResponse.ok<LoginResponse>(res, { token: accessToken, user, roles, permissions, vnnToken });
   };
 
   logout = (_req: Request, res: Response) => {

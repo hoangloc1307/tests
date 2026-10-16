@@ -4,12 +4,8 @@ export interface AuthAccount {
   id: string;
   username: string;
   displayName: string;
-  email: string;
-  avatar: string | null;
-  isFirstTimeLogin: boolean;
-  isHRReference: boolean;
   status: number;
-  type: number;
+  token: string;
 }
 
 export interface AuthClient {

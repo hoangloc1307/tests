@@ -30,6 +30,7 @@ export class LoginUseCase {
       },
       roles: permissions?.[0]?.roles ?? [],
       permissions: permissions?.[0]?.permissions ?? [],
+      vnnToken: account.token,
     };
   }
 }

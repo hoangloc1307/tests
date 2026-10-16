@@ -64,12 +64,8 @@ export class HttpAuthClient implements AuthClient {
       id: data.Data.Account.id,
       username: data.Data.Account.username,
       displayName: data.Data.Account.display_name,
-      email: data.Data.Account.email,
-      avatar: data.Data.Account.avatar,
-      isFirstTimeLogin: data.Data.Account.isFirstTimeLogin,
-      isHRReference: data.Data.Account.isHRReference,
       status: data.Data.Account.status,
-      type: data.Data.Account.type,
+      token: data.Data.Token.access_token,
     };
   }
 }

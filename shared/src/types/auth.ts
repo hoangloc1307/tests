@@ -8,6 +8,7 @@ export interface LoginResponse {
   user: UserInfo;
   roles: string[];
   permissions: string[];
+  vnnToken: string;
 }
 
 export interface RefreshResponse {
