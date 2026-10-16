@@ -1,15 +1,23 @@
 import { IconDeviceFloppy } from '@tabler/icons-react';
+import { useSelector } from '@tanstack/react-form';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { createIssueSchema, DetectionTypeEnum, IssueCategoryEnum } from 'shared/schemas/issue';
+import {
+  createIssueSchema,
+  DetectionTypeEnum,
+  IssueCategoryEnum,
+  AnomalyLocationEnum,
+} from 'shared/schemas/issue';
 import { hrQueries } from '~/hooks/queries/hr.queries';
+import { masterQueries } from '~/hooks/queries/master.queries';
 import { useAppForm } from '~/hooks/use-app-form';
 import { useAuthStore } from '~/stores/auth';
 
 export default function NewIssuePage() {
-  const { t } = useTranslation('issue');
+  const { t, i18n } = useTranslation('issue');
   const { data: sections = [] } = useQuery(hrQueries.sections());
+  const { data: processes = [] } = useQuery(masterQueries.processes());
   const user = useAuthStore((s) => s.user);
 
   const form = useAppForm({
@@ -26,6 +34,12 @@ export default function NewIssuePage() {
       rubber: '',
       batch: '',
       quantity: null as number | null,
+      jobNo: '',
+      detectionProcess: '',
+      errorCode: '',
+      anomalyLocation: '',
+      normalCondition: '',
+      abnormalCondition: '',
       recorder: user ? `${user.username} - ${user.name}` : '',
       issueDate: format(new Date(), 'yyyy-MM-dd'),
     },
@@ -36,6 +50,9 @@ export default function NewIssuePage() {
       console.log(value);
     },
   });
+
+  const selectedProcess = useSelector(form.store, (state) => state.values.detectionProcess);
+  const { data: errors = [] } = useQuery(masterQueries.errorsByProcess(selectedProcess));
 
   const sectionOptions = sections.map((s) => ({
     label: `${s.SectionId} - ${s.Name}`,
@@ -52,12 +69,44 @@ export default function NewIssuePage() {
     label: t(`detection_type_options.${value}`),
   }));
 
+  const processOptions = processes.map((p) => {
+    const lang = i18n.language;
+    let label = p.OperationNameVI;
+    if (lang === 'en') label = p.OperationNameEn;
+    else if (lang === 'ja') label = p.OperationNameJp;
+    return {
+      value: p.ProcessId,
+      label: `${p.ProcessId} - ${label}`,
+    };
+  });
+
+  const errorOptions = errors.map((e) => {
+    const lang = i18n.language;
+    let label = e.NameVI;
+    if (lang === 'en') label = e.NameEN;
+    else if (lang === 'ja') label = e.NameJP;
+    return {
+      value: e.ErrorCode,
+      label: `${e.ErrorCode} - ${label}`,
+    };
+  });
+
+  const anomalyLocationOptions = AnomalyLocationEnum.options.map((value) => ({
+    value,
+    label: t(`anomaly_location_options.${value}`),
+  }));
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
         form.handleSubmit();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+          e.preventDefault();
+        }
       }}
       className='space-y-4'
     >
@@ -110,9 +159,16 @@ export default function NewIssuePage() {
         />
       </div>
 
-      {/* Thông tin phát hành */}
-      <h2 className='border-b font-semibold capitalize'>{t('info_title')}</h2>
+      {/* Thông tin ghi nhận */}
+      <h2 className='border-b font-semibold capitalize'>{t('record_info_title')}</h2>
       <div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
+        {/* Job no */}
+        <form.AppField
+          name='jobNo'
+          children={(field) => (
+            <field.TextField label={t('job_no')} placeholder={t('job_no_placeholder')} />
+          )}
+        />
         {/* Phân loại */}
         <form.AppField
           name='category'
@@ -145,6 +201,31 @@ export default function NewIssuePage() {
               label={t('product_code')}
               required
               placeholder={t('product_code_placeholder')}
+            />
+          )}
+        />
+        {/* Công đoạn phát hiện */}
+        <form.AppField
+          name='detectionProcess'
+          children={(field) => (
+            <field.ComboboxField
+              label={t('detection_process')}
+              required
+              options={processOptions}
+              placeholder={t('detection_process_placeholder')}
+            />
+          )}
+        />
+        {/* Tên lỗi */}
+        <form.AppField
+          name='errorCode'
+          children={(field) => (
+            <field.ComboboxField
+              label={t('error_name')}
+              required
+              options={errorOptions}
+              placeholder={t('error_name_placeholder')}
+              disabled={!selectedProcess}
             />
           )}
         />
@@ -198,6 +279,42 @@ export default function NewIssuePage() {
               label={t('quantity')}
               required
               placeholder={t('quantity_placeholder')}
+            />
+          )}
+        />
+        {/* Vị trí vùng bất thường */}
+        <form.AppField
+          name='anomalyLocation'
+          children={(field) => (
+            <field.SelectField
+              label={t('anomaly_location')}
+              required
+              options={anomalyLocationOptions}
+              placeholder={t('anomaly_location_placeholder')}
+            />
+          )}
+        />
+        {/* Bình thường */}
+        <form.AppField
+          name='normalCondition'
+          children={(field) => (
+            <field.TextareaField
+              label={t('normal_condition')}
+              required
+              placeholder={t('normal_condition_placeholder')}
+              rows={4}
+            />
+          )}
+        />
+        {/* Bất thường */}
+        <form.AppField
+          name='abnormalCondition'
+          children={(field) => (
+            <field.TextareaField
+              label={t('abnormal_condition')}
+              required
+              placeholder={t('abnormal_condition_placeholder')}
+              rows={4}
             />
           )}
         />

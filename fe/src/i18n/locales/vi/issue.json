@@ -2,6 +2,7 @@
   "section": "Bộ phận phát hành",
   "section_placeholder": "Chọn bộ phận",
   "info_title": "1. Thông tin phát hành",
+  "record_info_title": "2. Thông tin ghi nhận",
   "recorder": "Nhân viên ghi nhận",
   "issue_date": "Ngày phát hành",
   "issue_code": "Mã phiếu",
@@ -40,6 +41,27 @@
   "batch_placeholder": "Nhập batch",
   "quantity": "Số lượng",
   "quantity_placeholder": "Nhập số lượng",
+  "job_no": "Job no",
+  "job_no_placeholder": "Nhập job no",
+  "detection_process": "Công đoạn phát hiện",
+  "detection_process_placeholder": "Chọn công đoạn",
+  "error_name": "Tên lỗi",
+  "error_name_placeholder": "Chọn lỗi",
+  "anomaly_location": "Vị trí vùng bất thường",
+  "anomaly_location_placeholder": "Chọn vị trí",
+  "anomaly_location_options": {
+    "A": "A",
+    "A'": "A'",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "OTHER": "Khác"
+  },
+  "normal_condition": "Bình thường",
+  "normal_condition_placeholder": "Nhập tình trạng bình thường",
+  "abnormal_condition": "Bất thường",
+  "abnormal_condition_placeholder": "Nhập tình trạng bất thường",
   "validation": {
     "section_required": "Vui lòng chọn bộ phận phát hành",
     "issue_date_required": "Vui lòng chọn ngày phát hành",
@@ -52,6 +74,11 @@
     "glue_required": "Vui lòng nhập keo",
     "rubber_required": "Vui lòng nhập cao su",
     "batch_required": "Vui lòng nhập batch",
-    "quantity_required": "Vui lòng nhập số lượng"
+    "quantity_required": "Vui lòng nhập số lượng",
+    "detection_process_required": "Vui lòng chọn công đoạn phát hiện",
+    "error_name_required": "Vui lòng chọn tên lỗi",
+    "anomaly_location_required": "Vui lòng chọn vị trí vùng bất thường",
+    "normal_condition_required": "Vui lòng nhập tình trạng bình thường",
+    "abnormal_condition_required": "Vui lòng nhập tình trạng bất thường"
   }
 }

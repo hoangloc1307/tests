@@ -2,6 +2,7 @@
   "section": "Issuing section",
   "section_placeholder": "Select section",
   "info_title": "1. Issue information",
+  "record_info_title": "2. Record information",
   "recorder": "Recorder",
   "issue_date": "Issue date",
   "issue_code": "Issue code",
@@ -40,6 +41,27 @@
   "batch_placeholder": "Enter batch",
   "quantity": "Quantity",
   "quantity_placeholder": "Enter quantity",
+  "job_no": "Job no",
+  "job_no_placeholder": "Enter job no",
+  "detection_process": "Detection process",
+  "detection_process_placeholder": "Select process",
+  "error_name": "Error name",
+  "error_name_placeholder": "Select error",
+  "anomaly_location": "Anomaly location",
+  "anomaly_location_placeholder": "Select location",
+  "anomaly_location_options": {
+    "A": "A",
+    "A'": "A'",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "OTHER": "Other"
+  },
+  "normal_condition": "Normal condition",
+  "normal_condition_placeholder": "Enter normal condition",
+  "abnormal_condition": "Abnormal condition",
+  "abnormal_condition_placeholder": "Enter abnormal condition",
   "validation": {
     "section_required": "Please select issuing section",
     "issue_date_required": "Please select issue date",
@@ -52,6 +74,11 @@
     "glue_required": "Please enter glue",
     "rubber_required": "Please enter rubber",
     "batch_required": "Please enter batch",
-    "quantity_required": "Please enter quantity"
+    "quantity_required": "Please enter quantity",
+    "detection_process_required": "Please select detection process",
+    "error_name_required": "Please select error name",
+    "anomaly_location_required": "Please select anomaly location",
+    "normal_condition_required": "Please enter normal condition",
+    "abnormal_condition_required": "Please enter abnormal condition"
   }
 }

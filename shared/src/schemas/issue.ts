@@ -10,6 +10,11 @@ export const DetectionTypeEnum = z.enum(['PRODUCT', 'METAL_CASE', 'SPRING', 'RUB
 });
 export type DetectionType = z.infer<typeof DetectionTypeEnum>;
 
+export const AnomalyLocationEnum = z.enum(['A', "A'", 'B', 'C', 'D', 'E', 'OTHER'], {
+  message: 'issue:validation.anomaly_location_required',
+});
+export type AnomalyLocation = z.infer<typeof AnomalyLocationEnum>;
+
 export const createIssueSchema = z.object({
   issueCode: z.string(),
   issueSection: z.string().nonempty({ message: 'issue:validation.section_required' }),
@@ -23,6 +28,14 @@ export const createIssueSchema = z.object({
   rubber: z.string().nonempty({ message: 'issue:validation.rubber_required' }),
   batch: z.string().nonempty({ message: 'issue:validation.batch_required' }),
   quantity: z.number({ message: 'issue:validation.quantity_required' }),
+  jobNo: z.string(),
+  detectionProcess: z.string().nonempty({ message: 'issue:validation.detection_process_required' }),
+  errorCode: z.string().nonempty({ message: 'issue:validation.error_name_required' }),
+  anomalyLocation: AnomalyLocationEnum,
+  normalCondition: z.string().nonempty({ message: 'issue:validation.normal_condition_required' }),
+  abnormalCondition: z
+    .string()
+    .nonempty({ message: 'issue:validation.abnormal_condition_required' }),
   recorder: z.string(),
   issueDate: z.string().nonempty({ message: 'issue:validation.issue_date_required' }),
 });
