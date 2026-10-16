@@ -2,6 +2,7 @@
   "section": "発行部門",
   "section_placeholder": "部門を選択",
   "info_title": "1. 発行情報",
+  "record_info_title": "2. 記録情報",
   "recorder": "記録者",
   "issue_date": "発行日",
   "issue_code": "票コード",
@@ -40,6 +41,27 @@
   "batch_placeholder": "バッチを入力",
   "quantity": "数量",
   "quantity_placeholder": "数量を入力",
+  "job_no": "Job no",
+  "job_no_placeholder": "Job noを入力",
+  "detection_process": "検出工程",
+  "detection_process_placeholder": "工程を選択",
+  "error_name": "エラー名",
+  "error_name_placeholder": "エラーを選択",
+  "anomaly_location": "異常位置",
+  "anomaly_location_placeholder": "位置を選択",
+  "anomaly_location_options": {
+    "A": "A",
+    "A'": "A'",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "OTHER": "その他"
+  },
+  "normal_condition": "正常状態",
+  "normal_condition_placeholder": "正常状態を入力",
+  "abnormal_condition": "異常状態",
+  "abnormal_condition_placeholder": "異常状態を入力",
   "validation": {
     "section_required": "発行部門を選択してください",
     "issue_date_required": "発行日を選択してください",
@@ -52,6 +74,12 @@
     "glue_required": "接着剤を入力してください",
     "rubber_required": "ゴムを入力してください",
     "batch_required": "バッチを入力してください",
-    "quantity_required": "数量を入力してください"
+    "quantity_required": "数量を入力してください",
+    "detection_process_required": "検出工程を選択してください",
+    "error_name_required": "エラー名を選択してください",
+    "anomaly_location_required": "異常位置を選択してください",
+    "normal_condition_required": "正常状態を入力してください",
+    "abnormal_condition_required": "異常状態を入力してください"
   }
 }
+

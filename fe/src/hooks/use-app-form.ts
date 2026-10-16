@@ -6,6 +6,7 @@ import {
   SelectField,
   SubmitButton,
   TextField,
+  TextareaField,
 } from '~/components/app-input';
 
 export const { fieldContext, formContext, useFieldContext, useFormContext } =
@@ -18,6 +19,7 @@ export const { useAppForm } = createFormHook({
     DatePickerField,
     SelectField,
     NumberField,
+    TextareaField,
   },
   formComponents: {
     SubmitButton,
