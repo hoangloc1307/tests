@@ -102,5 +102,24 @@ export const hrApi = new HttpClient({
 });
 
 // ============================================================
+// Master API
+// ============================================================
+
+export const masterApi = new HttpClient(
+  {
+    baseURL: CONFIG.MASTER_API_URL,
+  },
+  (ins) => {
+    ins.interceptors.request.use((config) => {
+      const vnnToken = useAuthStore.getState().vnnToken;
+      if (vnnToken) {
+        config.headers.Authorization = `Bearer ${vnnToken}`;
+      }
+      return config;
+    });
+  },
+);
+
+// ============================================================
 
 export default api;

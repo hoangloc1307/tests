@@ -18,6 +18,7 @@ export function useLogin() {
           user: data.data.user,
           roles: data.data.roles,
           permissions: data.data.permissions,
+          vnnToken: data.data.vnnToken,
         });
         navigate(PATHS.HOME, { replace: true });
       }
@@ -38,6 +39,7 @@ export function useLoginWithCard() {
           user: data.data.user,
           roles: data.data.roles,
           permissions: data.data.permissions,
+          vnnToken: data.data.vnnToken,
         });
         navigate(PATHS.HOME, { replace: true });
       }
