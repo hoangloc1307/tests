@@ -47,7 +47,7 @@ export const DatePickerField = ({
   };
 
   return (
-    <Field data-invalid={isInvalid}>
+    <Field data-invalid={isInvalid} className='gap-1'>
       <FieldLabel
         htmlFor={id}
         className={required ? "after:text-destructive after:-ml-1 after:content-['*']" : undefined}

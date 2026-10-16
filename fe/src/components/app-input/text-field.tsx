@@ -16,7 +16,7 @@ export const TextField = ({ label, required, readOnly, ...props }: TextFieldProp
   const isInvalid = field.state.meta.isTouched && field.state.meta.errors.length > 0;
 
   return (
-    <Field data-invalid={isInvalid}>
+    <Field data-invalid={isInvalid} className='gap-1'>
       <FieldLabel
         htmlFor={id}
         className={required ? "after:text-destructive after:-ml-1 after:content-['*']" : undefined}
