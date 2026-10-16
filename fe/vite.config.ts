@@ -35,6 +35,7 @@ export default defineConfig(({ mode }) => {
       port: result.data.VITE_PORT,
       strictPort: true,
       host: '0.0.0.0',
+      allowedHosts: ['b639'],
     },
     resolve: {
       alias: {

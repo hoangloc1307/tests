@@ -17,7 +17,7 @@ interface HrApiResponse<T> {
 }
 
 const getSections = async (): Promise<Section[]> => {
-  const response = await hrApi.get<HrApiResponse<Section[]>>('/api/section');
+  const response = await hrApi.get<HrApiResponse<Section[]>>('/section');
   return response.Data;
 };
 
