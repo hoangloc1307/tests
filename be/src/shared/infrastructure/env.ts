@@ -12,6 +12,19 @@ const envSchema = z.object({
     .min(1, { error: 'Must be greater than 0.' })
     .max(65535, { error: 'Must be less than 65536.' }),
 
+  // ==================== DATABASE ====================
+  // SMART Database
+  SMART_DB_SERVER: z.string().min(1, { error: 'SMART_DB_SERVER is required.' }),
+  SMART_DB_NAME: z.string().min(1, { error: 'SMART_DB_NAME is required.' }),
+  SMART_DB_USER: z.string().min(1, { error: 'SMART_DB_USER is required.' }),
+  SMART_DB_PASSWORD: z.string().min(1, { error: 'SMART_DB_PASSWORD is required.' }),
+
+  // A5 Database
+  A5_DB_SERVER: z.string().min(1, { error: 'A5_DB_SERVER is required.' }),
+  A5_DB_NAME: z.string().min(1, { error: 'A5_DB_NAME is required.' }),
+  A5_DB_USER: z.string().min(1, { error: 'A5_DB_USER is required.' }),
+  A5_DB_PASSWORD: z.string().min(1, { error: 'A5_DB_PASSWORD is required.' }),
+
   // ==================== THIRD PARTY ====================
   AUTH_ENDPOINT: z.url({ error: 'AUTH_ENDPOINT must be a valid URL.' }),
   HR_ENDPOINT: z.url({ error: 'HR_ENDPOINT must be a valid URL.' }),
@@ -19,6 +32,11 @@ const envSchema = z.object({
   A5_TENANT_ID: z.string().uuid({ error: 'A5_TENANT_ID must be a valid UUID.' }),
   A5_WORKER_USERNAME: z.string().min(1, { error: 'A5_WORKER_USERNAME is required.' }),
   A5_WORKER_PASSWORD: z.string().min(1, { error: 'A5_WORKER_PASSWORD is required.' }),
+
+  // ==================== FLOWABLE ====================
+  FLOWABLE_ENDPOINT: z.url({ error: 'FLOWABLE_ENDPOINT must be a valid URL.' }),
+  FLOWABLE_USER: z.string().min(1, { error: 'FLOWABLE_USER is required.' }),
+  FLOWABLE_PASSWORD: z.string().min(1, { error: 'FLOWABLE_PASSWORD is required.' }),
 
   // ==================== JWT ====================
   JWT_SECRET: z.string().min(1, { error: 'JWT_SECRET is required.' }),

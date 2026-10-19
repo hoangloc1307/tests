@@ -17,6 +17,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src", "eslint.config.ts", "prisma7.config.ts"],
+  "include": ["src", "eslint.config.ts", "prisma7.*.config.ts"],
   "exclude": ["node_modules", "dist", "generated"]
 }

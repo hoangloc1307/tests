@@ -1,0 +1,44 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../../generated/a5"
+  previewFeatures = ["partialIndexes"]
+}
+
+datasource db {
+  provider = "sqlserver"
+}
+
+/// Bảng chi tiết phiếu A5
+model A5Document {
+  documentId          String    @id(map: "PK_A5Documents") @map("DocumentId") @db.UniqueIdentifier
+  issueCode           String    @map("IssueCode") @db.VarChar(20)
+  category            String    @map("Category") @db.VarChar(30)           /// SAFETY | QUALITY | 2S | EQUIPMENT
+  detectionType       String    @map("DetectionType") @db.VarChar(30)      /// PRODUCT | METAL_CASE | SPRING | RUBBER | OTHER
+  line                String    @map("Line") @db.VarChar(10)
+  jobNo               String?   @map("JobNo") @db.VarChar(12)
+  machine             String    @map("Machine") @db.VarChar(10)
+  lotNo               String    @map("LotNo") @db.VarChar(6)
+  batch               String    @map("Batch") @db.VarChar(10)
+  productCode         String    @map("ProductCode") @db.VarChar(30)
+  rubber              String    @map("Rubber") @db.VarChar(10)
+  glue                String    @map("Glue") @db.VarChar(10)
+  detectionProcess    String    @map("DetectionProcess") @db.NVarChar(30)
+  errorCode           String    @map("ErrorCode") @db.VarChar(10)
+  otherError          String?   @map("OtherError") @db.NVarChar(100)
+  recorder            String    @map("Recorder") @db.VarChar(8)
+  quantity            Int       @map("Quantity")
+  anomalyLocation     String    @map("AnomalyLocation") @db.VarChar(10)    /// A | A' | B | C | D | E | OTHER
+  detectedAt          DateTime  @map("DetectedAt") @db.DateTime2
+  normalCondition     String    @map("NormalCondition") @db.NVarChar(250)
+  abnormalCondition   String    @map("AbnormalCondition") @db.NVarChar(250)
+  checkedBy           String    @map("CheckedBy") @db.VarChar(8)
+  abnormalLevel       Int?      @map("AbnormalLevel") @db.TinyInt
+  firstDetection      Boolean?  @map("FirstDetection")
+  recurrenceCount     Int?      @map("RecurrenceCount")
+  isA4Required        Boolean?  @map("IsA4Required")
+  ngQtyAfterHandling  Int?      @map("NGQtyAfterHandling")
+  okQtyAfterHandling  Int?      @map("OKQtyAfterHandling")
+  amsDocumentNo       String?   @map("AMSDocumentNo") @db.VarChar(30)
+
+  @@map("A5Documents")
+}
