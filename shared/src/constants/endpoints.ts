@@ -5,4 +5,8 @@ export const ENDPOINTS = {
     LOGOUT: '/logout',
     LOGIN_WITH_CARD: '/login-with-card',
   },
+  ISSUE: {
+    PREFIX: '/issues',
+    CREATE: '/',
+  },
 } as const;

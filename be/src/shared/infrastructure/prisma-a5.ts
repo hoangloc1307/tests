@@ -7,6 +7,7 @@ const sqlConfig = {
   password: env.A5_DB_PASSWORD,
   database: env.A5_DB_NAME,
   server: env.A5_DB_SERVER,
+  port: env.A5_DB_PORT,
   pool: {
     max: 10,
     min: 0,

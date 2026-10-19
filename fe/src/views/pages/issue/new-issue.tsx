@@ -5,9 +5,9 @@ import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import {
   createIssueSchema,
-  DetectionTypeEnum,
+  ItemCategoryEnum,
   IssueCategoryEnum,
-  AnomalyLocationEnum,
+  AbnormalAreaEnum,
 } from 'shared/schemas/issue';
 import { hrQueries } from '~/hooks/queries/hr.queries';
 import { masterQueries } from '~/hooks/queries/master.queries';
@@ -22,25 +22,25 @@ export default function NewIssuePage() {
 
   const form = useAppForm({
     defaultValues: {
-      issueCode: '',
+      documentNo: '',
       issueSection: '',
-      category: '',
-      detectionType: '',
-      productCode: '',
+      issueCategory: '',
+      itemCategory: '',
+      itemCode: '',
       lotNo: '',
-      line: '',
-      machine: '',
+      lineNo: '',
+      machineNo: '',
       glue: '',
       rubber: '',
-      batch: '',
-      quantity: null as number | null,
-      jobNo: '',
-      detectionProcess: '',
-      errorCode: '',
-      anomalyLocation: '',
-      normalCondition: '',
-      abnormalCondition: '',
-      recorder: user ? `${user.username} - ${user.name}` : '',
+      batchNo: '',
+      detectedQuantity: null as number | null,
+      jobOrderNo: '',
+      detectionStage: '',
+      detectionContent: '',
+      abnormalArea: '',
+      normalDescription: '',
+      abnormalDescription: '',
+      detectedBy: user?.username ?? '',
       issueDate: format(new Date(), 'yyyy-MM-dd'),
     },
     validators: {
@@ -51,7 +51,7 @@ export default function NewIssuePage() {
     },
   });
 
-  const selectedProcess = useSelector(form.store, (state) => state.values.detectionProcess);
+  const selectedProcess = useSelector(form.store, (state) => state.values.detectionStage);
   const { data: errors = [] } = useQuery(masterQueries.errorsByProcess(selectedProcess));
 
   const sectionOptions = sections.map((s) => ({
@@ -64,7 +64,7 @@ export default function NewIssuePage() {
     label: t(`category_options.${value}`),
   }));
 
-  const detectionTypeOptions = DetectionTypeEnum.options.map((value) => ({
+  const detectionTypeOptions = ItemCategoryEnum.options.map((value) => ({
     value,
     label: t(`detection_type_options.${value}`),
   }));
@@ -91,7 +91,7 @@ export default function NewIssuePage() {
     };
   });
 
-  const anomalyLocationOptions = AnomalyLocationEnum.options.map((value) => ({
+  const anomalyLocationOptions = AbnormalAreaEnum.options.map((value) => ({
     value,
     label: t(`anomaly_location_options.${value}`),
   }));
@@ -138,7 +138,7 @@ export default function NewIssuePage() {
         />
         {/* Nhân viên ghi nhận */}
         <form.AppField
-          name='recorder'
+          name='detectedBy'
           children={(field) => <field.TextField label={t('recorder')} readOnly />}
         />
         {/* Ngày phát hành */}
@@ -148,7 +148,7 @@ export default function NewIssuePage() {
         />
         {/* Mã phiếu */}
         <form.AppField
-          name='issueCode'
+          name='documentNo'
           children={(field) => (
             <field.TextField
               label={t('issue_code')}
@@ -164,14 +164,14 @@ export default function NewIssuePage() {
       <div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
         {/* Job no */}
         <form.AppField
-          name='jobNo'
+          name='jobOrderNo'
           children={(field) => (
             <field.TextField label={t('job_no')} placeholder={t('job_no_placeholder')} />
           )}
         />
         {/* Phân loại */}
         <form.AppField
-          name='category'
+          name='issueCategory'
           children={(field) => (
             <field.SelectField
               label={t('category')}
@@ -183,7 +183,7 @@ export default function NewIssuePage() {
         />
         {/* Phát hiện trên */}
         <form.AppField
-          name='detectionType'
+          name='itemCategory'
           children={(field) => (
             <field.SelectField
               label={t('detection_type')}
@@ -195,7 +195,7 @@ export default function NewIssuePage() {
         />
         {/* Mã sản phẩm */}
         <form.AppField
-          name='productCode'
+          name='itemCode'
           children={(field) => (
             <field.TextField
               label={t('product_code')}
@@ -206,7 +206,7 @@ export default function NewIssuePage() {
         />
         {/* Công đoạn phát hiện */}
         <form.AppField
-          name='detectionProcess'
+          name='detectionStage'
           children={(field) => (
             <field.ComboboxField
               label={t('detection_process')}
@@ -218,7 +218,7 @@ export default function NewIssuePage() {
         />
         {/* Tên lỗi */}
         <form.AppField
-          name='errorCode'
+          name='detectionContent'
           children={(field) => (
             <field.ComboboxField
               label={t('error_name')}
@@ -238,14 +238,14 @@ export default function NewIssuePage() {
         />
         {/* Line */}
         <form.AppField
-          name='line'
+          name='lineNo'
           children={(field) => (
             <field.TextField label={t('line')} required placeholder={t('line_placeholder')} />
           )}
         />
         {/* Máy */}
         <form.AppField
-          name='machine'
+          name='machineNo'
           children={(field) => (
             <field.TextField label={t('machine')} required placeholder={t('machine_placeholder')} />
           )}
@@ -266,14 +266,14 @@ export default function NewIssuePage() {
         />
         {/* Batch */}
         <form.AppField
-          name='batch'
+          name='batchNo'
           children={(field) => (
             <field.TextField label={t('batch')} required placeholder={t('batch_placeholder')} />
           )}
         />
         {/* Số lượng */}
         <form.AppField
-          name='quantity'
+          name='detectedQuantity'
           children={(field) => (
             <field.NumberField
               label={t('quantity')}
@@ -284,7 +284,7 @@ export default function NewIssuePage() {
         />
         {/* Vị trí vùng bất thường */}
         <form.AppField
-          name='anomalyLocation'
+          name='abnormalArea'
           children={(field) => (
             <field.SelectField
               label={t('anomaly_location')}
@@ -296,7 +296,7 @@ export default function NewIssuePage() {
         />
         {/* Bình thường */}
         <form.AppField
-          name='normalCondition'
+          name='normalDescription'
           children={(field) => (
             <field.TextareaField
               label={t('normal_condition')}
@@ -308,7 +308,7 @@ export default function NewIssuePage() {
         />
         {/* Bất thường */}
         <form.AppField
-          name='abnormalCondition'
+          name='abnormalDescription'
           children={(field) => (
             <field.TextareaField
               label={t('abnormal_condition')}

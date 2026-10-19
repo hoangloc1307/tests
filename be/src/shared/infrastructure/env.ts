@@ -15,15 +15,24 @@ const envSchema = z.object({
   // ==================== DATABASE ====================
   // SMART Database
   SMART_DB_SERVER: z.string().min(1, { error: 'SMART_DB_SERVER is required.' }),
+  SMART_DB_PORT: z.coerce.number({ error: 'SMART_DB_PORT must be a number.' }).default(1433),
   SMART_DB_NAME: z.string().min(1, { error: 'SMART_DB_NAME is required.' }),
   SMART_DB_USER: z.string().min(1, { error: 'SMART_DB_USER is required.' }),
   SMART_DB_PASSWORD: z.string().min(1, { error: 'SMART_DB_PASSWORD is required.' }),
 
   // A5 Database
   A5_DB_SERVER: z.string().min(1, { error: 'A5_DB_SERVER is required.' }),
+  A5_DB_PORT: z.coerce.number({ error: 'A5_DB_PORT must be a number.' }).default(1433),
   A5_DB_NAME: z.string().min(1, { error: 'A5_DB_NAME is required.' }),
   A5_DB_USER: z.string().min(1, { error: 'A5_DB_USER is required.' }),
   A5_DB_PASSWORD: z.string().min(1, { error: 'A5_DB_PASSWORD is required.' }),
+
+  // QIM Database (PostgreSQL)
+  QIM_DB_HOST: z.string().min(1, { error: 'QIM_DB_HOST is required.' }),
+  QIM_DB_PORT: z.coerce.number({ error: 'QIM_DB_PORT must be a number.' }),
+  QIM_DB_NAME: z.string().min(1, { error: 'QIM_DB_NAME is required.' }),
+  QIM_DB_USER: z.string().min(1, { error: 'QIM_DB_USER is required.' }),
+  QIM_DB_PASSWORD: z.string().min(1, { error: 'QIM_DB_PASSWORD is required.' }),
 
   // ==================== THIRD PARTY ====================
   AUTH_ENDPOINT: z.url({ error: 'AUTH_ENDPOINT must be a valid URL.' }),

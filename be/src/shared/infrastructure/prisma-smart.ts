@@ -7,6 +7,7 @@ const sqlConfig = {
   password: env.SMART_DB_PASSWORD,
   database: env.SMART_DB_NAME,
   server: env.SMART_DB_SERVER,
+  port: env.SMART_DB_PORT,
   pool: {
     max: 10,
     min: 0,
