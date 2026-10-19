@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug BE",
+      "cwd": "${workspaceFolder}/be",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev"],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug FE (Chrome)",
+      "url": "http://localhost:6996",
+      "webRoot": "${workspaceFolder}/fe/src",
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${webRoot}/*"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": ["Debug BE", "Debug FE (Chrome)"],
+      "stopAll": true
+    }
+  ]
+}
