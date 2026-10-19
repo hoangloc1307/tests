@@ -37,11 +37,11 @@ export const DatePickerField = ({
   const locale = localeMap[i18n.language as keyof typeof localeMap] ?? vi;
 
   const dateValue = field.state.value
-    ? parse(field.state.value, 'yyyy-MM-dd', new Date())
+    ? parse(field.state.value, 'yyyyMMdd', new Date())
     : undefined;
 
   const handleSelect = (date: Date | undefined) => {
-    const value = date ? format(date, 'yyyy-MM-dd') : null;
+    const value = date ? format(date, 'yyyyMMdd') : null;
     field.handleChange(value);
     onChange?.(value);
   };

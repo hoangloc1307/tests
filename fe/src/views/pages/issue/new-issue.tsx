@@ -41,7 +41,7 @@ export default function NewIssuePage() {
       normalDescription: '',
       abnormalDescription: '',
       detectedBy: user?.username ?? '',
-      issueDate: format(new Date(), 'yyyy-MM-dd'),
+      issueDate: format(new Date(), 'yyyyMMdd'),
     },
     validators: {
       onSubmit: createIssueSchema,
