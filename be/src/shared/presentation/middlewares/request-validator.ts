@@ -15,5 +15,9 @@ export const requestValidator =
     }
 
     req.body = result.data;
+    req.validatedData = {
+      ...(req.validatedData ?? {}),
+      body: result.data as Record<string, unknown>,
+    };
     next();
   };

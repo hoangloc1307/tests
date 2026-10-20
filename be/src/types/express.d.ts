@@ -6,7 +6,7 @@ declare global {
       user?: { username: string };
       validatedData?: {
         files?: Record<string, Express.Multer.File[]>;
-        body?: Record<string, string>;
+        body?: Record<string, unknown>;
       } & Record<string, unknown>;
     }
   }
