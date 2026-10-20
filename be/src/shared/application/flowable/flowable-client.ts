@@ -1,7 +1,4 @@
-/**
- * Flowable workflow client interface
- * Defines the contract for interacting with Flowable workflow engine
- */
+import { FlowableVariableScopeValue } from '~/shared/application/flowable/flowable-constants';
 
 // ==================== Common Types ====================
 
@@ -9,7 +6,7 @@ export interface ProcessVariable {
   name: string;
   value: unknown;
   type?: string;
-  scope?: 'local' | 'global';
+  scope?: FlowableVariableScopeValue;
 }
 
 // ==================== Process Instance Types ====================

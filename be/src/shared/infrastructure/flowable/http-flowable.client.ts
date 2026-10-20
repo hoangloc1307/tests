@@ -11,7 +11,7 @@ import type {
   StartProcessInput,
   Task,
   TaskQuery,
-} from '~/shared/application/flowable-client';
+} from '~/shared/application/flowable/flowable-client';
 import { AppError } from '~/shared/domain/app-error';
 import { env } from '~/shared/infrastructure/env';
 import { HttpClient } from '~/shared/infrastructure/http-client';

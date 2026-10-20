@@ -10,7 +10,7 @@ import { HttpPermissionClient } from '~/modules/auth/infrastructure/http-permiss
 import { JwtTokenService } from '~/modules/auth/infrastructure/jwt-token.service';
 import type { IssueRepository } from '~/modules/issue/domain/issue.repository';
 import { PrismaIssueRepository } from '~/modules/issue/infrastructure/prisma-issue.repository';
-import type { FlowableClient } from '~/shared/application/flowable-client';
+import type { FlowableClient } from '~/shared/application/flowable/flowable-client';
 import type { Logger } from '~/shared/application/logger';
 import type { MailService } from '~/shared/application/mail-service';
 import type { TemplateRenderer } from '~/shared/application/template-renderer';

@@ -1,6 +1,7 @@
 import jwt, { type SignOptions } from 'jsonwebtoken';
 import { injectable } from 'tsyringe';
 import type { TokenPayload, TokenService } from '~/modules/auth/domain/token-service';
+import { AppError } from '~/shared/domain/app-error';
 import { env } from '~/shared/infrastructure/env';
 
 @injectable()
@@ -13,7 +14,10 @@ export class JwtTokenService implements TokenService {
 
   verifyAccessToken(token: string): TokenPayload {
     const decoded = jwt.verify(token, env.JWT_SECRET) as jwt.JwtPayload;
-    return { username: String(decoded.username) };
+    if (typeof decoded.username !== 'string' || decoded.username.length === 0) {
+      throw AppError.unauthorized('auth:invalidToken');
+    }
+    return { username: decoded.username };
   }
 
   signRefreshToken(payload: TokenPayload): string {
@@ -24,6 +28,9 @@ export class JwtTokenService implements TokenService {
 
   verifyRefreshToken(token: string): TokenPayload {
     const decoded = jwt.verify(token, env.JWT_REFRESH_SECRET) as jwt.JwtPayload;
-    return { username: String(decoded.username) };
+    if (typeof decoded.username !== 'string' || decoded.username.length === 0) {
+      throw AppError.unauthorized('auth:invalidToken');
+    }
+    return { username: decoded.username };
   }
 }
