@@ -10,7 +10,7 @@ const prettierConfig: Config = {
   trailingComma: 'all',
   bracketSpacing: true,
   arrowParens: 'always',
-  endOfLine: 'crlf',
+  endOfLine: 'auto',
   bracketSameLine: false,
   jsxSingleQuote: true,
   proseWrap: 'preserve',
