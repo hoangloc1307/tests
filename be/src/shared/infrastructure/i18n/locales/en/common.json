@@ -2,7 +2,10 @@
   "error": {
     "title": "An error occurred",
     "notFound": "Resource not found",
-    "internal": "Internal server error"
+    "internal": "Internal server error",
+    "unsupportedDocumentType": "Unsupported document type: {{documentType}}",
+    "invalidIssueDate": "Invalid issue date: {{issueDate}}",
+    "handlerDocumentTypeMismatch": "Handler document type mismatch (expected {{expected}}, received {{received}})"
   },
   "validation": {
     "invalid": "Invalid input"

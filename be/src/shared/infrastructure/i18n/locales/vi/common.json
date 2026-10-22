@@ -2,7 +2,10 @@
   "error": {
     "title": "Đã xảy ra lỗi",
     "notFound": "Không tìm thấy tài nguyên",
-    "internal": "Lỗi máy chủ nội bộ"
+    "internal": "Lỗi máy chủ nội bộ",
+    "unsupportedDocumentType": "Loại phiếu không được hỗ trợ: {{documentType}}",
+    "invalidIssueDate": "Ngày phát hành không hợp lệ: {{issueDate}}",
+    "handlerDocumentTypeMismatch": "Handler không khớp loại phiếu (mong đợi {{expected}}, nhận {{received}})"
   },
   "validation": {
     "invalid": "Dữ liệu không hợp lệ"

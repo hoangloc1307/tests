@@ -11,9 +11,7 @@ export const createIssueRouter = (): Router => {
 
   router.post(
     ENDPOINTS.ISSUE.CREATE,
-    // 1. parse: files -> req.files, JSON (field `data`) -> req.body
     bodyParser(),
-    // 2. validate files only (text fields are validated by the zod schema below)
     fileValidator([
       {
         field: 'attachments',
@@ -23,7 +21,6 @@ export const createIssueRouter = (): Router => {
         maxSize: 10 * 1024 * 1024,
       },
     ]),
-    // 3. validate the JSON payload
     requestValidator(createIssueSchema),
     controller.create,
   );

@@ -7,6 +7,7 @@ export const TOKENS = {
   PrismaClientSmart: Symbol.for('PrismaClientSmart'),
   PrismaClientA5: Symbol.for('PrismaClientA5'),
   FlowableClient: Symbol.for('FlowableClient'),
+  SerialGenerator: Symbol.for('SerialGenerator'),
 
   // Auth services
   AuthClient: Symbol.for('AuthClient'),
@@ -15,5 +16,6 @@ export const TOKENS = {
   TokenService: Symbol.for('TokenService'),
 
   // Issue services
-  IssueRepository: Symbol.for('IssueRepository'),
+  A5IssueRepository: Symbol.for('A5IssueRepository'),
+  DocumentHandler: Symbol.for('DocumentHandler'),
 } as const;

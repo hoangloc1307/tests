@@ -11,113 +11,135 @@ datasource db {
 /// Bảng master các quy trình được tạo trên Flowable
 model ProcessMaster {
   id                   String  @id @map("Id") @db.UniqueIdentifier
-  name                 String  @map("Name") @db.NVarChar(255)                /// Tên quy trình. VD: Ghi nhận bất thường (A5)
-  documentType         String  @map("DocumentType") @db.VarChar(10)          /// Mã loại phiếu. VD: A5
-  description          String? @map("Description") @db.NVarChar(255)         /// Mô tả
-  processDefinitionId  String? @map("ProcessDefinitionId") @db.VarChar(200)  /// Id định nghĩa quy trình trên flowable
-  processDefinitionKey String? @map("ProcessDefinitionKey") @db.VarChar(20)  /// Key định nghĩa quy trình trên flowable
-  version              Int     @map("Version")                               /// Phiên bản quy trình
-  isLatestVersion      Boolean @default(true) @map("IsLatestVersion")        /// Phải phiên bản mới nhất không
+  name                 String  @map("Name") @db.NVarChar(255) /// Tên quy trình. VD: Ghi nhận bất thường (A5)
+  documentType         String  @map("DocumentType") @db.VarChar(10) /// Mã loại phiếu. VD: A5
+  description          String? @map("Description") @db.NVarChar(255) /// Mô tả
+  processDefinitionId  String? @map("ProcessDefinitionId") @db.VarChar(200) /// Id định nghĩa quy trình trên flowable
+  processDefinitionKey String? @map("ProcessDefinitionKey") @db.VarChar(20) /// Key định nghĩa quy trình trên flowable
+  version              Int     @map("Version") /// Phiên bản quy trình
+  isLatestVersion      Boolean @default(true) @map("IsLatestVersion") /// Phải phiên bản mới nhất không
+  isActive             Boolean @default(true) @map("IsActive") /// Đang được sử dụng không
 
-  processSteps         ProcessStep[]
-  documentMasters      DocumentMaster[]
+  processSteps    ProcessStep[]
+  documentMasters DocumentMaster[]
 }
 
 /// Bảng master các bước trong quy trình
 model StepMaster {
-  id              String   @id @map("Id") @db.UniqueIdentifier
-  name            String   @map("Name") @db.NVarChar(255)            /// Tên bước
-  nameInFlowable  String?  @map("NameInFlowable") @db.NVarChar(255)  /// Tên bước trong flowable
-  description     String?  @map("Description") @db.NVarChar(255)     /// Mô tả
-  fieldControl    String?  @map("FieldControl") @db.Text             /// Quản lý field
-  version         Int      @map("Version")                           /// Phiên bản của bước
-  functionHandler String?  @map("FunctionHandler") @db.VarChar(100)  /// Handler chạy ở bước này trong quy trình này
-  status          Boolean  @default(true) @map("Status")             /// Đang được sử dụng không
+  id              String  @id @map("Id") @db.UniqueIdentifier
+  name            String  @map("Name") @db.NVarChar(255) /// Tên bước
+  nameInFlowable  String? @map("NameInFlowable") @db.NVarChar(255) /// Tên bước trong flowable
+  description     String? @map("Description") @db.NVarChar(255) /// Mô tả
+  fieldControl    String? @map("FieldControl") @db.Text /// Quản lý field
+  version         Int     @map("Version") @db.Int /// Phiên bản của bước
+  functionHandler String? @map("FunctionHandler") @db.VarChar(100) /// Handler chạy ở bước này trong quy trình này
+  isActive        Boolean @default(true) @map("IsActive") /// Đang được sử dụng không
 
-  processSteps    ProcessStep[]
+  processSteps ProcessStep[]
 }
 
 /// Bảng map bước vào quy trình
 model ProcessStep {
-  processMasterId String        @map("ProcessMasterId") @db.UniqueIdentifier /// Id quy trình
-  stepMasterId    String        @map("StepMasterId") @db.UniqueIdentifier    /// Id bước
+  processMasterId String @map("ProcessMasterId") @db.UniqueIdentifier /// Id quy trình
+  stepMasterId    String @map("StepMasterId") @db.UniqueIdentifier /// Id bước
 
-  processMaster   ProcessMaster @relation(fields: [processMasterId], references: [id])
-  stepMaster      StepMaster    @relation(fields: [stepMasterId], references: [id])
+  processMaster ProcessMaster @relation(fields: [processMasterId], references: [id])
+  stepMaster    StepMaster    @relation(fields: [stepMasterId], references: [id])
 
   @@id([processMasterId, stepMasterId])
 }
 
-
 /// Bảng master tất cả các phiếu được tạo
 model DocumentMaster {
-  documentId        String         @id @map("DocumentId") @db.UniqueIdentifier
-  documentNo        String         @map("DocumentNo") @db.VarChar(20)
-  processMasterId   String?        @map("ProcessMasterId") @db.UniqueIdentifier /// Xác định phiếu thuộc quy trình nào
-  documentType      String?        @map("DocumentType") @db.VarChar(10)         /// Loại phiếu
-  processInstanceId String?        @map("ProcessInstanceId") @db.VarChar(50)    /// Instance trên flowable
-  issueSection      String?        @map("IssueSection") @db.Char(4)             /// Bộ phận phát hành
-  issueDate         DateTime?      @map("IssueDate") @db.DateTime2              /// Ngày phát hành
-  receiveSection    String?        @map("ReceiveSection") @db.Char(4)           /// Bộ phận tiếp nhận
-  finishDate        DateTime?      @map("FinishDate") @db.DateTime2             /// Ngày hoàn thành
-  cancelReason      String?        @map("CancelReason") @db.NVarChar(255)       /// Lí do huỷ
-  status            String?        @map("Status") @db.Char(1)                   /// Trạng thái phiếu
+  documentId        String    @id @map("DocumentId") @db.UniqueIdentifier
+  documentNo        String    @map("DocumentNo") @db.VarChar(20)
+  processMasterId   String    @map("ProcessMasterId") @db.UniqueIdentifier /// Xác định phiếu thuộc quy trình nào
+  documentType      String    @map("DocumentType") @db.VarChar(10) /// Loại phiếu
+  processInstanceId String    @map("ProcessInstanceId") @db.VarChar(50) /// Instance trên flowable
+  issueSection      String    @map("IssueSection") @db.Char(4) /// Bộ phận phát hành
+  issueDate         DateTime  @map("IssueDate") @db.DateTime2 /// Ngày phát hành
+  receiveSection    String?   @map("ReceiveSection") @db.Char(4) /// Bộ phận tiếp nhận
+  finishDate        DateTime? @map("FinishDate") @db.DateTime2 /// Ngày hoàn thành
+  cancelReason      String?   @map("CancelReason") @db.NVarChar(255) /// Lí do huỷ
+  status            String    @map("Status") @db.Char(1) /// Trạng thái phiếu
+  isActive          Boolean   @default(true) @map("IsActive")
+  createdBy         String    @map("CreatedBy") @db.Char(8)
+  createdAt         DateTime  @default(now()) @map("CreatedAt") @db.DateTime2
+  updatedBy         String?   @map("UpdatedBy") @db.Char(8)
+  updatedAt         DateTime? @updatedAt @map("UpdatedAt") @db.DateTime2
 
-  processMaster     ProcessMaster? @relation(fields: [processMasterId], references: [id])
-  a5Document        A5Document?
+  processMaster ProcessMaster? @relation(fields: [processMasterId], references: [id])
+  a5Document    A5Document?
 }
-
 
 /// Bảng chi tiết phiếu A5
 model A5Document {
-  documentId           String         @id @map("DocumentId") @db.UniqueIdentifier
-  documentNo           String         @map("DocumentNo") @db.VarChar(20)
-  issueCategory        String         @map("IssueCategory") @db.VarChar(30)        /// Phân loại (An toàn, Chất lượng, 2S, Thiết bị)
-  itemCategory         String         @map("ItemCategory") @db.VarChar(30)         /// Phân loại (Sản phẩm, Cao su, Metal case, Lò xo, Khác)
-  lineNo               String         @map("LineNo") @db.VarChar(10)               /// Line
-  jobOrderNo           String?        @map("JobOrderNo") @db.VarChar(12)           /// Job no
-  machineNo            String         @map("MachineNo") @db.VarChar(10)            /// Máy
-  lotNo                String         @map("LotNo") @db.VarChar(6)                 /// Mã số lot
-  batchNo              String         @map("BatchNo") @db.VarChar(10)              /// Batch
-  itemCode             String         @map("ItemCode") @db.VarChar(30)             /// Mã sản phẩm
-  rubber               String         @map("Rubber") @db.VarChar(10)               /// Cao su
-  glue                 String         @map("Glue") @db.VarChar(10)                 /// Keo
-  detectionStage       String         @map("DetectionStage") @db.NVarChar(30)      /// Công đoạn phát hiện
-  detectionContent     String         @map("DetectionContent") @db.VarChar(10)     /// Id lỗi
-  otherError           String?        @map("OtherError") @db.NVarChar(100)         /// Nội dung lỗi khác
-  detectedBy           String         @map("DetectedBy") @db.VarChar(8)            /// Mã nhân viên phát hiện
-  detectedQuantity     Int            @map("DetectedQuantity")                     /// Số lượng phát hiện
-  abnormalArea         String         @map("AbnormalArea") @db.VarChar(10)         /// Vùng bất thường
-  detectedAt           DateTime       @map("DetectedAt") @db.DateTime2             /// Ngày phát hiện
-  normalDescription    String         @map("NormalDescription") @db.NVarChar(250)  /// Mô tả bình thường
-  abnormalDescription  String         @map("AbnormalDescription") @db.NVarChar(250) /// Mô tả bất thường
-  checkedBy            String?         @map("CheckedBy") @db.VarChar(8)             /// Mã số dandori kiểm tra
-  abnormalLevel        Int?           @map("AbnormalLevel") @db.TinyInt            /// 1: Nhẹ | 2: Nặng | 3: Nghiêm trọng
-  firstDetection       Boolean?       @map("FirstDetection")                       /// Phát sinh lần đầu
-  recurrenceCount      Int?           @map("RecurrenceCount")                      /// Số lần tái phát sinh
-  isA4Required         Boolean?       @map("IsA4Required")                         /// Cần phát hành A4 không
-  ngQtyAfterHandling   Int?           @map("NGQtyAfterHandling")                   /// Kết quả xử lý NG
-  okQtyAfterHandling   Int?           @map("OKQtyAfterHandling")                   /// Kết quả xử lý OK
-  amsDocumentNo        String?        @map("AMSDocumentNo") @db.VarChar(30)        /// Mã phiếu A4
+  documentId           String   @id @map("DocumentId") @db.UniqueIdentifier
+  documentNo           String   @map("DocumentNo") @db.VarChar(20)
+  issueCategory        String   @map("IssueCategory") @db.VarChar(30) /// Phân loại (An toàn, Chất lượng, 2S, Thiết bị)
+  itemCategory         String   @map("ItemCategory") @db.VarChar(30) /// Phân loại (Sản phẩm, Cao su, Metal case, Lò xo, Khác)
+  lineNo               String   @map("LineNo") @db.VarChar(10) /// Line
+  jobOrderNo           String?  @map("JobOrderNo") @db.VarChar(12) /// Job no
+  machineNo            String   @map("MachineNo") @db.VarChar(10) /// Máy
+  lotNo                String   @map("LotNo") @db.VarChar(6) /// Mã số lot
+  batchNo              String   @map("BatchNo") @db.VarChar(10) /// Batch
+  itemCode             String   @map("ItemCode") @db.VarChar(30) /// Mã sản phẩm
+  rubber               String   @map("Rubber") @db.VarChar(10) /// Cao su
+  glue                 String   @map("Glue") @db.VarChar(10) /// Keo
+  detectionStage       String   @map("DetectionStage") @db.NVarChar(30) /// Công đoạn phát hiện
+  detectionContent     String   @map("DetectionContent") @db.VarChar(10) /// Id lỗi
+  otherError           String?  @map("OtherError") @db.NVarChar(100) /// Nội dung lỗi khác
+  detectedBy           String   @map("DetectedBy") @db.VarChar(8) /// Mã nhân viên phát hiện
+  detectedQuantity     Int      @map("DetectedQuantity") /// Số lượng phát hiện
+  abnormalArea         String   @map("AbnormalArea") @db.NVarChar(10) /// Vùng bất thường
+  detectedAt           DateTime @map("DetectedAt") @db.DateTime2 /// Ngày phát hiện
+  normalDescription    String   @map("NormalDescription") @db.NVarChar(250) /// Mô tả bình thường
+  abnormalDescription  String   @map("AbnormalDescription") @db.NVarChar(250) /// Mô tả bất thường
+  checkedBy            String?  @map("CheckedBy") @db.VarChar(8) /// Mã số dandori kiểm tra
+  abnormalLevel        Int?     @map("AbnormalLevel") @db.TinyInt /// 1: Nhẹ | 2: Nặng | 3: Nghiêm trọng
+  firstDetection       Boolean? @map("FirstDetection") /// Phát sinh lần đầu
+  recurrenceCount      Int?     @map("RecurrenceCount") /// Số lần tái phát sinh
+  isA4Required         Boolean? @map("IsA4Required") /// Cần phát hành A4 không
+  ngQtyAfterHandling   Int?     @map("NGQtyAfterHandling") /// Kết quả xử lý NG
+  okQtyAfterHandling   Int?     @map("OKQtyAfterHandling") /// Kết quả xử lý OK
+  amsDocumentNo        String?  @map("AMSDocumentNo") @db.VarChar(30) /// Mã phiếu A4
+  otherAbnormalContent String?  @map("OtherAbnormalContent") @db.NVarChar(100) /// Nội dung lỗi khác
+  batchQty             Int?     @map("BatchQty") @db.Int /// Số lượng của batch
+  lotQty               Int?     @map("LotQty") @db.Int /// Số lượng của lot
+  needCheckingQty      Int?     @map("NeedCheckingQty") @db.Int /// Số lượng cần kiểm
+  qtyChecked           Int?     @map("QtyChecked") @db.Int /// Số lượng đã kiểm
+  controlOfBeginning   Boolean? @map("ControlOfBeginning") /// Đang quản lý đầu kỳ
+  attachSample         Boolean? @map("AttachSample") /// Kèm mẫu
+  ngEmp                String?  @map("NGEmp") @db.VarChar(10) /// Mã số nhân viên lưu xuất
 
-  documentMaster       DocumentMaster @relation(fields: [documentId], references: [documentId])
-  a5ToA4IssueData      A5ToA4IssueData?
+  documentMaster DocumentMaster @relation(fields: [documentId], references: [documentId])
 }
 
-/// Bảng thông tin bổ sung nâng phiếu A5 lên A4
-model A5ToA4IssueData {
-  documentId           String      @id @map("DocumentId") @db.UniqueIdentifier
-  otherAbnormalContent String?     @map("OtherAbnormalContent") @db.NVarChar(100) /// Nội dung lỗi khác
-  batchQty             Int?        @map("BatchQty")                               /// Số lượng của batch
-  lotQty               Int?        @map("LotQty")                                 /// Số lượng của lot
-  needCheckingQty      Int?        @map("NeedCheckingQty")                        /// Số lượng cần kiểm
-  qtyChecked           Int?        @map("QtyChecked")                             /// Số lượng đã kiểm
-  controlOfBeginning   Boolean?    @map("ControlOfBeginning")                     /// Đang quản lý đầu kỳ
-  attachSample         Boolean?    @map("AttachSample")                           /// Kèm mẫu
-  ngEmp                String?     @map("NGEmp") @db.VarChar(10)                  /// Mã số nhân viên lưu xuất
+model DocumentSequence {
+  code          String    @id @map("Code") @db.VarChar(50)
+  name          String    @map("Name") @db.NVarChar(150)
+  prefix        String?   @map("Prefix") @db.VarChar(20)
+  suffix        String?   @map("Suffix") @db.VarChar(20)
+  format        String    @map("Format") @db.VarChar(20)
+  startSerialNo String    @map("StartSerialNo") @db.VarChar(10)
+  resetCycle    String    @default("DAILY") @map("ResetCycle") @db.VarChar(10) /// DAILY | MONTHLY | YEARLY | NEVER
+  step          Int       @map("Step")
+  isActive      Boolean   @default(true) @map("IsActive")
+  createdBy     String    @map("CreatedBy") @db.Char(8)
+  createdAt     DateTime  @map("createdAt") @db.DateTime2
+  updatedBy     String?   @map("UpdatedBy") @db.Char(8)
+  updatedAt     DateTime? @map("UpdatedAt") @db.DateTime2
 
-  a5Document           A5Document  @relation(fields: [documentId], references: [documentId])
+  counters DocumentSequenceCounter[]
 }
 
+model DocumentSequenceCounter {
+  sequenceCode String   @map("SequenceCode") @db.VarChar(50)
+  periodKey    String   @map("PeriodKey") @db.VarChar(10)
+  lastNumber   Int      @default(0) @map("LastNumber")
+  updatedAt    DateTime @updatedAt @map("UpdatedAt") @db.DateTime2
 
+  sequence DocumentSequence @relation(fields: [sequenceCode], references: [code])
 
+  @@unique([sequenceCode, periodKey])
+}
