@@ -69,11 +69,12 @@ export class HttpClient {
 
     const status = response.statusCode;
 
-    if (status === 204) {
+    const text = await response.body.text();
+    if (!text) {
       return { data: undefined as T, status };
     }
 
-    const data = (await response.body.json()) as T;
+    const data = JSON.parse(text) as T;
     return { data, status };
   }
 
