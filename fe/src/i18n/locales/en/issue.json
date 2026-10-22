@@ -65,6 +65,7 @@
   "validation": {
     "section_required": "Please select issuing section",
     "issue_date_required": "Please select issue date",
+    "issue_date_invalid": "Invalid issue date",
     "category_required": "Please select category",
     "detection_type_required": "Please select detection type",
     "product_code_required": "Please enter product code",

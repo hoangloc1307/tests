@@ -65,6 +65,7 @@
   "validation": {
     "section_required": "発行部門を選択してください",
     "issue_date_required": "発行日を選択してください",
+    "issue_date_invalid": "発行日が無効です",
     "category_required": "分類を選択してください",
     "detection_type_required": "検出タイプを選択してください",
     "product_code_required": "製品コードを入力してください",
@@ -82,4 +83,3 @@
     "abnormal_condition_required": "異常状態を入力してください"
   }
 }
-

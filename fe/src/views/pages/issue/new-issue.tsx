@@ -22,6 +22,7 @@ export default function NewIssuePage() {
 
   const form = useAppForm({
     defaultValues: {
+      documentType: 'A5',
       documentNo: '',
       issueSection: '',
       issueCategory: '',

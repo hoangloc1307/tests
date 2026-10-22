@@ -65,6 +65,7 @@
   "validation": {
     "section_required": "Vui lòng chọn bộ phận phát hành",
     "issue_date_required": "Vui lòng chọn ngày phát hành",
+    "issue_date_invalid": "Ngày phát hành không hợp lệ",
     "category_required": "Vui lòng chọn phân loại",
     "detection_type_required": "Vui lòng chọn loại phát hiện",
     "product_code_required": "Vui lòng nhập mã sản phẩm",
