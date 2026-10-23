@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { Role } from '~/modules/auth/domain/role.entity';
 import type {
+  ActiveUserRole,
   CreateRoleData,
   DeleteRoleData,
   RoleRepository,
@@ -85,6 +86,18 @@ export class PrismaA5RoleRepository implements RoleRepository {
       sectionId: entity.sectionId,
       createdAt: entity.createdAt.toISOString(),
       updatedAt: (entity.updatedAt ?? entity.createdAt).toISOString(),
+    }));
+  }
+
+  async findActiveRolesByUsername(username: string): Promise<ActiveUserRole[]> {
+    const rows = await this.prisma.userRole.findMany({
+      where: { username: username.trim(), isActive: true },
+      select: { roleId: true, sectionId: true },
+    });
+
+    return rows.map((row) => ({
+      roleId: row.roleId,
+      sectionId: row.sectionId.trim(),
     }));
   }
 

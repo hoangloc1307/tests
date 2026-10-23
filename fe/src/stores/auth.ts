@@ -1,4 +1,4 @@
-import type { UserInfo } from 'shared/types/auth';
+import type { UserInfo, UserRoleInfo } from 'shared/types/auth';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import STORAGE_KEYS from '~/constants/storage-keys';
@@ -6,7 +6,7 @@ import STORAGE_KEYS from '~/constants/storage-keys';
 interface AuthData {
   token: string;
   user: UserInfo;
-  roles: string[];
+  roles: UserRoleInfo[];
   permissions: string[];
   vnnToken: string;
 }
@@ -14,7 +14,7 @@ interface AuthData {
 interface AuthState {
   token: string | null;
   user: UserInfo | null;
-  roles: string[];
+  roles: UserRoleInfo[];
   permissions: string[];
   vnnToken: string | null;
   setAuth: (data: AuthData) => void;

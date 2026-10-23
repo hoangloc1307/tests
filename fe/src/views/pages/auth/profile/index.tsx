@@ -40,8 +40,8 @@ export default function ProfilePage() {
               <p className='font-semibold'>{t('auth:role')}</p>
               <div className='mt-2 flex flex-wrap gap-2'>
                 {roles.map((role) => (
-                  <Badge key={role} variant='secondary'>
-                    {role}
+                  <Badge key={`${role.role}:${role.section}`} variant='secondary'>
+                    {role.role} - {role.section}
                   </Badge>
                 ))}
               </div>

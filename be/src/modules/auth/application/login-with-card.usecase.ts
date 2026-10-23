@@ -37,7 +37,10 @@ export class LoginWithCardUseCase {
         username: employee.employeeId,
         name: employee.name,
       },
-      roles: permissions?.[0]?.roles ?? [],
+      roles: (permissions?.[0]?.roles ?? []).map((role) => ({
+        role,
+        section: employee.sectionId,
+      })),
       permissions: permissions?.[0]?.permissions ?? [],
       vnnToken: account.token,
     };

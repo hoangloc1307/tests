@@ -3,10 +3,15 @@ export interface UserInfo {
   name: string;
 }
 
+export interface UserRoleInfo {
+  role: string;
+  section: string;
+}
+
 export interface LoginResponse {
   token: string;
   user: UserInfo;
-  roles: string[];
+  roles: UserRoleInfo[];
   permissions: string[];
   vnnToken: string;
 }

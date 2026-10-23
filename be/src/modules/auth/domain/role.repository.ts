@@ -16,9 +16,15 @@ export interface DeleteRoleData {
   updatedBy: string;
 }
 
+export interface ActiveUserRole {
+  roleId: string;
+  sectionId: string;
+}
+
 export interface RoleRepository {
   create(data: CreateRoleData): Promise<void>;
   findAll(): Promise<UserRoleItem[]>;
+  findActiveRolesByUsername(username: string): Promise<ActiveUserRole[]>;
   update(data: UpdateRoleData): Promise<void>;
   delete(data: DeleteRoleData): Promise<void>;
 }
