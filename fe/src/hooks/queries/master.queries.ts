@@ -15,4 +15,10 @@ export const masterQueries = {
       enabled: !!processId,
       staleTime: Infinity,
     }),
+  roles: () =>
+    queryOptions({
+      queryKey: ['master', 'roles'],
+      queryFn: () => masterApis.getRoles(),
+      staleTime: Infinity,
+    }),
 };

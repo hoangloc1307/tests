@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ENDPOINTS } from 'shared/constants/endpoints';
-import { loginSchema, loginWithCardSchema } from 'shared/schemas/auth';
+import { createRoleSchema, loginSchema, loginWithCardSchema } from 'shared/schemas/auth';
 import { AuthController } from '~/modules/auth/presentation/auth.controller';
 import { authenticate } from '~/modules/auth/presentation/middlewares/authenticate';
 import { container } from '~/shared/infrastructure/di/container';
@@ -19,6 +19,13 @@ export const createAuthRouter = (): Router => {
   );
 
   router.post(ENDPOINTS.AUTH.LOGOUT, authenticate, controller.logout);
+
+  router.post(
+    ENDPOINTS.AUTH.ROLE,
+    authenticate,
+    requestValidator(createRoleSchema),
+    controller.createRole,
+  );
 
   return router;
 };

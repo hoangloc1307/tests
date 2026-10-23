@@ -14,6 +14,7 @@ export const TOKENS = {
   HrClient: Symbol.for('HrClient'),
   PermissionClient: Symbol.for('PermissionClient'),
   TokenService: Symbol.for('TokenService'),
+  RoleRepository: Symbol.for('RoleRepository'),
 
   // Issue services
   A5IssueRepository: Symbol.for('A5IssueRepository'),

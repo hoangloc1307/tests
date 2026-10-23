@@ -143,3 +143,16 @@ model DocumentSequenceCounter {
 
   @@unique([sequenceCode, periodKey])
 }
+
+model UserRole {
+  username  String    @map("Username") @db.Char(8)
+  roleId    String    @map("RoleId") @db.UniqueIdentifier
+  sectionId String    @map("SectionId") @db.Char(4)
+  isActive  Boolean   @default(true) @map("IsActive")
+  createdBy String    @map("CreatedBy") @db.Char(8)
+  createdAt DateTime  @default(now()) @map("CreatedAt") @db.DateTime2
+  updatedBy String?   @map("UpdatedBy") @db.Char(8)
+  updatedAt DateTime? @updatedAt @map("UpdatedAt") @db.DateTime2
+
+  @@id([username, roleId, sectionId])
+}

@@ -1,6 +1,8 @@
 {
   "issue": "Bất thường",
   "issue_create": "Phát hành bất thường",
+  "settings": "Cài đặt",
+  "settings_role": "Phân quyền",
   "guide": "Hướng dẫn sử dụng",
   "support": "Hỗ trợ, báo lỗi",
   "version_history": "Lịch sử cập nhật"

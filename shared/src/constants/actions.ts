@@ -5,6 +5,7 @@ export const ACTIONS = {
   DELETE: 'D',
   MANAGE: 'M',
   APPROVAL: 'A',
+  ALL: '*',
 } as const;
 
 export type Action = (typeof ACTIONS)[keyof typeof ACTIONS];

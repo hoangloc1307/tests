@@ -1,6 +1,7 @@
+import CONFIG from '~/configs/app';
 import { masterApi } from '~/lib/axios';
 
-export interface Process {
+interface Process {
   ProcessId: string;
   OperationNameVI: string;
   OperationNameEn: string;
@@ -15,13 +16,26 @@ export interface Process {
   UpdatedAt: string;
 }
 
-export interface ErrorConfig {
+interface ErrorConfig {
   ErrorCode: string;
   ProcessId: string;
   IsActive: boolean;
   NameVI: string;
   NameJP: string;
   NameEN: string;
+}
+
+interface Role {
+  RoleId: string;
+  TenantId: string;
+  RoleName: string;
+  Description: string | null;
+  IsActive: boolean;
+  IsSystemRole: boolean;
+  CreatedDate: string;
+  CreatedBy: string;
+  UpdatedDate: string;
+  UpdatedBy: string;
 }
 
 interface MasterApiResponse<T> {
@@ -42,7 +56,16 @@ const getErrorsByProcess = async (processId: string): Promise<ErrorConfig[]> => 
   return response.data;
 };
 
+const getRoles = async (): Promise<Role[]> => {
+  const response = await masterApi.get<MasterApiResponse<{ roles: Role[] }>>(
+    `/rbac/tenants/${CONFIG.A5_TENANT_ID}/roles`,
+  );
+
+  return response.data.roles;
+};
+
 export const masterApis = {
   getProcesses,
   getErrorsByProcess,
+  getRoles,
 };

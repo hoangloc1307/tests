@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import type { LoginResponse } from 'shared/types/auth';
 import { inject, injectable } from 'tsyringe';
+import { CreateRoleUseCase } from '~/modules/auth/application/create-role.usecase';
 import { LoginWithCardUseCase } from '~/modules/auth/application/login-with-card.usecase';
 import { LoginUseCase } from '~/modules/auth/application/login.usecase';
 import type { Translator } from '~/shared/application/translator';
@@ -17,6 +18,7 @@ export class AuthController {
   constructor(
     private readonly loginUseCase: LoginUseCase,
     private readonly loginWithCardUseCase: LoginWithCardUseCase,
+    private readonly createUserRoleUseCase: CreateRoleUseCase,
     @inject(TOKENS.Translator) private readonly i18n: Translator,
   ) {}
 
@@ -53,5 +55,13 @@ export class AuthController {
   logout = (_req: Request, res: Response) => {
     res.clearCookie(REFRESH_TOKEN_COOKIE, { path: REFRESH_COOKIE_PATH });
     ApiResponse.ok(res, null, this.i18n.t('auth:logoutSuccess'));
+  };
+
+  createRole = async (req: Request, res: Response) => {
+    const result = await this.createUserRoleUseCase.execute({
+      ...req.body,
+      createdBy: req.user?.username as string,
+    });
+    ApiResponse.created(res, result, this.i18n.t('auth:createRoleSuccess'));
   };
 }

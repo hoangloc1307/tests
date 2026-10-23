@@ -4,6 +4,7 @@ export const ENDPOINTS = {
     LOGIN: '/login',
     LOGOUT: '/logout',
     LOGIN_WITH_CARD: '/login-with-card',
+    ROLE: '/role',
   },
   ISSUE: {
     PREFIX: '/issues',

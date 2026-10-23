@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
-import type { LoginInput, LoginWithCardInput } from 'shared/schemas/auth';
+import type { CreateRoleInput, LoginInput, LoginWithCardInput } from 'shared/schemas/auth';
 import { authApi } from '~/apis/auth';
+import { toast } from '~/components/ui/toast';
 import PATHS from '~/constants/paths';
 import { useAppMutation } from '~/hooks/use-app-mutation';
 import { useAuthStore } from '~/stores/auth';
@@ -22,6 +23,15 @@ export function useLogin() {
         });
         navigate(PATHS.HOME, { replace: true });
       }
+    },
+  });
+}
+
+export function useCreateUserRole() {
+  return useAppMutation({
+    mutationFn: (payload: CreateRoleInput) => authApi.createUserRole(payload),
+    onSuccess: (data) => {
+      toast.add({ type: 'success', title: data.message });
     },
   });
 }

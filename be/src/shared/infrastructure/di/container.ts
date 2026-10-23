@@ -3,11 +3,13 @@ import { container } from 'tsyringe';
 import type { AuthClient } from '~/modules/auth/domain/auth-client';
 import type { HrClient } from '~/modules/auth/domain/hr-client';
 import type { PermissionClient } from '~/modules/auth/domain/permission-client';
+import type { RoleRepository } from '~/modules/auth/domain/role.repository';
 import type { TokenService } from '~/modules/auth/domain/token-service';
 import { HttpAuthClient } from '~/modules/auth/infrastructure/http-auth.client';
 import { HttpHrClient } from '~/modules/auth/infrastructure/http-hr.client';
 import { HttpPermissionClient } from '~/modules/auth/infrastructure/http-permission.client';
 import { JwtTokenService } from '~/modules/auth/infrastructure/jwt-token.service';
+import { PrismaA5RoleRepository } from '~/modules/auth/infrastructure/prisma-a5-role.repository';
 import { A5DocumentHandler } from '~/modules/issue/application/handlers/a5-document.handler';
 import type { A5IssueRepository } from '~/modules/issue/domain/a5-issue.repository';
 import type { DocumentHandler } from '~/modules/issue/domain/document-handler';
@@ -43,6 +45,7 @@ container.registerSingleton<AuthClient>(TOKENS.AuthClient, HttpAuthClient);
 container.registerSingleton<HrClient>(TOKENS.HrClient, HttpHrClient);
 container.registerSingleton<PermissionClient>(TOKENS.PermissionClient, HttpPermissionClient);
 container.registerSingleton<TokenService>(TOKENS.TokenService, JwtTokenService);
+container.registerSingleton<RoleRepository>(TOKENS.RoleRepository, PrismaA5RoleRepository);
 
 // Register issue services
 container.registerSingleton<A5IssueRepository>(TOKENS.A5IssueRepository, PrismaA5IssueRepository);

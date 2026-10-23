@@ -1,6 +1,8 @@
 {
   "issue": "Anomaly",
   "issue_create": "Issue anomaly",
+  "settings": "Settings",
+  "settings_role": "Permissions",
   "guide": "User guide",
   "support": "Support & report issues",
   "version_history": "Version history"

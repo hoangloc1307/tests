@@ -5,6 +5,7 @@ const PATHS = {
   PROFILE: '/profile',
   VERSION_HISTORY: '/version-history',
   NEW_ISSUE: '/new-issue',
+  ROLE: '/role',
 } as const;
 
 export default PATHS;

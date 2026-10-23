@@ -6,6 +6,9 @@ import z from 'zod';
 
 const envSchema = z.object({
   VITE_MAIN_API: z.url({ message: 'VITE_MAIN_API phải là một URL hợp lệ' }),
+  VITE_HR_API: z.url({ message: 'VITE_HR_API phải là một URL hợp lệ' }),
+  VITE_MASTER_API: z.url({ message: 'VITE_MASTER_API phải là một URL hợp lệ' }),
+  VITE_A5_TENANT_ID: z.uuid({ message: 'VITE_A5_TENANT_ID phải là một UUID hợp lệ' }),
   VITE_EMPLOYEE_IMAGE_URL: z
     .url({ message: 'VITE_EMPLOYEE_IMAGE_URL phải là một URL hợp lệ' })
     .optional(),

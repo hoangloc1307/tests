@@ -13,6 +13,14 @@ export const loginWithCardSchema = z.object({
 
 export type LoginWithCardInput = z.infer<typeof loginWithCardSchema>;
 
+export const createRoleSchema = z.object({
+  username: z.string().nonempty({ message: 'auth:permission.validation.username_required' }),
+  roleId: z.string().nonempty({ message: 'auth:permission.validation.role_required' }),
+  sectionId: z.string().nonempty({ message: 'auth:permission.validation.section_required' }),
+});
+
+export type CreateRoleInput = z.infer<typeof createRoleSchema>;
+
 export const changePasswordSchema = z
   .object({
     currentPassword: z.string().min(6),

@@ -8,6 +8,7 @@ import LoginPage from '~/views/pages/auth/login';
 import LoginWithCardPage from '~/views/pages/auth/login-with-card';
 import ProfilePage from '~/views/pages/auth/profile';
 import NewIssuePage from '~/views/pages/issue/new-issue';
+import RolePage from '~/views/pages/role';
 import VersionHistoryPage from '~/views/pages/version-history';
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           {
             path: PATHS.NEW_ISSUE,
             element: <NewIssuePage />,
+          },
+          {
+            path: PATHS.ROLE,
+            element: <RolePage />,
           },
         ],
       },

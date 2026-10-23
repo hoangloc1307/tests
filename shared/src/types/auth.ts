@@ -14,3 +14,9 @@ export interface LoginResponse {
 export interface RefreshResponse {
   token: string;
 }
+
+export interface RoleResponse {
+  username: string;
+  roleId: string;
+  sectionId: string;
+}
