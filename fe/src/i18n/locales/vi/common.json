@@ -5,5 +5,10 @@
   "or": "hoặc",
   "processing": "Đang xử lý",
   "save": "Lưu",
-  "search": "Tìm kiếm"
+  "search": "Tìm kiếm",
+  "actions": "Thao tác",
+  "edit": "Sửa",
+  "delete": "Xóa",
+  "cancel": "Hủy",
+  "confirm": "Xác nhận"
 }

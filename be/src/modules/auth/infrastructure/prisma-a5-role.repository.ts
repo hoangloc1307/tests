@@ -1,19 +1,53 @@
 import { inject, injectable } from 'tsyringe';
-import { Prisma } from '../../../../generated/a5/client';
-import type { CreateRoleData, Role, RoleRepository } from '~/modules/auth/domain/role.repository';
+import { Role } from '~/modules/auth/domain/role.entity';
+import type {
+  CreateRoleData,
+  DeleteRoleData,
+  RoleRepository,
+  UpdateRoleData,
+  UserRoleItem,
+} from '~/modules/auth/domain/role.repository';
 import { AppError } from '~/shared/domain/app-error';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import type { PrismaClientA5 } from '~/shared/infrastructure/prisma-a5';
+import type { PrismaClientSmart } from '~/shared/infrastructure/prisma-smart';
+import { Prisma } from '../../../../generated/a5/client';
 
 const PRISMA_UNIQUE_CONSTRAINT_ERROR = 'P2002';
+const PRISMA_RECORD_NOT_FOUND = 'P2025';
 
 @injectable()
 export class PrismaA5RoleRepository implements RoleRepository {
-  constructor(@inject(TOKENS.PrismaClientA5) private readonly prisma: PrismaClientA5) {}
+  constructor(
+    @inject(TOKENS.PrismaClientA5) private readonly prisma: PrismaClientA5,
+    @inject(TOKENS.PrismaClientSmart) private readonly smart: PrismaClientSmart,
+  ) {}
 
-  async create(data: CreateRoleData): Promise<Role> {
-    try {
-      const userRole = await this.prisma.userRole.create({
+  async create(data: CreateRoleData): Promise<void> {
+    const identity = {
+      username: data.username,
+      roleId: data.roleId,
+      sectionId: data.sectionId,
+    };
+
+    const row = await this.prisma.userRole.findUnique({
+      where: { username_roleId_sectionId: identity },
+    });
+    const existing = row ? Role.fromPersistence(row) : null;
+
+    // Đã tồn tại và còn active -> trùng phân quyền.
+    if (existing?.isActive()) {
+      throw AppError.conflict('auth:roleAlreadyGranted');
+    }
+
+    // Đã tồn tại nhưng không còn active -> hồi sinh thay vì tạo mới.
+    if (existing) {
+      await this.prisma.userRole.update({
+        where: { id: existing.id },
+        data: { isActive: true, updatedBy: data.createdBy },
+      });
+    } else {
+      await this.prisma.userRole.create({
         data: {
           username: data.username,
           roleId: data.roleId,
@@ -21,18 +55,74 @@ export class PrismaA5RoleRepository implements RoleRepository {
           createdBy: data.createdBy,
         },
       });
+    }
+  }
 
-      return {
-        username: userRole.username,
-        roleId: userRole.roleId,
-        sectionId: userRole.sectionId,
-      };
+  async findAll(): Promise<UserRoleItem[]> {
+    const rows = await this.prisma.userRole.findMany({
+      orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
+    });
+
+    const activeRoles = rows
+      .map((r) => Role.fromPersistence(r))
+      .filter((entity) => entity.isActive());
+
+    const usernames = [...new Set(activeRoles.map((r) => r.username))];
+    const accounts = usernames.length
+      ? await this.smart.systemAccount.findMany({
+          where: { username: { in: usernames } },
+          select: { username: true, displayName: true },
+        })
+      : [];
+
+    const displayNameByUsername = new Map(accounts.map((a) => [a.username.trim(), a.displayName]));
+
+    return activeRoles.map((entity) => ({
+      id: entity.id,
+      username: entity.username,
+      displayName: displayNameByUsername.get(entity.username) ?? null,
+      roleId: entity.roleId,
+      sectionId: entity.sectionId,
+      createdAt: entity.createdAt.toISOString(),
+      updatedAt: (entity.updatedAt ?? entity.createdAt).toISOString(),
+    }));
+  }
+
+  async update(data: UpdateRoleData): Promise<void> {
+    try {
+      await this.prisma.userRole.update({
+        where: { id: data.id, isActive: true },
+        data: {
+          roleId: data.roleId,
+          sectionId: data.sectionId,
+          updatedBy: data.updatedBy,
+        },
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === PRISMA_UNIQUE_CONSTRAINT_ERROR) {
+          throw AppError.conflict('auth:roleAlreadyGranted');
+        }
+        if (error.code === PRISMA_RECORD_NOT_FOUND) {
+          throw AppError.notFound('auth:roleNotFound');
+        }
+      }
+      throw error;
+    }
+  }
+
+  async delete(data: DeleteRoleData): Promise<void> {
+    try {
+      await this.prisma.userRole.update({
+        where: { id: data.id, isActive: true },
+        data: { isActive: false, updatedBy: data.updatedBy },
+      });
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
-        error.code === PRISMA_UNIQUE_CONSTRAINT_ERROR
+        error.code === PRISMA_RECORD_NOT_FOUND
       ) {
-        throw AppError.conflict('auth:roleAlreadyGranted');
+        throw AppError.notFound('auth:roleNotFound');
       }
       throw error;
     }

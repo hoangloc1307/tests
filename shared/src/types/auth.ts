@@ -15,8 +15,12 @@ export interface RefreshResponse {
   token: string;
 }
 
-export interface RoleResponse {
+export interface RoleListItem {
+  id: string;
   username: string;
+  displayName: string | null;
   roleId: string;
   sectionId: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 }

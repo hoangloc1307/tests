@@ -5,5 +5,10 @@
   "or": "または",
   "processing": "処理中",
   "save": "保存",
-  "search": "検索"
+  "search": "検索",
+  "actions": "操作",
+  "edit": "編集",
+  "delete": "削除",
+  "cancel": "キャンセル",
+  "confirm": "確認"
 }

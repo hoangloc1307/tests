@@ -5,5 +5,10 @@
   "or": "or",
   "processing": "Processing",
   "save": "Save",
-  "search": "Search"
+  "search": "Search",
+  "actions": "Actions",
+  "edit": "Edit",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "confirm": "Confirm"
 }

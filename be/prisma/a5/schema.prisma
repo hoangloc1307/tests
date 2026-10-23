@@ -145,6 +145,7 @@ model DocumentSequenceCounter {
 }
 
 model UserRole {
+  id        String    @id(map: "UserRole_pkey") @default(dbgenerated("newid()"), map: "UserRole_id_df") @map("Id") @db.UniqueIdentifier
   username  String    @map("Username") @db.Char(8)
   roleId    String    @map("RoleId") @db.UniqueIdentifier
   sectionId String    @map("SectionId") @db.Char(4)
@@ -154,5 +155,5 @@ model UserRole {
   updatedBy String?   @map("UpdatedBy") @db.Char(8)
   updatedAt DateTime? @updatedAt @map("UpdatedAt") @db.DateTime2
 
-  @@id([username, roleId, sectionId])
+  @@unique([username, roleId, sectionId], map: "UserRole_username_roleId_sectionId_key")
 }

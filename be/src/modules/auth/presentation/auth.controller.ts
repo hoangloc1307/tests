@@ -2,8 +2,11 @@ import type { Request, Response } from 'express';
 import type { LoginResponse } from 'shared/types/auth';
 import { inject, injectable } from 'tsyringe';
 import { CreateRoleUseCase } from '~/modules/auth/application/create-role.usecase';
+import { DeleteRoleUseCase } from '~/modules/auth/application/delete-role.usecase';
+import { ListRolesUseCase } from '~/modules/auth/application/list-roles.usecase';
 import { LoginWithCardUseCase } from '~/modules/auth/application/login-with-card.usecase';
 import { LoginUseCase } from '~/modules/auth/application/login.usecase';
+import { UpdateRoleUseCase } from '~/modules/auth/application/update-role.usecase';
 import type { Translator } from '~/shared/application/translator';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import { isProd } from '~/shared/infrastructure/env';
@@ -19,6 +22,9 @@ export class AuthController {
     private readonly loginUseCase: LoginUseCase,
     private readonly loginWithCardUseCase: LoginWithCardUseCase,
     private readonly createUserRoleUseCase: CreateRoleUseCase,
+    private readonly listRolesUseCase: ListRolesUseCase,
+    private readonly updateRoleUseCase: UpdateRoleUseCase,
+    private readonly deleteRoleUseCase: DeleteRoleUseCase,
     @inject(TOKENS.Translator) private readonly i18n: Translator,
   ) {}
 
@@ -58,10 +64,31 @@ export class AuthController {
   };
 
   createRole = async (req: Request, res: Response) => {
-    const result = await this.createUserRoleUseCase.execute({
+    await this.createUserRoleUseCase.execute({
       ...req.body,
       createdBy: req.user?.username as string,
     });
-    ApiResponse.created(res, result, this.i18n.t('auth:createRoleSuccess'));
+    ApiResponse.created(res, null, this.i18n.t('auth:createRoleSuccess'));
+  };
+
+  listRoles = async (_req: Request, res: Response) => {
+    const result = await this.listRolesUseCase.execute();
+    ApiResponse.ok(res, result);
+  };
+
+  updateRole = async (req: Request, res: Response) => {
+    await this.updateRoleUseCase.execute({
+      ...req.body,
+      updatedBy: req.user?.username as string,
+    });
+    ApiResponse.ok(res, null, this.i18n.t('auth:updateRoleSuccess'));
+  };
+
+  deleteRole = async (req: Request, res: Response) => {
+    await this.deleteRoleUseCase.execute({
+      id: req.body.id,
+      updatedBy: req.user?.username as string,
+    });
+    ApiResponse.deleted(res);
   };
 }

@@ -1,8 +1,16 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
-import type { CreateRoleInput, LoginInput, LoginWithCardInput } from 'shared/schemas/auth';
+import type {
+  CreateRoleInput,
+  DeleteRoleInput,
+  LoginInput,
+  LoginWithCardInput,
+  UpdateRoleInput,
+} from 'shared/schemas/auth';
 import { authApi } from '~/apis/auth';
 import { toast } from '~/components/ui/toast';
 import PATHS from '~/constants/paths';
+import { authQueries } from '~/hooks/queries/auth.queries';
 import { useAppMutation } from '~/hooks/use-app-mutation';
 import { useAuthStore } from '~/stores/auth';
 
@@ -28,10 +36,37 @@ export function useLogin() {
 }
 
 export function useCreateUserRole() {
+  const queryClient = useQueryClient();
+
   return useAppMutation({
     mutationFn: (payload: CreateRoleInput) => authApi.createUserRole(payload),
     onSuccess: (data) => {
       toast.add({ type: 'success', title: data.message });
+      queryClient.invalidateQueries({ queryKey: authQueries.userRoles().queryKey });
+    },
+  });
+}
+
+export function useUpdateUserRole() {
+  const queryClient = useQueryClient();
+
+  return useAppMutation({
+    mutationFn: (payload: UpdateRoleInput) => authApi.updateUserRole(payload),
+    onSuccess: (data) => {
+      toast.add({ type: 'success', title: data.message });
+      queryClient.invalidateQueries({ queryKey: authQueries.userRoles().queryKey });
+    },
+  });
+}
+
+export function useDeleteUserRole() {
+  const queryClient = useQueryClient();
+
+  return useAppMutation({
+    mutationFn: (payload: DeleteRoleInput) => authApi.deleteUserRole(payload),
+    onSuccess: (data) => {
+      toast.add({ type: 'success', title: data.message });
+      queryClient.invalidateQueries({ queryKey: authQueries.userRoles().queryKey });
     },
   });
 }
