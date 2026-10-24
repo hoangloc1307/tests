@@ -4,10 +4,10 @@ import ProtectedRoute from '~/router/guards/protected';
 import RejectedRoute from '~/router/guards/rejected';
 import AuthLayout from '~/views/layouts/auth';
 import SidebarLayout from '~/views/layouts/sidebar';
+import AbnormalA5Page from '~/views/pages/abnormal-a5/new-issue';
 import LoginPage from '~/views/pages/auth/login';
 import LoginWithCardPage from '~/views/pages/auth/login-with-card';
 import ProfilePage from '~/views/pages/auth/profile';
-import NewIssuePage from '~/views/pages/issue/new-issue';
 import RolePage from '~/views/pages/role';
 import VersionHistoryPage from '~/views/pages/version-history';
 
@@ -31,8 +31,8 @@ const router = createBrowserRouter([
             element: <VersionHistoryPage />,
           },
           {
-            path: PATHS.NEW_ISSUE,
-            element: <NewIssuePage />,
+            path: PATHS.A5,
+            element: <AbnormalA5Page />,
           },
           {
             path: PATHS.ROLE,

@@ -1,5 +1,5 @@
 export const FEATURES = {
-  ISSUE: 'ISSUE',
+  ISSUE_A5: 'ISSUE_A5',
   ROLE: 'ROLE',
 } as const;
 

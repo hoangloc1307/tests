@@ -17,8 +17,8 @@ const MAIN_MENU: NavItem[] = [
     children: [
       {
         title: 'navigation:issue_create',
-        url: PATHS.NEW_ISSUE,
-        featureCode: FEATURES.ISSUE,
+        url: PATHS.A5,
+        featureCode: FEATURES.ISSUE_A5,
       },
     ],
   },

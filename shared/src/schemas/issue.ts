@@ -50,6 +50,8 @@ const baseIssueShape = {
  */
 export const createA5IssueSchema = z.object({
   documentType: z.literal(DOCUMENT_TYPE.A5),
+  // Mã phiếu do server sinh, chỉ hiển thị (read-only) khi tạo mới.
+  documentNo: z.string(),
   ...baseIssueShape,
   issueCategory: IssueCategoryEnum,
   itemCategory: ItemCategoryEnum,
@@ -60,7 +62,10 @@ export const createA5IssueSchema = z.object({
   glue: z.string().nonempty({ message: 'issue:validation.glue_required' }),
   rubber: z.string().nonempty({ message: 'issue:validation.rubber_required' }),
   batchNo: z.string().nonempty({ message: 'issue:validation.batch_required' }),
-  detectedQuantity: z.coerce.number({ message: 'issue:validation.quantity_required' }),
+  detectedQuantity: z
+    .number({ message: 'issue:validation.quantity_required' })
+    .nullable()
+    .refine((v): v is number => v !== null, { message: 'issue:validation.quantity_required' }),
   jobOrderNo: z.string(),
   detectionStage: z.string().nonempty({ message: 'issue:validation.detection_process_required' }),
   detectionContent: z.string().nonempty({ message: 'issue:validation.error_name_required' }),

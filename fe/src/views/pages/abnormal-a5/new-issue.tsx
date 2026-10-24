@@ -4,29 +4,35 @@ import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import {
-  createIssueSchema,
-  ItemCategoryEnum,
-  IssueCategoryEnum,
   AbnormalAreaEnum,
+  createIssueSchema,
+  DOCUMENT_TYPE,
+  IssueCategoryEnum,
+  ItemCategoryEnum,
+  type AbnormalArea,
+  type IssueCategory,
+  type ItemCategory,
 } from 'shared/schemas/issue';
+import { useCreateIssue } from '~/hooks/mutations/use-issue';
 import { hrQueries } from '~/hooks/queries/hr.queries';
 import { masterQueries } from '~/hooks/queries/master.queries';
 import { useAppForm } from '~/hooks/use-app-form';
 import { useAuthStore } from '~/stores/auth';
 
-export default function NewIssuePage() {
+export default function AbnormalA5Page() {
   const { t, i18n } = useTranslation('issue');
   const { data: sections = [] } = useQuery(hrQueries.sections());
   const { data: processes = [] } = useQuery(masterQueries.processes());
   const user = useAuthStore((s) => s.user);
+  const createIssue = useCreateIssue();
 
   const form = useAppForm({
     defaultValues: {
-      documentType: 'A5',
+      documentType: DOCUMENT_TYPE.A5,
       documentNo: '',
       issueSection: '',
-      issueCategory: '',
-      itemCategory: '',
+      issueCategory: '' as IssueCategory | '',
+      itemCategory: '' as ItemCategory | '',
       itemCode: '',
       lotNo: '',
       lineNo: '',
@@ -38,7 +44,7 @@ export default function NewIssuePage() {
       jobOrderNo: '',
       detectionStage: '',
       detectionContent: '',
-      abnormalArea: '',
+      abnormalArea: '' as AbnormalArea | '',
       normalDescription: '',
       abnormalDescription: '',
       detectedBy: user?.username ?? '',
@@ -47,8 +53,10 @@ export default function NewIssuePage() {
     validators: {
       onSubmit: createIssueSchema,
     },
-    onSubmit: async ({ value }) => {
-      console.log(value);
+    onSubmit: async ({ value, formApi }) => {
+      const payload = createIssueSchema.parse(value);
+      await createIssue.mutateAsync(payload);
+      formApi.reset();
     },
   });
 
