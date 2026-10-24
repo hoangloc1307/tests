@@ -4,7 +4,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node --import @swc-node/register/esm-register --watch src/server.ts",
+    "dev": "cross-env NODE_ENV=development node --import @swc-node/register/esm-register --watch-path=./src src/server.ts",
     "lint": "eslint .",
     "clean": "rimraf dist",
     "prebuild": "pnpm clean",
