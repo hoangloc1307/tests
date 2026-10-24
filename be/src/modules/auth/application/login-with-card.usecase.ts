@@ -27,7 +27,10 @@ export class LoginWithCardUseCase {
     ]);
     const permissions = await this.permissionClient.getUserPermissions(account.id);
 
-    const accessToken = this.tokens.signAccessToken({ username: employee.employeeId });
+    const accessToken = this.tokens.signAccessToken({
+      username: employee.employeeId,
+      vnnToken: account.token,
+    });
     const refreshToken = this.tokens.signRefreshToken({ username: employee.employeeId });
 
     return {

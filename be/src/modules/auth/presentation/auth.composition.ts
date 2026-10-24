@@ -9,6 +9,7 @@ import {
 } from 'shared/schemas/auth';
 import { AuthController } from '~/modules/auth/presentation/auth.controller';
 import { authenticate } from '~/modules/auth/presentation/middlewares/authenticate';
+import { authorize } from '~/modules/auth/presentation/middlewares/authorize';
 import { container } from '~/shared/infrastructure/di/container';
 import { requestValidator } from '~/shared/presentation/middlewares';
 
@@ -30,7 +31,12 @@ export const createAuthRouter = (): Router => {
 
   router.get(ENDPOINTS.AUTH.ROLES, controller.listRoles);
 
-  router.post(ENDPOINTS.AUTH.ROLES, requestValidator(createRoleSchema), controller.createRole);
+  router.post(
+    ENDPOINTS.AUTH.ROLES,
+    authorize('ROLE', 'C'),
+    requestValidator(createRoleSchema),
+    controller.createRole,
+  );
 
   router.patch(ENDPOINTS.AUTH.ROLES, requestValidator(updateRoleSchema), controller.updateRole);
 

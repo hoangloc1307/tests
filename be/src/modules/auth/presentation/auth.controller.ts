@@ -64,10 +64,13 @@ export class AuthController {
   };
 
   createRole = async (req: Request, res: Response) => {
-    await this.createUserRoleUseCase.execute({
-      ...req.body,
-      createdBy: req.user?.username as string,
-    });
+    await this.createUserRoleUseCase.execute(
+      {
+        ...req.body,
+        createdBy: req.user?.username as string,
+      },
+      req.authContext?.sections ?? [],
+    );
     ApiResponse.created(res, null, this.i18n.t('auth:createRoleSuccess'));
   };
 

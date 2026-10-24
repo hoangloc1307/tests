@@ -1,5 +1,6 @@
 export interface TokenPayload {
   username: string;
+  vnnToken?: string;
 }
 
 export interface TokenService {

@@ -2,47 +2,27 @@ import type { LoginInput } from 'shared/schemas/auth';
 import type { UserRoleInfo } from 'shared/types/auth';
 import { inject, injectable } from 'tsyringe';
 import type { LoginResult } from '~/modules/auth/application/dto';
+import { ResolveUserRolePermissionsService } from '~/modules/auth/application/resolve-user-role-permissions.service';
 import type { AuthClient } from '~/modules/auth/domain/auth-client';
-import type { PermissionClient } from '~/modules/auth/domain/permission-client';
-import type { RoleRepository } from '~/modules/auth/domain/role.repository';
 import type { TokenService } from '~/modules/auth/domain/token-service';
-import type { Logger } from '~/shared/application/logger';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 
 @injectable()
 export class LoginUseCase {
   constructor(
     @inject(TOKENS.AuthClient) private readonly authClient: AuthClient,
-    @inject(TOKENS.PermissionClient) private readonly permissionClient: PermissionClient,
-    @inject(TOKENS.RoleRepository) private readonly roleRepository: RoleRepository,
     @inject(TOKENS.TokenService) private readonly tokens: TokenService,
-    @inject(TOKENS.Logger) private readonly logger: Logger,
+    private readonly resolveUserRolePermissions: ResolveUserRolePermissionsService,
   ) {}
 
   async execute(input: LoginInput): Promise<LoginResult> {
     const account = await this.authClient.login(input);
 
-    // Lấy các role (roleId + sectionId) của user từ database.
-    const userRoles = await this.roleRepository.findActiveRolesByUsername(account.username);
-
-    // Gom các roleId duy nhất để tránh gọi API permission trùng.
-    const uniqueRoleIds = [...new Set(userRoles.map((r) => r.roleId))];
-
-    // Lấy role name + permissions cho từng roleId từ API ngoài.
-    const rolePermissionEntries = await Promise.all(
-      uniqueRoleIds.map(async (roleId) => {
-        try {
-          const result = await this.permissionClient.getRolePermissions(roleId, account.token);
-          return [roleId, result] as const;
-        } catch (error) {
-          // Một role lỗi không được chặn toàn bộ login; bỏ qua role đó.
-          this.logger.warn({ roleId, error }, 'Failed to fetch permissions for role');
-          return null;
-        }
-      }),
+    // Lấy role_section + permissions của user (dùng service chung).
+    const { userRoles, rolePermissionByRoleId } = await this.resolveUserRolePermissions.execute(
+      account.username,
+      account.token,
     );
-
-    const rolePermissionByRoleId = new Map(rolePermissionEntries.filter((entry) => entry !== null));
 
     // roles: [{ role: roleName, section: sectionId }], bỏ các role không lấy được thông tin.
     const roles: UserRoleInfo[] = userRoles.flatMap((userRole) => {
@@ -56,7 +36,10 @@ export class LoginUseCase {
       ...new Set([...rolePermissionByRoleId.values()].flatMap((info) => info.permissions)),
     ];
 
-    const accessToken = this.tokens.signAccessToken({ username: account.username });
+    const accessToken = this.tokens.signAccessToken({
+      username: account.username,
+      vnnToken: account.token,
+    });
     const refreshToken = this.tokens.signRefreshToken({ username: account.username });
 
     return {

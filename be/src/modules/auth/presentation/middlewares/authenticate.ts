@@ -17,7 +17,7 @@ export const authenticate = (req: Request, _res: Response, next: NextFunction) =
 
   try {
     const payload = tokenService.verifyAccessToken(token);
-    req.user = { username: payload.username };
+    req.user = { username: payload.username, vnnToken: payload.vnnToken };
     next();
   } catch {
     next(AppError.unauthorized('auth:tokenExpired'));

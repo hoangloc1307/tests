@@ -7,7 +7,11 @@ import { env } from '~/shared/infrastructure/env';
 @injectable()
 export class JwtTokenService implements TokenService {
   signAccessToken(payload: TokenPayload): string {
-    return jwt.sign(payload, env.JWT_SECRET, {
+    const tokenPayload: TokenPayload = { username: payload.username };
+    if (payload.vnnToken) {
+      tokenPayload.vnnToken = payload.vnnToken;
+    }
+    return jwt.sign(tokenPayload, env.JWT_SECRET, {
       expiresIn: env.JWT_ACCESS_EXPIRY,
     } as SignOptions);
   }
@@ -17,11 +21,12 @@ export class JwtTokenService implements TokenService {
     if (typeof decoded.username !== 'string' || decoded.username.length === 0) {
       throw AppError.unauthorized('auth:invalidToken');
     }
-    return { username: decoded.username };
+    const vnnToken = typeof decoded.vnnToken === 'string' ? decoded.vnnToken : undefined;
+    return { username: decoded.username, vnnToken };
   }
 
   signRefreshToken(payload: TokenPayload): string {
-    return jwt.sign(payload, env.JWT_REFRESH_SECRET, {
+    return jwt.sign({ username: payload.username }, env.JWT_REFRESH_SECRET, {
       expiresIn: env.JWT_REFRESH_EXPIRY,
     } as SignOptions);
   }
