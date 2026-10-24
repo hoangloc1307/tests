@@ -70,6 +70,7 @@ export class AuthController {
         createdBy: req.user?.username as string,
       },
       req.authContext?.sections ?? [],
+      req.authContext?.isSuperAdmin ?? false,
     );
     ApiResponse.created(res, null, this.i18n.t('auth:createRoleSuccess'));
   };

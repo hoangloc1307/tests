@@ -10,9 +10,13 @@ const ALLOWED_SECTION = '2120';
 export class CreateRoleUseCase {
   constructor(@inject(TOKENS.RoleRepository) private readonly roleRepository: RoleRepository) {}
 
-  async execute(input: CreateRoleData, grantedSections: string[]): Promise<void> {
-    // Chỉ user có role (với quyền ROLE:C) được gán cho bộ phận 2120 mới tạo được role.
-    if (!grantedSections.includes(ALLOWED_SECTION)) {
+  async execute(
+    input: CreateRoleData,
+    grantedSections: string[],
+    isSuperAdmin: boolean,
+  ): Promise<void> {
+    // Super admin bỏ qua ràng buộc section. User thường: chỉ bộ phận 2120 mới tạo được role.
+    if (!isSuperAdmin && !grantedSections.includes(ALLOWED_SECTION)) {
       throw AppError.forbidden('auth:forbidden');
     }
 

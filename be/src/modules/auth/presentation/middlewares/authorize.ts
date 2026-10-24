@@ -4,6 +4,9 @@ import { hasPermission } from '~/modules/auth/domain/permission-matcher';
 import { AppError } from '~/shared/domain/app-error';
 import { container } from '~/shared/infrastructure/di/container';
 
+// Role đặc biệt: có role này thì bypass toàn bộ permission + section check.
+const SUPER_ADMIN_ROLE_NAME = 'Admin';
+
 export const authorize = (feature: string, action: string): RequestHandler => {
   return async (req: Request, _res: Response, next: NextFunction) => {
     const username = req.user?.username;
@@ -17,6 +20,17 @@ export const authorize = (feature: string, action: string): RequestHandler => {
     try {
       const service = container.resolve(ResolveUserRolePermissionsService);
       const { userRoles, rolePermissionByRoleId } = await service.execute(username, vnnToken);
+
+      // Super admin: có role tên ADMIN thì bypass toàn bộ permission + section check.
+      const isSuperAdmin = [...rolePermissionByRoleId.values()].some(
+        (info) => info.roleName === SUPER_ADMIN_ROLE_NAME,
+      );
+
+      if (isSuperAdmin) {
+        req.authContext = { sections: [], isSuperAdmin: true };
+        next();
+        return;
+      }
 
       // Các roleId có permission khớp feature:action.
       const grantedRoleIds = new Set(
@@ -37,7 +51,7 @@ export const authorize = (feature: string, action: string): RequestHandler => {
         return;
       }
 
-      req.authContext = { sections };
+      req.authContext = { sections, isSuperAdmin: false };
       next();
     } catch (error) {
       next(error);
