@@ -1,0 +1,39 @@
+# Chuẩn hoá line endings cho toàn repo, không phụ thuộc core.autocrlf của từng máy.
+# Mặc định: git tự nhận diện file text và lưu bằng LF trong repo,
+# đồng thời checkout ra working directory cũng bằng LF (khớp với .editorconfig).
+* text=auto eol=lf
+
+# Các loại file text phổ biến trong dự án (khai báo tường minh cho chắc chắn).
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.js    text eol=lf
+*.jsx   text eol=lf
+*.cjs   text eol=lf
+*.mjs   text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.css   text eol=lf
+*.scss  text eol=lf
+*.html  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.prisma text eol=lf
+*.env   text eol=lf
+*.sh    text eol=lf
+
+# Script Windows nên giữ CRLF.
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# File nhị phân: git không được đụng vào (không convert line ending).
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
