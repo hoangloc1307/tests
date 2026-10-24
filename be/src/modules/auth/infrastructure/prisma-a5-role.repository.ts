@@ -84,6 +84,7 @@ export class PrismaA5RoleRepository implements RoleRepository {
       displayName: displayNameByUsername.get(entity.username) ?? null,
       roleId: entity.roleId,
       sectionId: entity.sectionId,
+      isAdmin: entity.isAdmin,
       createdAt: entity.createdAt.toISOString(),
       updatedAt: (entity.updatedAt ?? entity.createdAt).toISOString(),
     }));

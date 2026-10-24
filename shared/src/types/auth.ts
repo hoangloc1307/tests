@@ -26,6 +26,7 @@ export interface RoleListItem {
   displayName: string | null;
   roleId: string;
   sectionId: string;
+  isAdmin: boolean;
   createdAt: string | null;
   updatedAt: string | null;
 }

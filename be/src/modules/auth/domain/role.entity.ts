@@ -3,6 +3,7 @@ export interface RoleProps {
   username: string;
   roleId: string;
   sectionId: string;
+  isAdmin: boolean;
   isActive: boolean;
   createdBy: string;
   createdAt: Date;
@@ -31,6 +32,10 @@ export class Role {
 
   get sectionId(): string {
     return this.props.sectionId.trim();
+  }
+
+  get isAdmin(): boolean {
+    return this.props.isAdmin;
   }
 
   get updatedAt(): Date | null {

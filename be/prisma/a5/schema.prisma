@@ -149,6 +149,7 @@ model UserRole {
   username  String    @map("Username") @db.Char(8)
   roleId    String    @map("RoleId") @db.UniqueIdentifier
   sectionId String    @map("SectionId") @db.Char(4)
+  isAdmin   Boolean   @default(false) @map("IsAdmin")
   isActive  Boolean   @default(true) @map("IsActive")
   createdBy String    @map("CreatedBy") @db.Char(8)
   createdAt DateTime  @default(now()) @map("CreatedAt") @db.DateTime2

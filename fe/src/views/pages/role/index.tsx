@@ -1,4 +1,4 @@
-import { IconDeviceFloppy, IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconDeviceFloppy, IconPencil, IconTrash, IconUserPentagon } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,9 @@ import { masterQueries } from '~/hooks/queries/master.queries';
 import { useAppForm } from '~/hooks/use-app-form';
 import { DeleteRoleDialog } from '~/views/pages/role/delete-role-dialog';
 import { EditRoleDialog } from '~/views/pages/role/edit-role-dialog';
+
+// Section "trống" (không ràng buộc bộ phận) -> không hiển thị gì ở cột bộ phận.
+const EMPTY_SECTION_ID = '0000';
 
 export default function RolePage() {
   const { t } = useTranslation('auth');
@@ -148,35 +151,46 @@ export default function RolePage() {
                 userRoles.map((item) => (
                   <TableRow key={item.id}>
                     <TableCell className='font-medium'>{item.username}</TableCell>
-                    <TableCell>{item.displayName ?? '-'}</TableCell>
+                    <TableCell>
+                      <span className='inline-flex items-center gap-1.5'>
+                        {item.isAdmin && (
+                          <IconUserPentagon className='text-primary size-4 shrink-0' />
+                        )}
+                        {item.displayName ?? '-'}
+                      </span>
+                    </TableCell>
                     <TableCell>{roleNameById.get(item.roleId) ?? item.roleId}</TableCell>
                     <TableCell>
-                      {sectionNameById.get(item.sectionId)
-                        ? `${item.sectionId} - ${sectionNameById.get(item.sectionId)}`
-                        : item.sectionId}
+                      {item.sectionId === EMPTY_SECTION_ID
+                        ? null
+                        : sectionNameById.get(item.sectionId)
+                          ? `${item.sectionId} - ${sectionNameById.get(item.sectionId)}`
+                          : item.sectionId}
                     </TableCell>
                     <TableCell>
                       {item.updatedAt ? new Date(item.updatedAt).toLocaleString() : '-'}
                     </TableCell>
                     <TableCell>
-                      <div className='flex justify-end gap-1'>
-                        <Button
-                          variant='ghost'
-                          size='icon-sm'
-                          aria-label={t('common:edit')}
-                          onClick={() => setEditItem(item)}
-                        >
-                          <IconPencil />
-                        </Button>
-                        <Button
-                          variant='ghost'
-                          size='icon-sm'
-                          aria-label={t('common:delete')}
-                          onClick={() => setDeleteItem(item)}
-                        >
-                          <IconTrash className='text-destructive' />
-                        </Button>
-                      </div>
+                      {!item.isAdmin && (
+                        <div className='flex justify-end gap-1'>
+                          <Button
+                            variant='ghost'
+                            size='icon-sm'
+                            aria-label={t('common:edit')}
+                            onClick={() => setEditItem(item)}
+                          >
+                            <IconPencil />
+                          </Button>
+                          <Button
+                            variant='ghost'
+                            size='icon-sm'
+                            aria-label={t('common:delete')}
+                            onClick={() => setDeleteItem(item)}
+                          >
+                            <IconTrash className='text-destructive' />
+                          </Button>
+                        </div>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))
