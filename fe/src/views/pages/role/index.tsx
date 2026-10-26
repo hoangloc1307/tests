@@ -21,7 +21,6 @@ import { useAppForm } from '~/hooks/use-app-form';
 import { DeleteRoleDialog } from '~/views/pages/role/delete-role-dialog';
 import { EditRoleDialog } from '~/views/pages/role/edit-role-dialog';
 
-// Section "trống" (không ràng buộc bộ phận) -> không hiển thị gì ở cột bộ phận.
 const EMPTY_SECTION_ID = '0000';
 
 export default function RolePage() {
@@ -59,10 +58,13 @@ export default function RolePage() {
       sectionId: '',
     },
     validators: {
-      onSubmit: createRoleSchema,
+      onSubmit: createRoleSchema.omit({ roleName: true }),
     },
     onSubmit: async ({ value, formApi }) => {
-      await createUserRole.mutateAsync(value);
+      await createUserRole.mutateAsync({
+        ...value,
+        roleName: roleNameById.get(value.roleId) ?? '',
+      });
       formApi.reset();
     },
   });

@@ -148,6 +148,7 @@ model UserRole {
   id        String    @id(map: "UserRole_pkey") @default(dbgenerated("newid()"), map: "UserRole_id_df") @map("Id") @db.UniqueIdentifier
   username  String    @map("Username") @db.Char(8)
   roleId    String    @map("RoleId") @db.UniqueIdentifier
+  roleName  String    @default("") @map("RoleName") @db.NVarChar(255)
   sectionId String    @map("SectionId") @db.Char(4)
   isAdmin   Boolean   @default(false) @map("IsAdmin")
   isActive  Boolean   @default(true) @map("IsActive")

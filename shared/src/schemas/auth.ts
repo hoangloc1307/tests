@@ -16,6 +16,7 @@ export type LoginWithCardInput = z.infer<typeof loginWithCardSchema>;
 export const createRoleSchema = z.object({
   username: z.string().nonempty({ message: 'auth:permission.validation.username_required' }),
   roleId: z.string().nonempty({ message: 'auth:permission.validation.role_required' }),
+  roleName: z.string().nonempty({ message: 'auth:permission.validation.role_required' }),
   sectionId: z.string().nonempty({ message: 'auth:permission.validation.section_required' }),
 });
 

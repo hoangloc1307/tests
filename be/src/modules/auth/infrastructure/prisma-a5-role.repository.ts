@@ -52,6 +52,7 @@ export class PrismaA5RoleRepository implements RoleRepository {
         data: {
           username: data.username,
           roleId: data.roleId,
+          roleName: data.roleName,
           sectionId: data.sectionId,
           createdBy: data.createdBy,
         },

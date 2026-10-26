@@ -23,6 +23,7 @@ export class CreateRoleUseCase {
     await this.roleRepository.create({
       username: input.username,
       roleId: input.roleId,
+      roleName: input.roleName,
       sectionId: input.sectionId,
       createdBy: input.createdBy,
     });
