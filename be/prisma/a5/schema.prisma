@@ -20,33 +20,20 @@ model ProcessMaster {
   isLatestVersion      Boolean @default(true) @map("IsLatestVersion") /// Phải phiên bản mới nhất không
   isActive             Boolean @default(true) @map("IsActive") /// Đang được sử dụng không
 
-  processSteps    ProcessStep[]
   documentMasters DocumentMaster[]
 }
 
 /// Bảng master các bước trong quy trình
 model StepMaster {
   id              String  @id @map("Id") @db.UniqueIdentifier
+  documentType    String  @map("DocumentType") @db.VarChar(10) /// Mã loại phiếu. VD: A5
   name            String  @map("Name") @db.NVarChar(255) /// Tên bước
-  nameInFlowable  String? @map("NameInFlowable") @db.NVarChar(255) /// Tên bước trong flowable
+  stepKey         String? @map("StepKey") @db.NVarChar(255) /// Tên bước trong flowable
   description     String? @map("Description") @db.NVarChar(255) /// Mô tả
   fieldControl    String? @map("FieldControl") @db.Text /// Quản lý field
   version         Int     @map("Version") @db.Int /// Phiên bản của bước
   functionHandler String? @map("FunctionHandler") @db.VarChar(100) /// Handler chạy ở bước này trong quy trình này
   isActive        Boolean @default(true) @map("IsActive") /// Đang được sử dụng không
-
-  processSteps ProcessStep[]
-}
-
-/// Bảng map bước vào quy trình
-model ProcessStep {
-  processMasterId String @map("ProcessMasterId") @db.UniqueIdentifier /// Id quy trình
-  stepMasterId    String @map("StepMasterId") @db.UniqueIdentifier /// Id bước
-
-  processMaster ProcessMaster @relation(fields: [processMasterId], references: [id])
-  stepMaster    StepMaster    @relation(fields: [stepMasterId], references: [id])
-
-  @@id([processMasterId, stepMasterId])
 }
 
 /// Bảng master tất cả các phiếu được tạo
