@@ -36,15 +36,10 @@ export class A5DocumentHandler implements DocumentHandler {
       throw AppError.validation('common:error.invalidIssueDate', { issueDate });
     }
 
-    //  Tìm process master của loại phiếu A5
-    const processMaster = await prismaA5.processMaster.findFirst({
-      where: {
-        documentType: this.documentType,
-        isLatestVersion: true,
-      },
-    });
+    //  Tìm process master phiên bản mới nhất đang dùng của loại phiếu A5
+    const processMaster = await this.a5IssueRepo.findLatestProcessMaster(this.documentType);
 
-    if (!processMaster || !processMaster.processDefinitionId) {
+    if (!processMaster) {
       throw AppError.server('common:error.processNotFound', {
         documentType: this.documentType,
       });

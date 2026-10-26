@@ -62,3 +62,8 @@ export interface A5Detail {
 }
 
 export type A5Issue = DocumentMaster & A5Detail;
+
+export interface ProcessMaster {
+  id: string;
+  processDefinitionId: string;
+}

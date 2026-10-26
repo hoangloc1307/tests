@@ -1,4 +1,5 @@
-import type { A5Detail, DocumentMaster } from '~/modules/issue/domain/issue.entity';
+import type { DocumentType } from 'shared/schemas/issue';
+import type { A5Detail, DocumentMaster, ProcessMaster } from '~/modules/issue/domain/issue.entity';
 import type { PrismaClientA5 } from '~/shared/infrastructure/prisma-a5';
 
 export type A5TxClient = Parameters<Parameters<PrismaClientA5['$transaction']>[0]>[0];
@@ -39,4 +40,5 @@ export type CreateA5IssueData = Omit<A5Detail, OptionalFields> &
 
 export interface A5IssueRepository {
   create(data: CreateA5IssueData, tx?: A5TxClient): Promise<DocumentMaster>;
+  findLatestProcessMaster(documentType: DocumentType): Promise<ProcessMaster | null>;
 }

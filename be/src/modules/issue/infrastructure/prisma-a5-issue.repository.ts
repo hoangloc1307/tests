@@ -6,13 +6,34 @@ import type {
   A5TxClient,
   CreateA5IssueData,
 } from '~/modules/issue/domain/a5-issue.repository';
-import type { DocumentMaster } from '~/modules/issue/domain/issue.entity';
+import type { DocumentMaster, ProcessMaster } from '~/modules/issue/domain/issue.entity';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import type { PrismaClientA5 } from '~/shared/infrastructure/prisma-a5';
 
 @injectable()
 export class PrismaA5IssueRepository implements A5IssueRepository {
   constructor(@inject(TOKENS.PrismaClientA5) private readonly prisma: PrismaClientA5) {}
+
+  async findLatestProcessMaster(documentType: DocumentType): Promise<ProcessMaster | null> {
+    const processMaster = await this.prisma.processMaster.findFirst({
+      where: {
+        documentType,
+        isLatestVersion: true,
+        isActive: true,
+      },
+      select: {
+        id: true,
+        processDefinitionId: true,
+      },
+    });
+
+    if (!processMaster?.processDefinitionId) return null;
+
+    return {
+      id: processMaster.id,
+      processDefinitionId: processMaster.processDefinitionId,
+    };
+  }
 
   async create(data: CreateA5IssueData, tx?: A5TxClient): Promise<DocumentMaster> {
     const {
