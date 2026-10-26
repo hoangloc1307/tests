@@ -14,6 +14,8 @@ import { A5DocumentHandler } from '~/modules/issue/application/handlers/a5-docum
 import type { A5IssueRepository } from '~/modules/issue/domain/a5-issue.repository';
 import type { DocumentHandler } from '~/modules/issue/domain/document-handler';
 import { PrismaA5IssueRepository } from '~/modules/issue/infrastructure/prisma-a5-issue.repository';
+import type { TaskRepository } from '~/modules/task/domain/task.repository';
+import { PrismaA5TaskRepository } from '~/modules/task/infrastructure/prisma-a5-task.repository';
 import type { FlowableClient } from '~/shared/application/flowable/flowable-client';
 import type { Logger } from '~/shared/application/logger';
 import type { MailService } from '~/shared/application/mail-service';
@@ -52,5 +54,8 @@ container.registerSingleton<A5IssueRepository>(TOKENS.A5IssueRepository, PrismaA
 
 // Register document handlers (một handler cho mỗi documentType)
 container.registerSingleton<DocumentHandler>(TOKENS.DocumentHandler, A5DocumentHandler);
+
+// Register task services
+container.registerSingleton<TaskRepository>(TOKENS.TaskRepository, PrismaA5TaskRepository);
 
 export { container };

@@ -19,4 +19,7 @@ export const TOKENS = {
   // Issue services
   A5IssueRepository: Symbol.for('A5IssueRepository'),
   DocumentHandler: Symbol.for('DocumentHandler'),
+
+  // Task services
+  TaskRepository: Symbol.for('TaskRepository'),
 } as const;

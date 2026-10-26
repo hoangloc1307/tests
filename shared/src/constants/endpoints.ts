@@ -10,4 +10,8 @@ export const ENDPOINTS = {
     PREFIX: '/issues',
     CREATE: '/',
   },
+  TASK: {
+    PREFIX: '/tasks',
+    LIST: '/',
+  },
 } as const;

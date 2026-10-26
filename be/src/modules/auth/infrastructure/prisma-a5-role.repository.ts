@@ -94,11 +94,12 @@ export class PrismaA5RoleRepository implements RoleRepository {
   async findActiveRolesByUsername(username: string): Promise<ActiveUserRole[]> {
     const rows = await this.prisma.userRole.findMany({
       where: { username: username.trim(), isActive: true },
-      select: { roleId: true, sectionId: true },
+      select: { roleId: true, roleName: true, sectionId: true },
     });
 
     return rows.map((row) => ({
       roleId: row.roleId,
+      roleName: row.roleName,
       sectionId: row.sectionId.trim(),
     }));
   }

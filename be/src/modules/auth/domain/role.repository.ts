@@ -18,6 +18,7 @@ export interface DeleteRoleData {
 
 export interface ActiveUserRole {
   roleId: string;
+  roleName: string;
   sectionId: string;
 }
 
