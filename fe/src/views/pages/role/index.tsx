@@ -15,9 +15,9 @@ import {
 } from '~/components/ui/table';
 import { useCreateUserRole } from '~/hooks/mutations/use-auth';
 import { authQueries } from '~/hooks/queries/auth.queries';
-import { hrQueries } from '~/hooks/queries/hr.queries';
 import { masterQueries } from '~/hooks/queries/master.queries';
 import { useAppForm } from '~/hooks/use-app-form';
+import { useSections } from '~/hooks/use-sections';
 import { DeleteRoleDialog } from '~/views/pages/role/delete-role-dialog';
 import { EditRoleDialog } from '~/views/pages/role/edit-role-dialog';
 
@@ -27,8 +27,8 @@ export default function RolePage() {
   const { t } = useTranslation('auth');
 
   const { data: roles = [] } = useQuery(masterQueries.roles());
-  const { data: sections = [] } = useQuery(hrQueries.sections());
   const { data: userRoles = [] } = useQuery(authQueries.userRoles());
+  const { sectionOptions, getSectionLabel } = useSections();
   const createUserRole = useCreateUserRole();
 
   const [editItem, setEditItem] = useState<RoleListItem | null>(null);
@@ -39,17 +39,8 @@ export default function RolePage() {
     .filter((r) => !r.IsSystemRole)
     .map((r) => ({ value: r.RoleId, label: r.RoleName }));
 
-  const sectionOptions = sections.map((s) => ({
-    value: s.SectionId,
-    label: `${s.SectionId} - ${s.Name}`,
-  }));
-
   // Map id -> tên hiển thị
   const roleNameById = useMemo(() => new Map(roles.map((r) => [r.RoleId, r.RoleName])), [roles]);
-  const sectionNameById = useMemo(
-    () => new Map(sections.map((s) => [s.SectionId, s.Name])),
-    [sections],
-  );
 
   const form = useAppForm({
     defaultValues: {
@@ -163,11 +154,7 @@ export default function RolePage() {
                     </TableCell>
                     <TableCell>{roleNameById.get(item.roleId) ?? item.roleId}</TableCell>
                     <TableCell>
-                      {item.sectionId === EMPTY_SECTION_ID
-                        ? null
-                        : sectionNameById.get(item.sectionId)
-                          ? `${item.sectionId} - ${sectionNameById.get(item.sectionId)}`
-                          : item.sectionId}
+                      {item.sectionId === EMPTY_SECTION_ID ? null : getSectionLabel(item.sectionId)}
                     </TableCell>
                     <TableCell>
                       {item.updatedAt ? new Date(item.updatedAt).toLocaleString() : '-'}

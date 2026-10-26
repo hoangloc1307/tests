@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '~/components/ui/table';
+import { useSections } from '~/hooks/use-sections';
 import { taskQueries } from '~/hooks/queries/task.queries';
 import { formatCompactDate, formatCompactDateTime } from '~/lib/utils';
 
@@ -17,6 +18,7 @@ export default function TaskPage() {
   const { t } = useTranslation('task');
 
   const { data: tasks = [] } = useQuery(taskQueries.list());
+  const { getSectionLabel } = useSections();
 
   return (
     <div className='space-y-4'>
@@ -51,8 +53,8 @@ export default function TaskPage() {
                 <TableRow key={item.taskId}>
                   <TableCell className='font-medium'>{item.documentNo || EMPTY}</TableCell>
                   <TableCell>{item.documentType}</TableCell>
-                  <TableCell>{item.issuingSection || EMPTY}</TableCell>
-                  <TableCell>{item.receivingSection || EMPTY}</TableCell>
+                  <TableCell>{getSectionLabel(item.issuingSection) ?? EMPTY}</TableCell>
+                  <TableCell>{getSectionLabel(item.receivingSection) ?? EMPTY}</TableCell>
                   <TableCell>{formatCompactDate(item.issuingDate) ?? EMPTY}</TableCell>
                   <TableCell>{item.currentStep ?? EMPTY}</TableCell>
                   <TableCell>{item.createdBy || EMPTY}</TableCell>

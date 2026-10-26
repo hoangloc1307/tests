@@ -14,14 +14,14 @@ import {
   type ItemCategory,
 } from 'shared/schemas/issue';
 import { useCreateIssue } from '~/hooks/mutations/use-issue';
-import { hrQueries } from '~/hooks/queries/hr.queries';
 import { masterQueries } from '~/hooks/queries/master.queries';
 import { useAppForm } from '~/hooks/use-app-form';
+import { useSections } from '~/hooks/use-sections';
 import { useAuthStore } from '~/stores/auth';
 
 export default function AbnormalA5Page() {
   const { t, i18n } = useTranslation('issue');
-  const { data: sections = [] } = useQuery(hrQueries.sections());
+  const { sectionOptions } = useSections();
   const { data: processes = [] } = useQuery(masterQueries.processes());
   const user = useAuthStore((s) => s.user);
   const createIssue = useCreateIssue();
@@ -62,11 +62,6 @@ export default function AbnormalA5Page() {
 
   const selectedProcess = useSelector(form.store, (state) => state.values.detectionStage);
   const { data: errors = [] } = useQuery(masterQueries.errorsByProcess(selectedProcess));
-
-  const sectionOptions = sections.map((s) => ({
-    label: `${s.SectionId} - ${s.Name}`,
-    value: s.SectionId,
-  }));
 
   const categoryOptions = IssueCategoryEnum.options.map((value) => ({
     value,
