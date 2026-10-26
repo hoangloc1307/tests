@@ -1,0 +1,15 @@
+{
+  "page_title": "Task list",
+  "table": {
+    "document_no": "Document no.",
+    "document_type": "Type",
+    "issuing_section": "Issuing section",
+    "receiving_section": "Receiving section",
+    "issuing_date": "Issuing date",
+    "current_step": "Current step",
+    "created_by": "Created by",
+    "created_date": "Created date",
+    "reject_reason": "Reject reason",
+    "empty": "No tasks found"
+  }
+}

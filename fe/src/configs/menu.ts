@@ -1,5 +1,6 @@
 import {
   IconBook2,
+  IconClipboardList,
   IconFileAlert,
   IconHelp,
   IconSettings,
@@ -21,6 +22,12 @@ const MAIN_MENU: NavItem[] = [
         featureCode: FEATURES.ISSUE_A5,
       },
     ],
+  },
+  {
+    title: 'navigation:task',
+    url: PATHS.TASK,
+    icon: IconClipboardList,
+    featureCode: FEATURES.TASK,
   },
   {
     title: 'navigation:settings',

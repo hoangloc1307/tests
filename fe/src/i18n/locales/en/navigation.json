@@ -1,6 +1,7 @@
 {
   "issue": "Anomaly",
   "issue_create": "Issue anomaly",
+  "task": "My tasks",
   "settings": "Settings",
   "settings_role": "Permissions",
   "guide": "User guide",

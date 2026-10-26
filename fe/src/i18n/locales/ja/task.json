@@ -1,0 +1,15 @@
+{
+  "page_title": "タスク一覧",
+  "table": {
+    "document_no": "伝票番号",
+    "document_type": "種類",
+    "issuing_section": "発行部署",
+    "receiving_section": "受領部署",
+    "issuing_date": "発行日",
+    "current_step": "現在のステップ",
+    "created_by": "作成者",
+    "created_date": "作成日",
+    "reject_reason": "差戻し理由",
+    "empty": "タスクがありません"
+  }
+}

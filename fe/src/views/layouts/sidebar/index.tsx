@@ -7,9 +7,9 @@ export default function SidebarLayout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className='min-w-0'>
         <SiteHeader />
-        <div className='flex-1 p-4'>
+        <div className='min-w-0 flex-1 p-4'>
           <Outlet />
         </div>
       </SidebarInset>

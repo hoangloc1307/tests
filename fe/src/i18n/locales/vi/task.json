@@ -1,0 +1,15 @@
+{
+  "page_title": "Danh sách công việc",
+  "table": {
+    "document_no": "Mã phiếu",
+    "document_type": "Loại phiếu",
+    "issuing_section": "Bộ phận phát hành",
+    "receiving_section": "Bộ phận tiếp nhận",
+    "issuing_date": "Ngày phát hành",
+    "current_step": "Bước hiện tại",
+    "created_by": "Người tạo",
+    "created_date": "Ngày tạo",
+    "reject_reason": "Lí do trả về",
+    "empty": "Không có công việc nào"
+  }
+}
