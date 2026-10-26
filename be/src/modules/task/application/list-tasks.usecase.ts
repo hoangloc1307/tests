@@ -50,6 +50,7 @@ export class ListTasksUseCase {
 
       result.push({
         taskId: task.id,
+        documentId: document.documentId,
         documentNo: nz(document.documentNo),
         documentType: document.documentType,
         issuingSection: nz(document.issueSection),

@@ -2,6 +2,7 @@ import type { DocumentType } from 'shared/schemas/issue';
 
 export interface TaskListItem {
   taskId: string;
+  documentId: string;
   documentNo: string;
   documentType: DocumentType;
   issuingSection: string;

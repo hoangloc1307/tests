@@ -18,6 +18,7 @@ export class PrismaA5TaskRepository implements TaskRepository {
       },
       select: {
         processInstanceId: true,
+        documentId: true,
         documentNo: true,
         documentType: true,
         issueSection: true,
@@ -30,6 +31,7 @@ export class PrismaA5TaskRepository implements TaskRepository {
 
     return rows.map((row) => ({
       processInstanceId: row.processInstanceId,
+      documentId: row.documentId,
       documentNo: row.documentNo,
       documentType: row.documentType as DocumentType,
       issueSection: row.issueSection,

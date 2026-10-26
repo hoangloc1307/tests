@@ -2,6 +2,7 @@ import type { DocumentType } from 'shared/schemas/issue';
 
 export interface WipDocument {
   processInstanceId: string;
+  documentId: string;
   documentNo: string;
   documentType: DocumentType;
   issueSection: string;
