@@ -1,3 +1,4 @@
+import type { RoleListItem } from 'shared/types/auth';
 import { inject, injectable } from 'tsyringe';
 import { Role } from '~/modules/auth/domain/role.entity';
 import type {
@@ -6,7 +7,6 @@ import type {
   DeleteRoleData,
   RoleRepository,
   UpdateRoleData,
-  UserRoleItem,
 } from '~/modules/auth/domain/role.repository';
 import { AppError } from '~/shared/domain/app-error';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
@@ -60,7 +60,7 @@ export class PrismaA5RoleRepository implements RoleRepository {
     }
   }
 
-  async findAll(): Promise<UserRoleItem[]> {
+  async findAll(): Promise<RoleListItem[]> {
     const rows = await this.prisma.userRole.findMany({
       orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
     });

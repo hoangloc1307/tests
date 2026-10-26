@@ -1,7 +1,7 @@
 import { format, isValid } from 'date-fns';
+import type { TaskListItem } from 'shared/types/task';
 import { inject, injectable } from 'tsyringe';
 import type { RoleRepository } from '~/modules/auth/domain/role.repository';
-import type { TaskListItem } from '~/modules/task/domain/task.entity';
 import type { TaskRepository } from '~/modules/task/domain/task.repository';
 import type { FlowableClient, Task } from '~/shared/application/flowable/flowable-client';
 import { FLOWABLE_VARIABLE_NAME } from '~/shared/application/flowable/flowable-constants';

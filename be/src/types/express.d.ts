@@ -6,7 +6,6 @@ declare global {
       user?: { username: string; vnnToken?: string };
       authContext?: {
         sections: string[];
-        roles: { roleName: string; sectionId: string }[];
         isSuperAdmin: boolean;
       };
       validatedData?: {
