@@ -22,6 +22,7 @@ export const NumberField = ({
   min,
   decimalScale = 0,
   onChange,
+  readOnly,
   ...props
 }: NumberFieldProps) => {
   const id = useId();
@@ -57,7 +58,11 @@ export const NumberField = ({
         aria-invalid={isInvalid}
         thousandSeparator=','
         decimalScale={decimalScale}
+        readOnly={readOnly}
+        tabIndex={readOnly ? -1 : undefined}
+        className={readOnly ? 'field-readonly pointer-events-none' : undefined}
         {...props}
+        placeholder={readOnly ? undefined : props.placeholder}
       />
       {isInvalid && <FieldError>{t(field.state.meta.errors[0].message)}</FieldError>}
     </Field>

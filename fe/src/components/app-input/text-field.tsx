@@ -30,8 +30,10 @@ export const TextField = ({ label, required, readOnly, ...props }: TextFieldProp
         onBlur={field.handleBlur}
         aria-invalid={isInvalid}
         readOnly={readOnly}
-        className={readOnly ? 'text-input-readonly cursor-default' : undefined}
+        tabIndex={readOnly ? -1 : undefined}
+        className={readOnly ? 'field-readonly pointer-events-none' : undefined}
         {...props}
+        placeholder={readOnly ? undefined : props.placeholder}
       />
       {isInvalid && <FieldError>{t(field.state.meta.errors[0].message)}</FieldError>}
     </Field>

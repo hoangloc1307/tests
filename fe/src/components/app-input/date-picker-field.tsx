@@ -20,6 +20,7 @@ type DatePickerFieldProps = {
   label?: string;
   required?: boolean;
   placeholder?: string;
+  readOnly?: boolean;
   onChange?: (value: string | null) => void;
 };
 
@@ -27,6 +28,7 @@ export const DatePickerField = ({
   label,
   required,
   placeholder,
+  readOnly,
   onChange,
 }: DatePickerFieldProps) => {
   const id = useId();
@@ -54,26 +56,31 @@ export const DatePickerField = ({
       >
         {label}
       </FieldLabel>
-      <Popover>
+      <Popover open={readOnly ? false : undefined}>
         <PopoverTrigger
           render={
             <Button
               id={id}
               type='button'
               variant='outline'
+              tabIndex={readOnly ? -1 : undefined}
               className={cn(
-                'text-popover-foreground h-8 w-full justify-start px-2.5 text-left font-normal',
-                !field.state.value && 'text-muted-foreground',
+                'h-8 w-full justify-start px-2.5 text-left font-normal',
+                readOnly ? 'text-input-readonly' : 'text-popover-foreground',
+                !readOnly && !field.state.value && 'text-muted-foreground',
+                readOnly && 'field-readonly pointer-events-none',
               )}
               onBlur={field.handleBlur}
               aria-invalid={isInvalid}
             />
           }
         >
-          <IconCalendar className='mr-2 size-4' />
+          {!readOnly && <IconCalendar className='mr-2 size-4' />}
           {field.state.value
             ? format(dateValue!, 'dd/MM/yyyy')
-            : (placeholder ?? t('common:selectDate'))}
+            : readOnly
+              ? ''
+              : (placeholder ?? t('common:selectDate'))}
         </PopoverTrigger>
         <PopoverContent className='w-auto p-0' align='start'>
           <Calendar

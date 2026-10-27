@@ -5,6 +5,22 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Field ở chế độ chỉ xem: chữ xanh, con trỏ mặc định, tắt focus ring & hover. */
+@utility field-readonly {
+  color: var(--input-readonly);
+  cursor: default;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  &:focus-visible {
+    border-color: var(--input);
+    box-shadow: none;
+    --tw-ring-shadow: 0 0 #0000;
+  }
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: 'Inter Variable', sans-serif;

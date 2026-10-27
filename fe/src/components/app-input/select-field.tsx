@@ -22,6 +22,7 @@ type SelectFieldProps = {
     value: string;
   }[];
   disabled?: boolean;
+  readOnly?: boolean;
 };
 
 export const SelectField = ({
@@ -31,6 +32,7 @@ export const SelectField = ({
   emptyText,
   options,
   disabled,
+  readOnly,
 }: SelectFieldProps) => {
   const id = useId();
   const { t } = useTranslation();
@@ -50,9 +52,19 @@ export const SelectField = ({
         value={field.state.value}
         onValueChange={(val) => val && field.handleChange(val)}
         disabled={disabled}
+        {...(readOnly ? { open: false } : {})}
       >
-        <SelectTrigger id={id} aria-invalid={isInvalid} onBlur={field.handleBlur}>
-          <SelectValue placeholder={placeholder}>{selectedOption?.label}</SelectValue>
+        <SelectTrigger
+          id={id}
+          aria-invalid={isInvalid}
+          onBlur={field.handleBlur}
+          hideIcon={readOnly}
+          tabIndex={readOnly ? -1 : undefined}
+          className={readOnly ? 'field-readonly pointer-events-none' : undefined}
+        >
+          <SelectValue placeholder={readOnly ? undefined : placeholder}>
+            {selectedOption?.label}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

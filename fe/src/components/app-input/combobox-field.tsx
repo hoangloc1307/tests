@@ -22,6 +22,7 @@ type ComboboxFieldProps = {
   options: Option[];
   placeholder?: string;
   disabled?: boolean;
+  readOnly?: boolean;
   onChange?: (value: string) => void;
 };
 
@@ -31,6 +32,7 @@ export const ComboboxField = ({
   options,
   placeholder,
   disabled,
+  readOnly,
   onChange,
 }: ComboboxFieldProps) => {
   const id = useId();
@@ -57,14 +59,19 @@ export const ComboboxField = ({
         }}
         itemToStringValue={(item) => item.label}
         disabled={disabled}
+        {...(readOnly ? { open: false } : {})}
       >
         <ComboboxInput
           id={id}
-          placeholder={placeholder}
-          showClear={!!field.state.value}
+          placeholder={readOnly ? undefined : placeholder}
+          showTrigger={!readOnly}
+          showClear={!readOnly && !!field.state.value}
           onBlur={field.handleBlur}
           aria-invalid={isInvalid}
           disabled={disabled}
+          readOnly={readOnly}
+          tabIndex={readOnly ? -1 : undefined}
+          className={readOnly ? 'field-readonly pointer-events-none' : undefined}
         />
         <ComboboxContent>
           <ComboboxEmpty>{t('common:noResults', { defaultValue: 'Không tìm thấy' })}</ComboboxEmpty>
