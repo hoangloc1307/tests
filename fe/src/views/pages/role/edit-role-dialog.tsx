@@ -25,7 +25,7 @@ export function EditRoleDialog({
   sectionOptions,
   onOpenChange,
 }: EditRoleDialogProps) {
-  const { t } = useTranslation('auth');
+  const { t } = useTranslation();
   const updateUserRole = useUpdateUserRole();
 
   const form = useAppForm({
@@ -51,7 +51,7 @@ export function EditRoleDialog({
     <Dialog open={!!item} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t('permission.edit_title')}</DialogTitle>
+          <DialogTitle>{t('auth:permission.edit_title')}</DialogTitle>
         </DialogHeader>
 
         <form
@@ -63,7 +63,7 @@ export function EditRoleDialog({
           className='flex flex-col gap-4'
         >
           <div className='text-sm'>
-            <span className='text-muted-foreground'>{t('permission.employee_code')}: </span>
+            <span className='text-muted-foreground'>{t('auth:permission.employee_code')}: </span>
             <span className='font-medium'>{item?.username}</span>
             {item?.displayName ? ` - ${item.displayName}` : ''}
           </div>
@@ -72,9 +72,9 @@ export function EditRoleDialog({
             name='roleId'
             children={(field) => (
               <field.SelectField
-                label={t('permission.role')}
+                label={t('auth:permission.role')}
                 options={roleOptions}
-                placeholder={t('permission.role_placeholder')}
+                placeholder={t('auth:permission.role_placeholder')}
                 required
               />
             )}
@@ -84,9 +84,9 @@ export function EditRoleDialog({
             name='sectionId'
             children={(field) => (
               <field.ComboboxField
-                label={t('permission.section')}
+                label={t('auth:permission.section')}
                 options={sectionOptions}
-                placeholder={t('permission.section_placeholder')}
+                placeholder={t('auth:permission.section_placeholder')}
                 required
               />
             )}

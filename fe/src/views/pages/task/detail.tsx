@@ -5,7 +5,7 @@ import { taskQueries } from '~/hooks/queries/task.queries';
 import { renderTaskDetail } from '~/views/pages/task/details/registry';
 
 export default function TaskDetailPage() {
-  const { t } = useTranslation('task');
+  const { t } = useTranslation();
   const { documentId = '', taskId = '' } = useParams();
 
   const { data: task, isPending, isError } = useQuery(taskQueries.detail(documentId, taskId));
@@ -19,7 +19,7 @@ export default function TaskDetailPage() {
   }
 
   if (isError || !task) {
-    return <p className='text-muted-foreground py-10 text-center'>{t('detail.not_found')}</p>;
+    return <p className='text-muted-foreground py-10 text-center'>{t('task:detail.not_found')}</p>;
   }
 
   const view = renderTaskDetail(task);
@@ -27,7 +27,7 @@ export default function TaskDetailPage() {
   if (!view) {
     return (
       <p className='text-muted-foreground py-10 text-center'>
-        {t('detail.unsupported_type', { documentType: task.documentType })}
+        {t('task:detail.unsupported_type', { documentType: task.documentType })}
       </p>
     );
   }

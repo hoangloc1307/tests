@@ -28,11 +28,11 @@ const toFormValues = (task: A5TaskDetailResponse): A5FormValues => ({
 });
 
 export default function A5TaskDetailView({ task }: { task: A5TaskDetailResponse }) {
-  const { t } = useTranslation('task');
+  const { t } = useTranslation();
 
   return (
     <A5IssueForm
-      title={`${t('detail.title')} - ${task.documentNo}`}
+      title={`${t('task:detail.title')} - ${task.documentNo}`}
       defaultValues={toFormValues(task)}
       readOnly
     />

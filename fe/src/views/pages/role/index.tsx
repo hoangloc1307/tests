@@ -24,7 +24,7 @@ import { EditRoleDialog } from '~/views/pages/role/edit-role-dialog';
 const EMPTY_SECTION_ID = '0000';
 
 export default function RolePage() {
-  const { t } = useTranslation('auth');
+  const { t } = useTranslation();
 
   const { data: roles = [] } = useQuery(masterQueries.roles());
   const { data: userRoles = [] } = useQuery(authQueries.userRoles());
@@ -81,8 +81,8 @@ export default function RolePage() {
           name='username'
           children={(field) => (
             <field.TextField
-              label={t('permission.employee_code')}
-              placeholder={t('permission.employee_code_placeholder')}
+              label={t('auth:permission.employee_code')}
+              placeholder={t('auth:permission.employee_code_placeholder')}
               required
             />
           )}
@@ -92,9 +92,9 @@ export default function RolePage() {
           name='roleId'
           children={(field) => (
             <field.SelectField
-              label={t('permission.role')}
+              label={t('auth:permission.role')}
               options={roleOptions}
-              placeholder={t('permission.role_placeholder')}
+              placeholder={t('auth:permission.role_placeholder')}
               required
             />
           )}
@@ -104,9 +104,9 @@ export default function RolePage() {
           name='sectionId'
           children={(field) => (
             <field.ComboboxField
-              label={t('permission.section')}
+              label={t('auth:permission.section')}
               options={sectionOptions}
-              placeholder={t('permission.section_placeholder')}
+              placeholder={t('auth:permission.section_placeholder')}
               required
             />
           )}
@@ -120,24 +120,24 @@ export default function RolePage() {
 
       {/* Danh sách phân quyền */}
       <div className='space-y-2'>
-        <h2 className='text-foreground text-lg font-semibold'>{t('permission.list_title')}</h2>
+        <h2 className='text-foreground text-lg font-semibold'>{t('auth:permission.list_title')}</h2>
         <div className='rounded-lg border'>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{t('permission.table.employee_code')}</TableHead>
-                <TableHead>{t('permission.table.employee_name')}</TableHead>
-                <TableHead>{t('permission.table.role')}</TableHead>
-                <TableHead>{t('permission.table.section')}</TableHead>
-                <TableHead>{t('permission.table.updated_at')}</TableHead>
-                <TableHead className='text-right'>{t('permission.table.actions')}</TableHead>
+                <TableHead>{t('auth:permission.table.employee_code')}</TableHead>
+                <TableHead>{t('auth:permission.table.employee_name')}</TableHead>
+                <TableHead>{t('auth:permission.table.role')}</TableHead>
+                <TableHead>{t('auth:permission.table.section')}</TableHead>
+                <TableHead>{t('auth:permission.table.updated_at')}</TableHead>
+                <TableHead className='text-right'>{t('auth:permission.table.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {userRoles.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className='text-muted-foreground py-6 text-center'>
-                    {t('permission.table.empty')}
+                    {t('auth:permission.table.empty')}
                   </TableCell>
                 </TableRow>
               ) : (

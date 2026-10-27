@@ -55,7 +55,7 @@ export default function A5IssueForm({
   readOnly = false,
   onSubmit,
 }: A5IssueFormProps) {
-  const { t } = useTranslation('issue');
+  const { t } = useTranslation();
   const { sectionOptions } = useSections();
   const { processOptions } = useProcesses();
 
@@ -77,17 +77,17 @@ export default function A5IssueForm({
 
   const categoryOptions = IssueCategoryEnum.options.map((value) => ({
     value,
-    label: t(`category_options.${value}`),
+    label: t(`issue:category_options.${value}`),
   }));
 
   const detectionTypeOptions = ItemCategoryEnum.options.map((value) => ({
     value,
-    label: t(`detection_type_options.${value}`),
+    label: t(`issue:detection_type_options.${value}`),
   }));
 
   const anomalyLocationOptions = AbnormalAreaEnum.options.map((value) => ({
     value,
-    label: t(`anomaly_location_options.${value}`),
+    label: t(`issue:anomaly_location_options.${value}`),
   }));
 
   return (
@@ -116,17 +116,17 @@ export default function A5IssueForm({
       </div>
 
       {/* Thông tin phát hành */}
-      <h2 className='border-b font-semibold capitalize'>{t('info_title')}</h2>
+      <h2 className='border-b font-semibold capitalize'>{t('issue:info_title')}</h2>
       <div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
         {/* Bộ phận phát hành */}
         <form.AppField
           name='issueSection'
           children={(field) => (
             <field.ComboboxField
-              label={t('section')}
+              label={t('issue:section')}
               required
               options={sectionOptions}
-              placeholder={t('section_placeholder')}
+              placeholder={t('issue:section_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -134,13 +134,13 @@ export default function A5IssueForm({
         {/* Nhân viên ghi nhận */}
         <form.AppField
           name='detectedBy'
-          children={(field) => <field.TextField label={t('recorder')} readOnly />}
+          children={(field) => <field.TextField label={t('issue:recorder')} readOnly />}
         />
         {/* Ngày phát hành */}
         <form.AppField
           name='issueDate'
           children={(field) => (
-            <field.DatePickerField label={t('issue_date')} required readOnly={readOnly} />
+            <field.DatePickerField label={t('issue:issue_date')} required readOnly={readOnly} />
           )}
         />
         {/* Mã phiếu */}
@@ -148,8 +148,8 @@ export default function A5IssueForm({
           name='documentNo'
           children={(field) => (
             <field.TextField
-              label={t('issue_code')}
-              placeholder={t('issue_code_placeholder')}
+              label={t('issue:issue_code')}
+              placeholder={t('issue:issue_code_placeholder')}
               readOnly
             />
           )}
@@ -157,15 +157,15 @@ export default function A5IssueForm({
       </div>
 
       {/* Thông tin ghi nhận */}
-      <h2 className='border-b font-semibold capitalize'>{t('record_info_title')}</h2>
+      <h2 className='border-b font-semibold capitalize'>{t('issue:record_info_title')}</h2>
       <div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
         {/* Job no */}
         <form.AppField
           name='jobOrderNo'
           children={(field) => (
             <field.TextField
-              label={t('job_no')}
-              placeholder={t('job_no_placeholder')}
+              label={t('issue:job_no')}
+              placeholder={t('issue:job_no_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -175,10 +175,10 @@ export default function A5IssueForm({
           name='issueCategory'
           children={(field) => (
             <field.SelectField
-              label={t('category')}
+              label={t('issue:category')}
               required
               options={categoryOptions}
-              placeholder={t('category_placeholder')}
+              placeholder={t('issue:category_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -188,10 +188,10 @@ export default function A5IssueForm({
           name='itemCategory'
           children={(field) => (
             <field.SelectField
-              label={t('detection_type')}
+              label={t('issue:detection_type')}
               required
               options={detectionTypeOptions}
-              placeholder={t('detection_type_placeholder')}
+              placeholder={t('issue:detection_type_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -201,9 +201,9 @@ export default function A5IssueForm({
           name='itemCode'
           children={(field) => (
             <field.TextField
-              label={t('product_code')}
+              label={t('issue:product_code')}
               required
-              placeholder={t('product_code_placeholder')}
+              placeholder={t('issue:product_code_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -213,10 +213,10 @@ export default function A5IssueForm({
           name='detectionStage'
           children={(field) => (
             <field.ComboboxField
-              label={t('detection_process')}
+              label={t('issue:detection_process')}
               required
               options={processOptions}
-              placeholder={t('detection_process_placeholder')}
+              placeholder={t('issue:detection_process_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -226,10 +226,10 @@ export default function A5IssueForm({
           name='detectionContent'
           children={(field) => (
             <field.ComboboxField
-              label={t('error_name')}
+              label={t('issue:error_name')}
               required
               options={errorOptions}
-              placeholder={t('error_name_placeholder')}
+              placeholder={t('issue:error_name_placeholder')}
               readOnly={readOnly}
               disabled={!readOnly && !selectedProcess}
             />
@@ -240,9 +240,9 @@ export default function A5IssueForm({
           name='lotNo'
           children={(field) => (
             <field.TextField
-              label={t('lot_no')}
+              label={t('issue:lot_no')}
               required
-              placeholder={t('lot_no_placeholder')}
+              placeholder={t('issue:lot_no_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -252,9 +252,9 @@ export default function A5IssueForm({
           name='lineNo'
           children={(field) => (
             <field.TextField
-              label={t('line')}
+              label={t('issue:line')}
               required
-              placeholder={t('line_placeholder')}
+              placeholder={t('issue:line_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -264,9 +264,9 @@ export default function A5IssueForm({
           name='machineNo'
           children={(field) => (
             <field.TextField
-              label={t('machine')}
+              label={t('issue:machine')}
               required
-              placeholder={t('machine_placeholder')}
+              placeholder={t('issue:machine_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -276,9 +276,9 @@ export default function A5IssueForm({
           name='glue'
           children={(field) => (
             <field.TextField
-              label={t('glue')}
+              label={t('issue:glue')}
               required
-              placeholder={t('glue_placeholder')}
+              placeholder={t('issue:glue_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -288,9 +288,9 @@ export default function A5IssueForm({
           name='rubber'
           children={(field) => (
             <field.TextField
-              label={t('rubber')}
+              label={t('issue:rubber')}
               required
-              placeholder={t('rubber_placeholder')}
+              placeholder={t('issue:rubber_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -300,9 +300,9 @@ export default function A5IssueForm({
           name='batchNo'
           children={(field) => (
             <field.TextField
-              label={t('batch')}
+              label={t('issue:batch')}
               required
-              placeholder={t('batch_placeholder')}
+              placeholder={t('issue:batch_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -312,9 +312,9 @@ export default function A5IssueForm({
           name='detectedQuantity'
           children={(field) => (
             <field.NumberField
-              label={t('quantity')}
+              label={t('issue:quantity')}
               required
-              placeholder={t('quantity_placeholder')}
+              placeholder={t('issue:quantity_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -324,10 +324,10 @@ export default function A5IssueForm({
           name='abnormalArea'
           children={(field) => (
             <field.SelectField
-              label={t('anomaly_location')}
+              label={t('issue:anomaly_location')}
               required
               options={anomalyLocationOptions}
-              placeholder={t('anomaly_location_placeholder')}
+              placeholder={t('issue:anomaly_location_placeholder')}
               readOnly={readOnly}
             />
           )}
@@ -337,9 +337,9 @@ export default function A5IssueForm({
           name='normalDescription'
           children={(field) => (
             <field.TextareaField
-              label={t('normal_condition')}
+              label={t('issue:normal_condition')}
               required
-              placeholder={t('normal_condition_placeholder')}
+              placeholder={t('issue:normal_condition_placeholder')}
               rows={4}
               readOnly={readOnly}
             />
@@ -350,9 +350,9 @@ export default function A5IssueForm({
           name='abnormalDescription'
           children={(field) => (
             <field.TextareaField
-              label={t('abnormal_condition')}
+              label={t('issue:abnormal_condition')}
               required
-              placeholder={t('abnormal_condition_placeholder')}
+              placeholder={t('issue:abnormal_condition_placeholder')}
               rows={4}
               readOnly={readOnly}
             />

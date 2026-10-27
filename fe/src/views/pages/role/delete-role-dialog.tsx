@@ -18,7 +18,7 @@ interface DeleteRoleDialogProps {
 }
 
 export function DeleteRoleDialog({ item, onOpenChange }: DeleteRoleDialogProps) {
-  const { t } = useTranslation('auth');
+  const { t } = useTranslation();
   const deleteUserRole = useDeleteUserRole();
 
   const handleDelete = async () => {
@@ -31,11 +31,10 @@ export function DeleteRoleDialog({ item, onOpenChange }: DeleteRoleDialogProps) 
     <Dialog open={!!item} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t('permission.delete_confirm_title')}</DialogTitle>
+          <DialogTitle>{t('auth:permission.delete_confirm_title')}</DialogTitle>
           <DialogDescription>
             <Trans
-              i18nKey='permission.delete_confirm_description'
-              ns='auth'
+              i18nKey='auth:permission.delete_confirm_description'
               values={{
                 name: item?.displayName ? `${item.username} - ${item.displayName}` : item?.username,
               }}

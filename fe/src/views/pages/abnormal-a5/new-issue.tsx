@@ -11,7 +11,7 @@ import { useAuthStore } from '~/stores/auth';
 import A5IssueForm, { type A5FormValues } from '~/views/pages/abnormal-a5/a5-issue-form';
 
 export default function AbnormalA5Page() {
-  const { t } = useTranslation('issue');
+  const { t } = useTranslation();
   const user = useAuthStore((s) => s.user);
   const createIssue = useCreateIssue();
 

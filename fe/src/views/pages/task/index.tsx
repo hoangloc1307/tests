@@ -17,7 +17,7 @@ import { buildUrl, formatCompactDate, formatCompactDateTime } from '~/lib/utils'
 const EMPTY = '-';
 
 export default function TaskPage() {
-  const { t } = useTranslation('task');
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { data: tasks = [] } = useQuery(taskQueries.list());
@@ -33,22 +33,22 @@ export default function TaskPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>{t('table.document_no')}</TableHead>
-              <TableHead>{t('table.document_type')}</TableHead>
-              <TableHead>{t('table.issuing_section')}</TableHead>
-              <TableHead>{t('table.receiving_section')}</TableHead>
-              <TableHead>{t('table.issuing_date')}</TableHead>
-              <TableHead>{t('table.current_step')}</TableHead>
-              <TableHead>{t('table.created_by')}</TableHead>
-              <TableHead>{t('table.created_date')}</TableHead>
-              <TableHead>{t('table.reject_reason')}</TableHead>
+              <TableHead>{t('task:table.document_no')}</TableHead>
+              <TableHead>{t('task:table.document_type')}</TableHead>
+              <TableHead>{t('task:table.issuing_section')}</TableHead>
+              <TableHead>{t('task:table.receiving_section')}</TableHead>
+              <TableHead>{t('task:table.issuing_date')}</TableHead>
+              <TableHead>{t('task:table.current_step')}</TableHead>
+              <TableHead>{t('task:table.created_by')}</TableHead>
+              <TableHead>{t('task:table.created_date')}</TableHead>
+              <TableHead>{t('task:table.reject_reason')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {tasks.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={9} className='text-muted-foreground py-6 text-center'>
-                  {t('table.empty')}
+                  {t('task:table.empty')}
                 </TableCell>
               </TableRow>
             ) : (

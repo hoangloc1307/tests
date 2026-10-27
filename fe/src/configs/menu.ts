@@ -45,17 +45,17 @@ const MAIN_MENU: NavItem[] = [
 
 const SECONDARY_MENU = [
   {
-    title: 'guide',
+    title: 'navigation:guide',
     url: '/',
     icon: IconBook2,
   },
   {
-    title: 'support',
+    title: 'navigation:support',
     url: '/',
     icon: IconHelp,
   },
   {
-    title: 'version_history',
+    title: 'navigation:version_history',
     url: PATHS.VERSION_HISTORY,
     icon: IconTimeline,
   },
