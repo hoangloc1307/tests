@@ -1,7 +1,7 @@
 import CONFIG from '~/configs/app';
 import { masterApi } from '~/lib/axios';
 
-interface Process {
+export interface Process {
   ProcessId: string;
   OperationNameVI: string;
   OperationNameEn: string;
@@ -16,7 +16,7 @@ interface Process {
   UpdatedAt: string;
 }
 
-interface ErrorConfig {
+export interface ErrorConfig {
   ErrorCode: string;
   ProcessId: string;
   IsActive: boolean;

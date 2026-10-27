@@ -11,5 +11,10 @@
     "created_date": "Ngày tạo",
     "reject_reason": "Lí do trả về",
     "empty": "Không có công việc nào"
+  },
+  "detail": {
+    "title": "Chi tiết công việc",
+    "not_found": "Không tìm thấy công việc",
+    "unsupported_type": "Chưa hỗ trợ hiển thị loại phiếu {{documentType}}"
   }
 }

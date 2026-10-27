@@ -11,5 +11,10 @@
     "created_date": "Created date",
     "reject_reason": "Reject reason",
     "empty": "No tasks found"
+  },
+  "detail": {
+    "title": "Task detail",
+    "not_found": "Task not found",
+    "unsupported_type": "Document type {{documentType}} is not supported yet"
   }
 }

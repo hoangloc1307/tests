@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { ENDPOINTS } from 'shared/constants/endpoints';
 import {
   Table,
   TableBody,
@@ -10,12 +12,13 @@ import {
 } from '~/components/ui/table';
 import { useSections } from '~/hooks/use-sections';
 import { taskQueries } from '~/hooks/queries/task.queries';
-import { formatCompactDate, formatCompactDateTime } from '~/lib/utils';
+import { buildUrl, formatCompactDate, formatCompactDateTime } from '~/lib/utils';
 
 const EMPTY = '-';
 
 export default function TaskPage() {
   const { t } = useTranslation('task');
+  const navigate = useNavigate();
 
   const { data: tasks = [] } = useQuery(taskQueries.list());
   const { getSectionLabel } = useSections();
@@ -50,7 +53,18 @@ export default function TaskPage() {
               </TableRow>
             ) : (
               tasks.map((item) => (
-                <TableRow key={item.taskId}>
+                <TableRow
+                  key={item.taskId}
+                  className='hover:bg-muted/50 cursor-pointer'
+                  onClick={() =>
+                    navigate(
+                      buildUrl(ENDPOINTS.TASK.PREFIX, ENDPOINTS.TASK.DETAIL, {
+                        documentId: item.documentId,
+                        taskId: item.taskId,
+                      }),
+                    )
+                  }
+                >
                   <TableCell className='font-medium'>{item.documentNo || EMPTY}</TableCell>
                   <TableCell>{item.documentType}</TableCell>
                   <TableCell>{getSectionLabel(item.issuingSection) ?? EMPTY}</TableCell>

@@ -11,5 +11,10 @@
     "created_date": "作成日",
     "reject_reason": "差戻し理由",
     "empty": "タスクがありません"
+  },
+  "detail": {
+    "title": "タスク詳細",
+    "not_found": "タスクが見つかりません",
+    "unsupported_type": "伝票種類 {{documentType}} はまだ対応していません"
   }
 }

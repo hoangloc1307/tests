@@ -10,6 +10,7 @@ import LoginWithCardPage from '~/views/pages/auth/login-with-card';
 import ProfilePage from '~/views/pages/auth/profile';
 import RolePage from '~/views/pages/role';
 import TaskPage from '~/views/pages/task';
+import TaskDetailPage from '~/views/pages/task/detail';
 import VersionHistoryPage from '~/views/pages/version-history';
 
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
           {
             path: PATHS.TASK,
             element: <TaskPage />,
+          },
+          {
+            path: PATHS.TASK_DETAIL,
+            element: <TaskDetailPage />,
           },
         ],
       },

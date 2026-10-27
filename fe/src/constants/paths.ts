@@ -8,6 +8,7 @@ const PATHS = {
   VERSION_HISTORY: '/version-history',
   ROLE: '/roles',
   TASK: '/tasks',
+  TASK_DETAIL: '/tasks/:documentId/:taskId',
   A5: `/${DOCUMENT_TYPE.A5.toLocaleLowerCase()}`,
 } as const;
 

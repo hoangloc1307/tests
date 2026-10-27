@@ -3,12 +3,10 @@ import type { TaskListItem } from 'shared/types/task';
 import { inject, injectable } from 'tsyringe';
 import type { RoleRepository } from '~/modules/auth/domain/role.repository';
 import type { TaskRepository } from '~/modules/task/domain/task.repository';
-import type { FlowableClient, Task } from '~/shared/application/flowable/flowable-client';
-import { FLOWABLE_VARIABLE_NAME } from '~/shared/application/flowable/flowable-constants';
+import type { FlowableClient } from '~/shared/application/flowable/flowable-client';
+import { extractRejectReason } from '~/shared/application/flowable/flowable-task';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
-
-/** Chuẩn hoá chuỗi: trim, trả về null nếu rỗng. */
-const nz = (value: string | null | undefined): string => value?.trim() ?? '';
+import { normalizeString as nz } from '~/shared/utils/string';
 
 @injectable()
 export class ListTasksUseCase {
@@ -61,18 +59,10 @@ export class ListTasksUseCase {
         createdDate: isValid(document.createdAt)
           ? format(document.createdAt, 'yyyyMMddHHmmss')
           : null,
-        rejectReason: this.extractRejectReason(task),
+        rejectReason: extractRejectReason(task),
       });
     }
 
     return result;
-  }
-
-  /** Lấy lí do trả về/từ chối từ biến local của task (nếu có). */
-  private extractRejectReason(task: Task): string | null {
-    const comment = (task.variables ?? []).find(
-      (v) => v.name === FLOWABLE_VARIABLE_NAME.COMMENT,
-    )?.value;
-    return typeof comment === 'string' ? comment : null;
   }
 }

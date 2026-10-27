@@ -1,6 +1,11 @@
 import { DOCUMENT_STATUS, type DocumentType } from 'shared/schemas/issue';
 import { inject, injectable } from 'tsyringe';
-import type { TaskRepository, TaskStep, WipDocument } from '~/modules/task/domain/task.repository';
+import type {
+  DocumentMasterInfo,
+  TaskRepository,
+  TaskStep,
+  WipDocument,
+} from '~/modules/task/domain/task.repository';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import type { PrismaClientA5 } from '~/shared/infrastructure/prisma-a5';
 
@@ -62,5 +67,38 @@ export class PrismaA5TaskRepository implements TaskRepository {
         stepKey: row.stepKey,
         name: row.name,
       }));
+  }
+
+  async findDocumentMasterById(documentId: string): Promise<DocumentMasterInfo | null> {
+    const row = await this.prisma.documentMaster.findUnique({
+      where: { documentId },
+      select: {
+        processInstanceId: true,
+        documentId: true,
+        documentNo: true,
+        documentType: true,
+        status: true,
+        issueSection: true,
+        receiveSection: true,
+        issueDate: true,
+        createdBy: true,
+        createdAt: true,
+      },
+    });
+
+    if (!row) return null;
+
+    return {
+      processInstanceId: row.processInstanceId,
+      documentId: row.documentId,
+      documentNo: row.documentNo,
+      documentType: row.documentType as DocumentType,
+      status: row.status,
+      issueSection: row.issueSection,
+      receiveSection: row.receiveSection,
+      issueDate: row.issueDate,
+      createdBy: row.createdBy,
+      createdAt: row.createdAt,
+    };
   }
 }

@@ -13,5 +13,6 @@ export const ENDPOINTS = {
   TASK: {
     PREFIX: '/tasks',
     LIST: '/',
+    DETAIL: '/:documentId/:taskId',
   },
 } as const;

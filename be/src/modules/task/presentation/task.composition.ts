@@ -9,5 +9,7 @@ export const createTaskRouter = (): Router => {
 
   router.get(ENDPOINTS.TASK.LIST, controller.list);
 
+  router.get(ENDPOINTS.TASK.DETAIL, controller.detail);
+
   return router;
 };
