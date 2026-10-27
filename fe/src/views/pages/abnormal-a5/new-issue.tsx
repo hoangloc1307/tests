@@ -17,7 +17,7 @@ export default function AbnormalA5Page() {
 
   const defaultValues: A5FormValues = {
     documentType: DOCUMENT_TYPE.A5,
-    documentNo: '',
+    documentNo: DOCUMENT_TYPE.A5,
     issueSection: '',
     issueCategory: '' as IssueCategory | '',
     itemCategory: '' as ItemCategory | '',

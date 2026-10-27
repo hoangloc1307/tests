@@ -19,7 +19,11 @@ export const TextareaField = ({ label, required, readOnly, ...props }: TextareaF
     <Field data-invalid={isInvalid} className='gap-1'>
       <FieldLabel
         htmlFor={id}
-        className={required ? "after:text-destructive after:-ml-1 after:content-['*']" : undefined}
+        className={
+          required && !readOnly
+            ? "after:text-destructive after:-ml-1 after:content-['*']"
+            : undefined
+        }
       >
         {label}
       </FieldLabel>
