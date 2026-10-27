@@ -1,7 +1,7 @@
 import type { CreateIssueInput } from 'shared/schemas/issue';
 import { inject, injectable } from 'tsyringe';
 import { DocumentHandlerRegistry } from '~/modules/issue/application/handlers/document-handler.registry';
-import { flowableApproval } from '~/shared/application/flowable/flowable-approval';
+import { flowableApproval } from '~/shared/application/flowable/flowable-task';
 import type { FlowableClient } from '~/shared/application/flowable/flowable-client';
 import {
   FLOWABLE_VARIABLE_NAME,

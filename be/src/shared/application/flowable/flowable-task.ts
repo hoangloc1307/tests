@@ -1,4 +1,4 @@
-import type { FlowableClient, ProcessVariable } from './flowable-client';
+import type { FlowableClient, ProcessVariable, Task } from './flowable-client';
 import {
   FLOWABLE_APPROVAL,
   FLOWABLE_VARIABLE_NAME,
@@ -13,6 +13,9 @@ export interface FlowableApprovalInput {
   variables?: ProcessVariable[];
 }
 
+/**
+ * Hoàn thành task: mặc định duyệt (APPROVED) sang bước tiếp theo nếu không chỉ định approval.
+ */
 export const flowableApproval = async (
   flowableClient: FlowableClient,
   { taskId, completedBy, approval, variables = [] }: FlowableApprovalInput,
@@ -37,4 +40,15 @@ export const flowableApproval = async (
   ];
 
   return flowableClient.completeTask(taskId, vars);
+};
+
+/**
+ * Lấy lí do trả về/từ chối từ biến local của task (nếu có).
+ * Trả về null khi không có biến comment hoặc giá trị không phải chuỗi.
+ */
+export const extractRejectReason = (task: Task): string | null => {
+  const comment = (task.variables ?? []).find(
+    (v) => v.name === FLOWABLE_VARIABLE_NAME.COMMENT,
+  )?.value;
+  return typeof comment === 'string' ? comment : null;
 };
