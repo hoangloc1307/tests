@@ -1,7 +1,10 @@
+import { IconCheck, IconCornerUpLeft } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { DOCUMENT_TYPE } from 'shared/schemas/issue';
 import type { A5TaskDetailResponse } from 'shared/types/task';
-import A5IssueForm, { type A5FormValues } from '~/views/pages/abnormal-a5/a5-issue-form';
+import { Button } from '~/components/ui/button';
+import A5IssueForm from '~/views/pages/abnormal-a5/a5-issue-form';
+import { useA5IssueForm, type A5FormValues } from '~/views/pages/abnormal-a5/use-a5-issue-form';
 
 const toFormValues = (task: A5TaskDetailResponse): A5FormValues => ({
   documentType: DOCUMENT_TYPE.A5,
@@ -30,11 +33,23 @@ const toFormValues = (task: A5TaskDetailResponse): A5FormValues => ({
 export default function A5TaskDetailView({ task }: { task: A5TaskDetailResponse }) {
   const { t } = useTranslation();
 
+  const form = useA5IssueForm({ defaultValues: toFormValues(task), readOnly: true });
+
   return (
     <A5IssueForm
-      title={`${t('task:detail.title')} - ${task.documentNo}`}
-      defaultValues={toFormValues(task)}
+      form={form}
+      title={`${t('task:detail.title')}: ${task.documentNo}`}
       readOnly
+      actions={
+        <div className='flex gap-2'>
+          <Button type='button' variant='outline'>
+            <IconCornerUpLeft data-icon='inline-start' /> {t('task:detail.return')}
+          </Button>
+          <Button type='button'>
+            <IconCheck data-icon='inline-start' /> {t('task:detail.approve')}
+          </Button>
+        </div>
+      }
     />
   );
 }

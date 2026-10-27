@@ -1,76 +1,23 @@
-import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useSelector } from '@tanstack/react-form';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  AbnormalAreaEnum,
-  createIssueSchema,
-  DOCUMENT_TYPE,
-  IssueCategoryEnum,
-  ItemCategoryEnum,
-  type AbnormalArea,
-  type CreateIssueInput,
-  type IssueCategory,
-  type ItemCategory,
-} from 'shared/schemas/issue';
-import { useAppForm } from '~/hooks/use-app-form';
+import { AbnormalAreaEnum, IssueCategoryEnum, ItemCategoryEnum } from 'shared/schemas/issue';
 import { useErrors } from '~/hooks/use-errors';
 import { useProcesses } from '~/hooks/use-processes';
 import { useSections } from '~/hooks/use-sections';
-
-export interface A5FormValues {
-  documentType: typeof DOCUMENT_TYPE.A5;
-  documentNo: string;
-  issueSection: string;
-  issueCategory: IssueCategory | '';
-  itemCategory: ItemCategory | '';
-  itemCode: string;
-  lotNo: string;
-  lineNo: string;
-  machineNo: string;
-  glue: string;
-  rubber: string;
-  batchNo: string;
-  detectedQuantity: number | null;
-  jobOrderNo: string;
-  detectionStage: string;
-  detectionContent: string;
-  abnormalArea: AbnormalArea | '';
-  normalDescription: string;
-  abnormalDescription: string;
-  detectedBy: string;
-  issueDate: string;
-}
+import type { A5IssueForm as A5IssueFormInstance } from '~/views/pages/abnormal-a5/use-a5-issue-form';
 
 interface A5IssueFormProps {
+  form: A5IssueFormInstance;
   title: ReactNode;
-  defaultValues: A5FormValues;
   readOnly?: boolean;
-  onSubmit?: (value: CreateIssueInput) => Promise<void> | void;
+  actions?: ReactNode;
 }
 
-export default function A5IssueForm({
-  title,
-  defaultValues,
-  readOnly = false,
-  onSubmit,
-}: A5IssueFormProps) {
+export default function A5IssueForm({ form, title, readOnly = false, actions }: A5IssueFormProps) {
   const { t } = useTranslation();
   const { sectionOptions } = useSections();
   const { processOptions } = useProcesses();
-
-  const form = useAppForm({
-    defaultValues,
-    validators: {
-      onSubmit: createIssueSchema,
-    },
-    onSubmit: async ({ value, formApi }) => {
-      if (readOnly) return;
-      const payload = createIssueSchema.parse(value);
-      await onSubmit?.(payload);
-      formApi.reset();
-    },
-  });
 
   const selectedProcess = useSelector(form.store, (state) => state.values.detectionStage);
   const { errorOptions } = useErrors(selectedProcess);
@@ -106,13 +53,7 @@ export default function A5IssueForm({
     >
       <div className='mb-4 flex items-center justify-between'>
         <h1 className='text-foreground text-2xl font-bold capitalize'>{title}</h1>
-        {!readOnly && (
-          <form.AppForm>
-            <form.SubmitButton>
-              <IconDeviceFloppy data-icon='inline-start' /> {t('common:save')}
-            </form.SubmitButton>
-          </form.AppForm>
-        )}
+        {actions}
       </div>
 
       {/* Thông tin phát hành */}
