@@ -7,15 +7,13 @@ import {
   type IssueCategory,
   type ItemCategory,
 } from 'shared/schemas/issue';
-import { useCreateIssue } from '~/hooks/mutations/use-issue';
-import { useAuthStore } from '~/stores/auth';
+import { useCreateA5Issue } from '~/hooks/mutations/use-issue';
 import A5IssueForm from '~/views/pages/abnormal-a5/a5-issue-form';
 import { useA5IssueForm, type A5FormValues } from '~/views/pages/abnormal-a5/use-a5-issue-form';
 
 export default function AbnormalA5Page() {
   const { t } = useTranslation();
-  const user = useAuthStore((s) => s.user);
-  const createIssue = useCreateIssue();
+  const createIssue = useCreateA5Issue();
 
   const defaultValues: A5FormValues = {
     documentType: DOCUMENT_TYPE.A5,
@@ -37,7 +35,8 @@ export default function AbnormalA5Page() {
     abnormalArea: '' as AbnormalArea | '',
     normalDescription: '',
     abnormalDescription: '',
-    detectedBy: user?.username ?? '',
+    detectedBy: '',
+    checkedBy: '',
     issueDate: format(new Date(), 'yyyyMMdd'),
   };
 

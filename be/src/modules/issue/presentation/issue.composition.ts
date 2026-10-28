@@ -1,28 +1,24 @@
 import { Router } from 'express';
+import { ACTIONS } from 'shared/constants/actions';
 import { ENDPOINTS } from 'shared/constants/endpoints';
-import { createIssueSchema } from 'shared/schemas/issue';
+import { FEATURES } from 'shared/constants/features';
+import { createA5IssueSchema } from 'shared/schemas/issue';
+import { authorize } from '~/modules/auth/presentation/middlewares/authorize';
 import { IssueController } from '~/modules/issue/presentation/issue.controller';
 import { container } from '~/shared/infrastructure/di/container';
-import { bodyParser, fileValidator, requestValidator } from '~/shared/presentation/middlewares';
+import { bodyParser, requestValidator } from '~/shared/presentation/middlewares';
 
 export const createIssueRouter = (): Router => {
   const controller = container.resolve(IssueController);
   const router = Router();
 
+  // Phiếu A5: quyền tạo gắn cố định với feature ISSUE_A5.
   router.post(
-    ENDPOINTS.ISSUE.CREATE,
+    ENDPOINTS.ISSUE.CREATE_A5,
+    authorize(FEATURES.ISSUE_A5, ACTIONS.CREATE),
     bodyParser(),
-    fileValidator([
-      {
-        field: 'attachments',
-        type: 'file',
-        required: false,
-        maxCount: 10,
-        maxSize: 10 * 1024 * 1024,
-      },
-    ]),
-    requestValidator(createIssueSchema),
-    controller.create,
+    requestValidator(createA5IssueSchema),
+    controller.createA5,
   );
 
   return router;

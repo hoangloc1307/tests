@@ -8,7 +8,7 @@ export const ENDPOINTS = {
   },
   ISSUE: {
     PREFIX: '/issues',
-    CREATE: '/',
+    CREATE_A5: '/a5',
   },
   TASK: {
     PREFIX: '/tasks',

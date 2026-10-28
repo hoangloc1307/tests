@@ -1,7 +1,7 @@
 import {
-  createIssueSchema,
+  createA5IssueSchema,
   type AbnormalArea,
-  type CreateIssueInput,
+  type CreateA5IssueInput,
   type DOCUMENT_TYPE,
   type IssueCategory,
   type ItemCategory,
@@ -29,24 +29,25 @@ export interface A5FormValues {
   normalDescription: string;
   abnormalDescription: string;
   detectedBy: string;
+  checkedBy: string;
   issueDate: string;
 }
 
 interface UseA5IssueFormOptions {
   defaultValues: A5FormValues;
   readOnly?: boolean;
-  onSubmit?: (value: CreateIssueInput) => Promise<void> | void;
+  onSubmit?: (value: CreateA5IssueInput) => Promise<void> | void;
 }
 
 export function useA5IssueForm({ defaultValues, readOnly, onSubmit }: UseA5IssueFormOptions) {
   return useAppForm({
     defaultValues,
     validators: {
-      onSubmit: createIssueSchema,
+      onSubmit: createA5IssueSchema,
     },
     onSubmit: async ({ value, formApi }) => {
       if (readOnly) return;
-      const payload = createIssueSchema.parse(value);
+      const payload = createA5IssueSchema.parse(value);
       await onSubmit?.(payload);
       formApi.reset();
     },
