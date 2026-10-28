@@ -4,7 +4,14 @@ import { Toaster } from '~/components/ui/toast';
 import { useTheme } from '~/hooks/use-theme';
 import router from '~/router';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
   useTheme();

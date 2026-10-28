@@ -27,7 +27,6 @@ const MAIN_MENU: NavItem[] = [
     title: 'navigation:task',
     url: PATHS.TASK,
     icon: IconClipboardList,
-    featureCode: FEATURES.TASK,
   },
   {
     title: 'navigation:settings',
