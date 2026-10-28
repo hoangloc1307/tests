@@ -3,10 +3,11 @@
   "section_placeholder": "部門を選択",
   "info_title": "1. 発行情報",
   "record_info_title": "2. 記録情報",
-  "recorder": "記録者",
+  "detector": "発見者",
+  "detector_placeholder": "発見者の社員コードを入力",
+  "checker": "確認者",
+  "checker_placeholder": "確認者の社員コードを入力",
   "issue_date": "発行日",
-  "issue_code": "票コード",
-  "issue_code_placeholder": "作成後に発行されます",
   "create_success": "異常発行が完了しました",
   "category": "分類",
   "category_placeholder": "分類を選択",
@@ -80,6 +81,8 @@
     "error_name_required": "エラー名を選択してください",
     "anomaly_location_required": "異常位置を選択してください",
     "normal_condition_required": "正常状態を入力してください",
-    "abnormal_condition_required": "異常状態を入力してください"
+    "abnormal_condition_required": "異常状態を入力してください",
+    "detector_required": "発見者を入力してください",
+    "checker_required": "確認者を入力してください"
   }
 }

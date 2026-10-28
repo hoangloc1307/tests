@@ -79,10 +79,9 @@ model A5Document {
   detectedBy           String   @map("DetectedBy") @db.VarChar(8) /// Mã nhân viên phát hiện
   detectedQuantity     Int      @map("DetectedQuantity") /// Số lượng phát hiện
   abnormalArea         String   @map("AbnormalArea") @db.NVarChar(10) /// Vùng bất thường
-  detectedAt           DateTime @map("DetectedAt") @db.DateTime2 /// Ngày phát hiện
   normalDescription    String   @map("NormalDescription") @db.NVarChar(250) /// Mô tả bình thường
   abnormalDescription  String   @map("AbnormalDescription") @db.NVarChar(250) /// Mô tả bất thường
-  checkedBy            String?  @map("CheckedBy") @db.VarChar(8) /// Mã số dandori kiểm tra
+  checkedBy            String   @map("CheckedBy") @db.VarChar(8) /// Mã nhân viên kiểm tra
   abnormalLevel        Int?     @map("AbnormalLevel") @db.TinyInt /// 1: Nhẹ | 2: Nặng | 3: Nghiêm trọng
   firstDetection       Boolean? @map("FirstDetection") /// Phát sinh lần đầu
   recurrenceCount      Int?     @map("RecurrenceCount") /// Số lần tái phát sinh

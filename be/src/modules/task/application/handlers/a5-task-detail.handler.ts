@@ -1,6 +1,5 @@
-import { format, isValid } from 'date-fns';
-import { DOCUMENT_TYPE } from 'shared/schemas/issue';
 import type { AbnormalArea, IssueCategory, ItemCategory } from 'shared/schemas/issue';
+import { DOCUMENT_TYPE } from 'shared/schemas/issue';
 import { inject, injectable } from 'tsyringe';
 import type {
   A5DocumentDetail,
@@ -47,7 +46,6 @@ export class A5TaskDetailHandler implements TaskDetailHandler {
       detectedBy: detail.detectedBy,
       detectedQuantity: detail.detectedQuantity,
       abnormalArea: detail.abnormalArea as AbnormalArea,
-      detectedAt: isValid(detail.detectedAt) ? format(detail.detectedAt, 'yyyyMMddHHmmss') : null,
       normalDescription: detail.normalDescription,
       abnormalDescription: detail.abnormalDescription,
       checkedBy: detail.checkedBy,

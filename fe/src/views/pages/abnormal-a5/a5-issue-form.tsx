@@ -72,11 +72,6 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
             />
           )}
         />
-        {/* Nhân viên ghi nhận */}
-        <form.AppField
-          name='detectedBy'
-          children={(field) => <field.TextField label={t('issue:recorder')} readOnly />}
-        />
         {/* Ngày phát hành */}
         <form.AppField
           name='issueDate'
@@ -84,14 +79,27 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
             <field.DatePickerField label={t('issue:issue_date')} required readOnly={readOnly} />
           )}
         />
-        {/* Mã phiếu */}
+        {/* Nhân viên phát hiện */}
         <form.AppField
-          name='documentNo'
+          name='detectedBy'
           children={(field) => (
             <field.TextField
-              label={t('issue:issue_code')}
-              placeholder={t('issue:issue_code_placeholder')}
-              readOnly
+              label={t('issue:detector')}
+              required
+              placeholder={t('issue:detector_placeholder')}
+              readOnly={readOnly}
+            />
+          )}
+        />
+        {/* Nhân viên kiểm tra */}
+        <form.AppField
+          name='checkedBy'
+          children={(field) => (
+            <field.TextField
+              label={t('issue:checker')}
+              required
+              placeholder={t('issue:checker_placeholder')}
+              readOnly={readOnly}
             />
           )}
         />

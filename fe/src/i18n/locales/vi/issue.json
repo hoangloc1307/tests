@@ -3,10 +3,11 @@
   "section_placeholder": "Chọn bộ phận",
   "info_title": "1. Thông tin phát hành",
   "record_info_title": "2. Thông tin ghi nhận",
-  "recorder": "Nhân viên ghi nhận",
+  "detector": "Nhân viên phát hiện",
+  "detector_placeholder": "Nhập mã nhân viên phát hiện",
+  "checker": "Nhân viên kiểm tra",
+  "checker_placeholder": "Nhập mã nhân viên kiểm tra",
   "issue_date": "Ngày phát hành",
-  "issue_code": "Mã phiếu",
-  "issue_code_placeholder": "Phát sinh sau khi tạo phiếu",
   "create_success": "Phát hành bất thường thành công",
   "category": "Phân loại",
   "category_placeholder": "Chọn phân loại",
@@ -80,6 +81,8 @@
     "error_name_required": "Vui lòng chọn tên lỗi",
     "anomaly_location_required": "Vui lòng chọn vị trí vùng bất thường",
     "normal_condition_required": "Vui lòng nhập tình trạng bình thường",
-    "abnormal_condition_required": "Vui lòng nhập tình trạng bất thường"
+    "abnormal_condition_required": "Vui lòng nhập tình trạng bất thường",
+    "detector_required": "Vui lòng nhập nhân viên phát hiện",
+    "checker_required": "Vui lòng nhập nhân viên kiểm tra"
   }
 }

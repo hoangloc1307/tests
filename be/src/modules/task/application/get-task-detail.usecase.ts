@@ -1,4 +1,4 @@
-import { format, isValid } from 'date-fns';
+import { format } from 'date-fns';
 import type { DocumentStatus } from 'shared/schemas/issue';
 import type { TaskDetail, TaskDetailBase } from 'shared/types/task';
 import { inject, injectable } from 'tsyringe';
@@ -49,9 +49,9 @@ export class GetTaskDetailUseCase {
       status: master.status as DocumentStatus,
       issuingSection: master.issueSection,
       receivingSection: master.receiveSection,
-      issuingDate: isValid(master.issueDate) ? format(master.issueDate, 'yyyyMMdd') : null,
+      issuingDate: format(master.issueDate, 'yyyyMMdd'),
       createdBy: master.createdBy,
-      createdDate: isValid(master.createdAt) ? format(master.createdAt, 'yyyyMMddHHmmss') : null,
+      createdDate: format(master.createdAt, 'yyyyMMddHHmmss'),
       rejectReason: extractRejectReason(task),
     };
 

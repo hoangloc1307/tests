@@ -48,14 +48,12 @@ export class PrismaA5IssueRepository implements A5IssueRepository {
     } = data;
     const documentId = randomUUID();
 
-    // Dùng transaction client nếu được truyền vào, ngược lại dùng client mặc định.
     const db = tx ?? this.prisma;
 
     const a5Document = await db.a5Document.create({
       data: {
         ...a5Detail,
         documentNo,
-        detectedAt: new Date(),
         documentMaster: {
           create: {
             documentId,

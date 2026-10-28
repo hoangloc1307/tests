@@ -1,4 +1,4 @@
-import { format, isValid } from 'date-fns';
+import { format } from 'date-fns';
 import type { TaskListItem } from 'shared/types/task';
 import { inject, injectable } from 'tsyringe';
 import type { RoleRepository } from '~/modules/auth/domain/role.repository';
@@ -53,12 +53,10 @@ export class ListTasksUseCase {
         documentType: document.documentType,
         issuingSection: nz(document.issueSection),
         receivingSection: document.receiveSection ? nz(document.receiveSection) : null,
-        issuingDate: isValid(document.issueDate) ? format(document.issueDate, 'yyyyMMdd') : null,
-        currentStep: stepDescByName.get(task.taskDefinitionKey) ?? null,
+        issuingDate: format(document.issueDate, 'yyyyMMdd'),
+        currentStep: stepDescByName.get(task.taskDefinitionKey) ?? '',
         createdBy: nz(document.createdBy),
-        createdDate: isValid(document.createdAt)
-          ? format(document.createdAt, 'yyyyMMddHHmmss')
-          : null,
+        createdDate: format(document.createdAt, 'yyyyMMddHHmmss'),
         rejectReason: extractRejectReason(task),
       });
     }

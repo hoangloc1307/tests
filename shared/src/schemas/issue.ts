@@ -74,7 +74,8 @@ export const createA5IssueSchema = z.object({
   abnormalDescription: z
     .string()
     .nonempty({ message: 'issue:validation.abnormal_condition_required' }),
-  detectedBy: z.string(),
+  detectedBy: z.string().nonempty({ message: 'issue:validation.detector_required' }),
+  checkedBy: z.string().nonempty({ message: 'issue:validation.checker_required' }),
 });
 
 export type CreateA5IssueInput = z.infer<typeof createA5IssueSchema>;

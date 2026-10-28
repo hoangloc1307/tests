@@ -1,5 +1,6 @@
 import type { DocumentType } from 'shared/schemas/issue';
-import type { A5Detail, DocumentMaster, ProcessMaster } from '~/modules/issue/domain/issue.entity';
+import { A5Detail } from 'shared/types/task';
+import type { DocumentMaster, ProcessMaster } from '~/modules/issue/domain/issue.entity';
 import type { PrismaClientA5 } from '~/shared/infrastructure/prisma-a5';
 
 export type A5TxClient = Parameters<Parameters<PrismaClientA5['$transaction']>[0]>[0];
@@ -7,7 +8,6 @@ export type A5TxClient = Parameters<Parameters<PrismaClientA5['$transaction']>[0
 type OptionalFields =
   | 'jobOrderNo'
   | 'otherError'
-  | 'checkedBy'
   | 'abnormalLevel'
   | 'firstDetection'
   | 'recurrenceCount'

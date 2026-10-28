@@ -28,6 +28,7 @@ const toFormValues = (task: A5TaskDetailResponse): A5FormValues => ({
   normalDescription: task.detail.normalDescription,
   abnormalDescription: task.detail.abnormalDescription,
   detectedBy: task.detail.detectedBy,
+  checkedBy: task.detail.checkedBy,
 });
 
 export default function A5TaskDetailView({ task }: { task: A5TaskDetailResponse }) {

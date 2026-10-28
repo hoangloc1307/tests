@@ -1,4 +1,3 @@
-import { DOCUMENT_TYPE } from 'shared/schemas/issue';
 import type {
   AbnormalArea,
   DocumentStatus,
@@ -6,6 +5,7 @@ import type {
   IssueCategory,
   ItemCategory,
 } from 'shared/schemas/issue';
+import { DOCUMENT_TYPE } from 'shared/schemas/issue';
 
 export interface TaskListItem {
   taskId: string;
@@ -14,15 +14,14 @@ export interface TaskListItem {
   documentType: DocumentType;
   issuingSection: string;
   receivingSection: string | null;
-  issuingDate: string | null;
-  currentStep: string | null;
+  issuingDate: string;
+  currentStep: string;
   createdBy: string;
-  createdDate: string | null;
+  createdDate: string;
   rejectReason: string | null;
 }
 
-/** Chi tiết riêng của phiếu A5 trả về cho FE (ánh xạ bảng A5Document). */
-export interface A5TaskDetail {
+export interface A5Detail {
   issueCategory: IssueCategory;
   itemCategory: ItemCategory;
   lineNo: string;
@@ -39,10 +38,9 @@ export interface A5TaskDetail {
   detectedBy: string;
   detectedQuantity: number;
   abnormalArea: AbnormalArea;
-  detectedAt: string | null;
   normalDescription: string;
   abnormalDescription: string;
-  checkedBy: string | null;
+  checkedBy: string;
   abnormalLevel: number | null;
   firstDetection: boolean | null;
   recurrenceCount: number | null;
@@ -60,9 +58,6 @@ export interface A5TaskDetail {
   ngEmp: string | null;
 }
 
-/**
- * Phần thông tin chung (master) của chi tiết công việc — dùng cho mọi loại phiếu.
- */
 export interface TaskDetailBase {
   taskId: string;
   documentId: string;
@@ -70,16 +65,15 @@ export interface TaskDetailBase {
   status: DocumentStatus;
   issuingSection: string;
   receivingSection: string | null;
-  issuingDate: string | null;
+  issuingDate: string;
   createdBy: string;
-  createdDate: string | null;
+  createdDate: string;
   rejectReason: string | null;
 }
 
-/** Chi tiết công việc của phiếu A5 (master chung + dữ liệu riêng A5). */
 export interface A5TaskDetailResponse extends TaskDetailBase {
   documentType: typeof DOCUMENT_TYPE.A5;
-  detail: A5TaskDetail;
+  detail: A5Detail;
 }
 
 /**

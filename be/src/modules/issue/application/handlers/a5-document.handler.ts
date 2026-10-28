@@ -32,18 +32,15 @@ export class A5DocumentHandler implements DocumentHandler {
     const { issueDate, ...rest } = input;
 
     const parsedIssueDate = parse(issueDate, 'yyyyMMdd', new Date());
-    if (!isValid(parsedIssueDate)) {
+
+    if (!isValid(parsedIssueDate))
       throw AppError.validation('common:error.invalidIssueDate', { issueDate });
-    }
 
     //  Tìm process master phiên bản mới nhất đang dùng của loại phiếu A5
     const processMaster = await this.a5IssueRepo.findLatestProcessMaster(this.documentType);
 
-    if (!processMaster) {
-      throw AppError.server('common:error.processNotFound', {
-        documentType: this.documentType,
-      });
-    }
+    if (!processMaster)
+      throw AppError.server('common:error.processNotFound', { documentType: this.documentType });
 
     // Tạo process instance
     const variables = [

@@ -34,7 +34,6 @@ export class PrismaA5TaskDetailRepository implements A5TaskDetailRepository {
       detectedBy: a5.detectedBy,
       detectedQuantity: a5.detectedQuantity,
       abnormalArea: a5.abnormalArea,
-      detectedAt: a5.detectedAt,
       normalDescription: a5.normalDescription,
       abnormalDescription: a5.abnormalDescription,
       checkedBy: a5.checkedBy,

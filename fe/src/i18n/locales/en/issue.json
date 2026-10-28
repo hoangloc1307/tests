@@ -3,10 +3,11 @@
   "section_placeholder": "Select section",
   "info_title": "1. Issue information",
   "record_info_title": "2. Record information",
-  "recorder": "Recorder",
+  "detector": "Detected by",
+  "detector_placeholder": "Enter detector employee code",
+  "checker": "Checked by",
+  "checker_placeholder": "Enter checker employee code",
   "issue_date": "Issue date",
-  "issue_code": "Issue code",
-  "issue_code_placeholder": "Generated after submission",
   "create_success": "Anomaly issued successfully",
   "category": "Category",
   "category_placeholder": "Select category",
@@ -80,6 +81,8 @@
     "error_name_required": "Please select error name",
     "anomaly_location_required": "Please select anomaly location",
     "normal_condition_required": "Please enter normal condition",
-    "abnormal_condition_required": "Please enter abnormal condition"
+    "abnormal_condition_required": "Please enter abnormal condition",
+    "detector_required": "Please enter detector",
+    "checker_required": "Please enter checker"
   }
 }
