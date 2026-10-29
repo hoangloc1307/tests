@@ -21,14 +21,18 @@ type DatePickerFieldProps = {
   required?: boolean;
   placeholder?: string;
   readOnly?: boolean;
+  max?: Date;
   onChange?: (value: string | null) => void;
 };
+
+const DEFAULT_END_MONTH = new Date(2050, 11);
 
 export const DatePickerField = ({
   label,
   required,
   placeholder,
   readOnly,
+  max,
   onChange,
 }: DatePickerFieldProps) => {
   const id = useId();
@@ -92,8 +96,8 @@ export const DatePickerField = ({
             captionLayout='dropdown'
             selected={dateValue}
             onSelect={handleSelect}
-            startMonth={new Date(2000, 0)}
-            endMonth={new Date(2050, 11)}
+            endMonth={max ?? DEFAULT_END_MONTH}
+            disabled={max ? { after: max } : undefined}
             locale={locale}
           />
         </PopoverContent>

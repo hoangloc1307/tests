@@ -10,5 +10,7 @@
   "edit": "Edit",
   "delete": "Delete",
   "cancel": "Cancel",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "yes": "Yes",
+  "no": "No"
 }
