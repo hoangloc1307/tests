@@ -21,6 +21,13 @@
   }
 }
 
+@utility radio-readonly {
+  &[data-readonly][data-checked] {
+    border-color: var(--input-readonly);
+    background-color: var(--input-readonly);
+  }
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: 'Inter Variable', sans-serif;

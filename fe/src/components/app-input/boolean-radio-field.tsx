@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Field, FieldError, FieldLabel, FieldTitle } from '~/components/ui/field';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 import { useFieldContext } from '~/hooks/use-app-form';
+import { cn } from '~/lib/utils';
 
 type BooleanRadioFieldProps = {
   label?: string;
@@ -47,13 +48,15 @@ export const BooleanRadioField = ({
         value={stringValue}
         onValueChange={(val) => val != null && field.handleChange(val === 'true')}
         onBlur={field.handleBlur}
-        disabled={disabled || readOnly}
+        disabled={disabled}
+        readOnly={readOnly}
         aria-invalid={isInvalid}
-        className={
+        className={cn(
+          'aria-readonly:pointer-events-none',
           orientation === 'horizontal'
             ? 'flex flex-1 flex-wrap items-center gap-4'
-            : 'flex flex-col gap-2'
-        }
+            : 'flex flex-col gap-2',
+        )}
       >
         {[
           { value: 'true', label: trueLabel },
@@ -61,12 +64,13 @@ export const BooleanRadioField = ({
         ].map((opt) => (
           <FieldLabel
             key={opt.value}
-            className='flex w-fit items-center gap-2 font-normal'
-            data-disabled={readOnly || disabled || undefined}
+            className='has-data-readonly:field-readonly flex w-fit items-center gap-2 font-normal'
+            data-disabled={disabled || undefined}
           >
             <RadioGroupItem
               value={opt.value}
-              disabled={disabled || readOnly}
+              disabled={disabled}
+              className='radio-readonly'
               onClick={() => {
                 if (!readOnly && !disabled && stringValue === opt.value) {
                   field.handleChange(null);
