@@ -62,7 +62,6 @@ model DocumentMaster {
 /// Bảng chi tiết phiếu A5
 model A5Document {
   documentId           String   @id @map("DocumentId") @db.UniqueIdentifier
-  documentNo           String   @map("DocumentNo") @db.VarChar(20)
   issueCategory        String   @map("IssueCategory") @db.VarChar(30) /// Phân loại (An toàn, Chất lượng, 2S, Thiết bị)
   itemCategory         String   @map("ItemCategory") @db.VarChar(30) /// Phân loại (Sản phẩm, Cao su, Metal case, Lò xo, Khác)
   lineNo               String   @map("LineNo") @db.VarChar(10) /// Line
@@ -78,14 +77,19 @@ model A5Document {
   otherError           String?  @map("OtherError") @db.NVarChar(100) /// Nội dung lỗi khác
   detectedBy           String   @map("DetectedBy") @db.VarChar(8) /// Mã nhân viên phát hiện
   detectedQuantity     Int      @map("DetectedQuantity") /// Số lượng phát hiện
+  detectedAt           DateTime @map("DetectedAt") @db.DateTime2 /// Ngày phát hiện
   abnormalArea         String   @map("AbnormalArea") @db.NVarChar(10) /// Vùng bất thường
   normalDescription    String   @map("NormalDescription") @db.NVarChar(250) /// Mô tả bình thường
   abnormalDescription  String   @map("AbnormalDescription") @db.NVarChar(250) /// Mô tả bất thường
   checkedBy            String   @map("CheckedBy") @db.VarChar(8) /// Mã nhân viên kiểm tra
-  abnormalLevel        Int?     @map("AbnormalLevel") @db.TinyInt /// 1: Nhẹ | 2: Nặng | 3: Nghiêm trọng
-  firstDetection       Boolean? @map("FirstDetection") /// Phát sinh lần đầu
+  abnormalLevel        Int      @map("AbnormalLevel") @db.TinyInt /// 1: Nhẹ | 2: Nặng | 3: Nghiêm trọng
+  judgment             Boolean  @map("Judgment") /// Phán định: true = OK | false = NG
+  firstDetection       Boolean  @map("FirstDetection") /// Phát sinh lần đầu
   recurrenceCount      Int?     @map("RecurrenceCount") /// Số lần tái phát sinh
-  isA4Required         Boolean? @map("IsA4Required") /// Cần phát hành A4 không
+  isA4Required         Boolean  @map("IsA4Required") /// Cần phát hành A4 không
+  isHandlingRequired   Boolean  @map("IsHandlingRequired") /// Cần xử lý không
+  handlingScope        String?  @map("HandlingScope") @db.NVarChar(255) /// Phạm vi xử lý
+  handlingInstruction  String?  @map("HandlingInstruction") @db.NVarChar(500) /// Hướng dẫn xử lý
   ngQtyAfterHandling   Int?     @map("NGQtyAfterHandling") /// Kết quả xử lý NG
   okQtyAfterHandling   Int?     @map("OKQtyAfterHandling") /// Kết quả xử lý OK
   amsDocumentNo        String?  @map("AMSDocumentNo") @db.VarChar(30) /// Mã phiếu A4

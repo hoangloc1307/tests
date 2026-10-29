@@ -1,5 +1,7 @@
+import { isValidYmd } from 'shared/utils/date';
 import { z } from 'zod';
 
+/** Loại phiếu */
 export const DOCUMENT_TYPE = {
   A5: 'A5',
 } as const;
@@ -15,75 +17,32 @@ export const DOCUMENT_STATUS = {
 
 export type DocumentStatus = (typeof DOCUMENT_STATUS)[keyof typeof DOCUMENT_STATUS];
 
+/**
+ * Validate `documentType` thuộc một trong các giá trị của `DOCUMENT_TYPE`.
+ * Dùng khi nhận loại phiếu dạng tham số tự do (vd: query `?documentType=A5` để lọc danh sách).
+ * Schema tạo phiếu KHÔNG dùng enum này — mỗi loại phiếu tự khai `z.literal(...)` làm
+ * discriminator cho `createIssueSchema`.
+ */
 export const DocumentTypeEnum = z.enum(Object.values(DOCUMENT_TYPE) as [string, ...string[]], {
   message: 'issue:validation.document_type_required',
 });
 
-export const IssueCategoryEnum = z.enum(['SAFETY', 'QUALITY', '2S', 'EQUIPMENT'], {
-  message: 'issue:validation.category_required',
-});
-export type IssueCategory = z.infer<typeof IssueCategoryEnum>;
-
-export const ItemCategoryEnum = z.enum(['PRODUCT', 'METAL_CASE', 'SPRING', 'RUBBER', 'OTHER'], {
-  message: 'issue:validation.detection_type_required',
-});
-export type ItemCategory = z.infer<typeof ItemCategoryEnum>;
-
-export const AbnormalAreaEnum = z.enum(['A', "A'", 'B', 'C', 'D', 'E', 'OTHER'], {
-  message: 'issue:validation.anomaly_location_required',
-});
-export type AbnormalArea = z.infer<typeof AbnormalAreaEnum>;
-
 /**
  * Các field dùng chung cho mọi loại phiếu (lưu ở DocumentMaster).
+ * Schema của từng loại phiếu spread shape này vào.
  */
-const baseIssueShape = {
-  issueSection: z.string().nonempty({ message: 'issue:validation.section_required' }),
+export const baseIssueShape = {
+  /** Bộ phận phát hành */
+  issueSection: z
+    .string()
+    .nonempty({ message: 'issue:validation.section_required' })
+    .max(4, { message: 'issue:validation.section_too_long' }),
+
+  /** Ngày phát hành (yyyyMMdd, phải là ngày có thật). Giữ chuỗi tới lúc insert mới parse Date. */
   issueDate: z
     .string()
-    .nonempty({ message: 'issue:validation.issue_date_required' })
-    .regex(/^\d{8}$/, { message: 'issue:validation.issue_date_invalid' }),
+    // abort: rỗng thì dừng, không báo thêm lỗi "không hợp lệ".
+    .nonempty({ message: 'issue:validation.issue_date_required', abort: true })
+    // isValidYmd kiểm tra cả định dạng 8 chữ số lẫn ngày có thật.
+    .refine(isValidYmd, { message: 'issue:validation.issue_date_invalid' }),
 };
-
-/**
- * Schema tạo phiếu A5 (gồm field chung + field chi tiết của A5).
- */
-export const createA5IssueSchema = z.object({
-  documentType: z.literal(DOCUMENT_TYPE.A5),
-  // Mã phiếu do server sinh, chỉ hiển thị (read-only) khi tạo mới.
-  documentNo: z.string(),
-  ...baseIssueShape,
-  issueCategory: IssueCategoryEnum,
-  itemCategory: ItemCategoryEnum,
-  itemCode: z.string().nonempty({ message: 'issue:validation.product_code_required' }),
-  lotNo: z.string().nonempty({ message: 'issue:validation.lot_no_required' }),
-  lineNo: z.string().nonempty({ message: 'issue:validation.line_required' }),
-  machineNo: z.string().nonempty({ message: 'issue:validation.machine_required' }),
-  glue: z.string().nonempty({ message: 'issue:validation.glue_required' }),
-  rubber: z.string().nonempty({ message: 'issue:validation.rubber_required' }),
-  batchNo: z.string().nonempty({ message: 'issue:validation.batch_required' }),
-  detectedQuantity: z
-    .number({ message: 'issue:validation.quantity_required' })
-    .nullable()
-    .refine((v): v is number => v !== null, { message: 'issue:validation.quantity_required' }),
-  jobOrderNo: z.string(),
-  detectionStage: z.string().nonempty({ message: 'issue:validation.detection_process_required' }),
-  detectionContent: z.string().nonempty({ message: 'issue:validation.error_name_required' }),
-  abnormalArea: AbnormalAreaEnum,
-  normalDescription: z.string().nonempty({ message: 'issue:validation.normal_condition_required' }),
-  abnormalDescription: z
-    .string()
-    .nonempty({ message: 'issue:validation.abnormal_condition_required' }),
-  detectedBy: z.string().nonempty({ message: 'issue:validation.detector_required' }),
-  checkedBy: z.string().nonempty({ message: 'issue:validation.checker_required' }),
-});
-
-export type CreateA5IssueInput = z.infer<typeof createA5IssueSchema>;
-
-/**
- * Discriminated union theo documentType. Thêm loại phiếu mới bằng cách
- * khai báo schema tương ứng rồi bổ sung vào union này.
- */
-export const createIssueSchema = z.discriminatedUnion('documentType', [createA5IssueSchema]);
-
-export type CreateIssueInput = z.infer<typeof createIssueSchema>;

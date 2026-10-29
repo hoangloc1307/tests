@@ -9,6 +9,7 @@ import type {
 import type { DocumentMaster, ProcessMaster } from '~/modules/issue/domain/issue.entity';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import type { PrismaClientA5 } from '~/shared/infrastructure/prisma-a5';
+import { parseYmd } from '~/shared/utils/date';
 
 @injectable()
 export class PrismaA5IssueRepository implements A5IssueRepository {
@@ -44,6 +45,7 @@ export class PrismaA5IssueRepository implements A5IssueRepository {
       createdBy,
       processMasterId,
       processInstanceId,
+      detectedAt,
       ...a5Detail
     } = data;
     const documentId = randomUUID();
@@ -53,14 +55,14 @@ export class PrismaA5IssueRepository implements A5IssueRepository {
     const a5Document = await db.a5Document.create({
       data: {
         ...a5Detail,
-        documentNo,
+        detectedAt: parseYmd(detectedAt),
         documentMaster: {
           create: {
             documentId,
             documentNo,
             documentType,
             issueSection,
-            issueDate,
+            issueDate: parseYmd(issueDate),
             status: DOCUMENT_STATUS.WIP,
             createdBy,
             processMasterId,

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { ACTIONS } from 'shared/constants/actions';
 import { ENDPOINTS } from 'shared/constants/endpoints';
 import { FEATURES } from 'shared/constants/features';
-import { createA5IssueSchema } from 'shared/schemas/issue';
+import { createA5IssueSchema } from 'shared/schemas/issue/a5';
 import { authorize } from '~/modules/auth/presentation/middlewares/authorize';
 import { IssueController } from '~/modules/issue/presentation/issue.controller';
 import { container } from '~/shared/infrastructure/di/container';

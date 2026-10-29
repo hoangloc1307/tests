@@ -4,7 +4,6 @@
     "notFound": "Resource not found",
     "internal": "Internal server error",
     "unsupportedDocumentType": "Unsupported document type: {{documentType}}",
-    "invalidIssueDate": "Invalid issue date: {{issueDate}}",
     "handlerDocumentTypeMismatch": "Handler document type mismatch (expected {{expected}}, received {{received}})",
     "sectionNotAllowed": "You do not have permission to issue for this section"
   },

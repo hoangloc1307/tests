@@ -1,5 +1,5 @@
-import { isValid, parse } from 'date-fns';
-import { DOCUMENT_TYPE, type CreateIssueInput } from 'shared/schemas/issue';
+import { DOCUMENT_TYPE } from 'shared/schemas/issue';
+import type { CreateIssueInput } from 'shared/schemas/issue/create-issue';
 import { inject, injectable } from 'tsyringe';
 import type { A5IssueRepository } from '~/modules/issue/domain/a5-issue.repository';
 import type { DocumentHandler } from '~/modules/issue/domain/document-handler';
@@ -28,13 +28,6 @@ export class A5DocumentHandler implements DocumentHandler {
         received: input.documentType,
       });
     }
-
-    const { issueDate, ...rest } = input;
-
-    const parsedIssueDate = parse(issueDate, 'yyyyMMdd', new Date());
-
-    if (!isValid(parsedIssueDate))
-      throw AppError.validation('common:error.invalidIssueDate', { issueDate });
 
     //  Tìm process master phiên bản mới nhất đang dùng của loại phiếu A5
     const processMaster = await this.a5IssueRepo.findLatestProcessMaster(this.documentType);
@@ -65,9 +58,8 @@ export class A5DocumentHandler implements DocumentHandler {
 
         return this.a5IssueRepo.create(
           {
-            ...rest,
+            ...input,
             documentNo,
-            issueDate: parsedIssueDate,
             createdBy: username,
             processMasterId: processMaster.id,
             processInstanceId: processInstance.id,

@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import type { CreateIssueInput } from 'shared/schemas/issue';
+import type { CreateIssueInput } from 'shared/schemas/issue/create-issue';
 import { injectable } from 'tsyringe';
 import { CreateIssueUseCase } from '~/modules/issue/application/create-issue.usecase';
 import { AppError } from '~/shared/domain/app-error';
@@ -14,8 +14,6 @@ export class IssueController {
     const input = req.validatedData?.body as CreateIssueInput;
     const authContext = req.authContext;
 
-    // Bộ phận phát hành phải nằm trong các section mà phân quyền cho phép.
-    // Super admin bỏ qua ràng buộc section.
     if (!authContext?.isSuperAdmin && !authContext?.sections.includes(input.issueSection)) {
       throw AppError.forbidden('common:error.sectionNotAllowed');
     }

@@ -1,11 +1,6 @@
-import type {
-  AbnormalArea,
-  DocumentStatus,
-  DocumentType,
-  IssueCategory,
-  ItemCategory,
-} from 'shared/schemas/issue';
+import type { DocumentStatus, DocumentType } from 'shared/schemas/issue';
 import { DOCUMENT_TYPE } from 'shared/schemas/issue';
+import type { AbnormalArea, IssueCategory, ItemCategory } from 'shared/schemas/issue/a5';
 
 export interface TaskListItem {
   taskId: string;
@@ -37,14 +32,19 @@ export interface A5Detail {
   otherError: string | null;
   detectedBy: string;
   detectedQuantity: number;
+  detectedAt: string;
   abnormalArea: AbnormalArea;
   normalDescription: string;
   abnormalDescription: string;
   checkedBy: string;
-  abnormalLevel: number | null;
-  firstDetection: boolean | null;
+  abnormalLevel: number;
+  judgment: boolean;
+  firstDetection: boolean;
   recurrenceCount: number | null;
-  isA4Required: boolean | null;
+  isA4Required: boolean;
+  isHandlingRequired: boolean;
+  handlingScope: string | null;
+  handlingInstruction: string | null;
   ngQtyAfterHandling: number | null;
   okQtyAfterHandling: number | null;
   amsDocumentNo: string | null;

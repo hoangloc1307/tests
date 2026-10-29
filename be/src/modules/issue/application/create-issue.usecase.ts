@@ -1,4 +1,4 @@
-import type { CreateIssueInput } from 'shared/schemas/issue';
+import type { CreateIssueInput } from 'shared/schemas/issue/create-issue';
 import { inject, injectable } from 'tsyringe';
 import { DocumentHandlerRegistry } from '~/modules/issue/application/handlers/document-handler.registry';
 import type { FlowableClient } from '~/shared/application/flowable/flowable-client';

@@ -1,42 +1,20 @@
-import {
-  createA5IssueSchema,
-  type AbnormalArea,
-  type CreateA5IssueInput,
-  type DOCUMENT_TYPE,
-  type IssueCategory,
-  type ItemCategory,
-} from 'shared/schemas/issue';
+import type { DOCUMENT_TYPE } from 'shared/schemas/issue';
+import { createA5IssueSchema, type CreateA5IssueRequest } from 'shared/schemas/issue/a5';
 import { useAppForm } from '~/hooks/use-app-form';
 
-export interface A5FormValues {
+type WithEmpty<T> = T extends boolean | number ? T | null : T extends string ? T | '' : T;
+
+/** Thêm type của giá trị default khi chưa nhập gì */
+export type A5FormValues = {
+  [K in keyof Omit<CreateA5IssueRequest, 'documentType'>]: WithEmpty<CreateA5IssueRequest[K]>;
+} & {
   documentType: typeof DOCUMENT_TYPE.A5;
-  documentNo: string;
-  issueSection: string;
-  issueCategory: IssueCategory | '';
-  itemCategory: ItemCategory | '';
-  itemCode: string;
-  lotNo: string;
-  lineNo: string;
-  machineNo: string;
-  glue: string;
-  rubber: string;
-  batchNo: string;
-  detectedQuantity: number | null;
-  jobOrderNo: string;
-  detectionStage: string;
-  detectionContent: string;
-  abnormalArea: AbnormalArea | '';
-  normalDescription: string;
-  abnormalDescription: string;
-  detectedBy: string;
-  checkedBy: string;
-  issueDate: string;
-}
+};
 
 interface UseA5IssueFormOptions {
   defaultValues: A5FormValues;
   readOnly?: boolean;
-  onSubmit?: (value: CreateA5IssueInput) => Promise<void> | void;
+  onSubmit?: (value: CreateA5IssueRequest) => Promise<void> | void;
 }
 
 export function useA5IssueForm({ defaultValues, readOnly, onSubmit }: UseA5IssueFormOptions) {
@@ -47,8 +25,7 @@ export function useA5IssueForm({ defaultValues, readOnly, onSubmit }: UseA5Issue
     },
     onSubmit: async ({ value, formApi }) => {
       if (readOnly) return;
-      const payload = createA5IssueSchema.parse(value);
-      await onSubmit?.(payload);
+      await onSubmit?.(value as CreateA5IssueRequest);
       formApi.reset();
     },
   });
