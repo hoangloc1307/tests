@@ -3,11 +3,24 @@ import { ENDPOINTS } from 'shared/constants/endpoints';
 import { toast } from '~/components/ui/toast';
 import CONFIG from '~/configs/app';
 import { HttpClient } from '~/lib/http-client';
+import { buildUrl } from '~/lib/utils';
 import { useAuthStore } from '~/stores/auth';
 
 // ============================================================
 // API chính (backend ITAM)
 // ============================================================
+
+const REFRESH_URL = buildUrl(ENDPOINTS.AUTH.PREFIX, ENDPOINTS.AUTH.REFRESH);
+
+/**
+ * 401 từ các route này không phải do access token hết hạn (đăng nhập sai, refresh token
+ * hết hạn...) nên không refresh; riêng REFRESH_URL còn để tránh vòng lặp refresh.
+ */
+const SKIP_REFRESH_URLS = [
+  buildUrl(ENDPOINTS.AUTH.PREFIX, ENDPOINTS.AUTH.LOGIN),
+  buildUrl(ENDPOINTS.AUTH.PREFIX, ENDPOINTS.AUTH.LOGIN_WITH_CARD),
+  REFRESH_URL,
+];
 
 let isRefreshing = false;
 let failedQueue: Array<{
@@ -48,7 +61,7 @@ const api = new HttpClient(
         if (
           error.response?.status !== 401 ||
           originalRequest._retry ||
-          originalRequest.url?.includes(`${ENDPOINTS.AUTH}/login`)
+          SKIP_REFRESH_URLS.some((url) => originalRequest.url?.includes(url))
         ) {
           return Promise.reject(error);
         }
@@ -67,7 +80,7 @@ const api = new HttpClient(
 
         try {
           const { data } = await axios.post(
-            `${ins.defaults.baseURL}${ENDPOINTS.AUTH}/refresh`,
+            `${ins.defaults.baseURL}${REFRESH_URL}`,
             {},
             { withCredentials: true },
           );
