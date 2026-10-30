@@ -70,10 +70,9 @@ export class A5DocumentHandler implements DocumentHandler {
           a5Tx,
         );
 
-        const jobOrderNo = input.jobOrderNo.trim();
-        if (jobOrderNo && input.abnormalLevel >= ABNORMAL_LEVEL.MAJOR) {
+        if (input.jobOrderNo && input.abnormalLevel >= ABNORMAL_LEVEL.MAJOR) {
           await this.jobHoldRepo.hold({
-            jobOrderNo,
+            jobOrderNo: input.jobOrderNo,
             documentNo: document.documentNo,
             abnormalLevel: input.abnormalLevel,
           });

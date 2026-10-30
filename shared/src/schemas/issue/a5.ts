@@ -58,42 +58,49 @@ export const createA5IssueSchema = z
     /** Mã sản phẩm */
     itemCode: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.product_code_required' })
       .max(30, { message: 'issue:validation.product_code_too_long' }),
 
     /** Lot no */
     lotNo: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.lot_no_required' })
       .max(6, { message: 'issue:validation.lot_no_too_long' }),
 
     /** Line */
     lineNo: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.line_required' })
       .max(10, { message: 'issue:validation.line_too_long' }),
 
     /** Máy */
     machineNo: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.machine_required' })
       .max(10, { message: 'issue:validation.machine_too_long' }),
 
     /** Keo */
     glue: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.glue_required' })
       .max(10, { message: 'issue:validation.glue_too_long' }),
 
     /** Cao su */
     rubber: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.rubber_required' })
       .max(10, { message: 'issue:validation.rubber_too_long' }),
 
     /** Batch */
     batchNo: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.batch_required' })
       .max(10, { message: 'issue:validation.batch_too_long' }),
 
@@ -106,17 +113,19 @@ export const createA5IssueSchema = z
       .refine((v): v is number => v !== null, { message: 'issue:validation.quantity_required' }),
 
     /** Job no (không bắt buộc) */
-    jobOrderNo: z.string().max(12, { message: 'issue:validation.job_no_too_long' }),
+    jobOrderNo: z.string().trim().max(12, { message: 'issue:validation.job_no_too_long' }),
 
     /** Công đoạn phát hiện */
     detectionStage: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.detection_process_required' })
       .max(30, { message: 'issue:validation.detection_process_too_long' }),
 
     /** Tên lỗi (id lỗi) */
     detectionContent: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.error_name_required' })
       .max(10, { message: 'issue:validation.error_name_too_long' }),
 
@@ -126,24 +135,28 @@ export const createA5IssueSchema = z
     /** Tình trạng bình thường */
     normalDescription: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.normal_condition_required' })
       .max(250, { message: 'issue:validation.normal_condition_too_long' }),
 
     /** Tình trạng bất thường */
     abnormalDescription: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.abnormal_condition_required' })
       .max(250, { message: 'issue:validation.abnormal_condition_too_long' }),
 
     /** Mã nhân viên phát hiện */
     detectedBy: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.detector_required' })
       .max(8, { message: 'issue:validation.detector_too_long' }),
 
     /** Mã nhân viên kiểm tra */
     checkedBy: z
       .string()
+      .trim()
       .nonempty({ message: 'issue:validation.checker_required' })
       .max(8, { message: 'issue:validation.checker_too_long' }),
 
@@ -153,6 +166,7 @@ export const createA5IssueSchema = z
     /** Ngày phát hiện (yyyyMMdd, phải là ngày có thật). Giữ chuỗi tới lúc insert mới parse Date. */
     detectedAt: z
       .string({ message: 'issue:validation.detected_date_required' })
+      .trim()
       // abort: rỗng thì dừng, không báo thêm lỗi "không hợp lệ".
       .nonempty({ message: 'issue:validation.detected_date_required', abort: true })
       // isValidYmd kiểm tra cả định dạng 8 chữ số lẫn ngày có thật.
@@ -178,7 +192,10 @@ export const createA5IssueSchema = z
     isHandlingRequired: z.boolean({ message: 'issue:validation.handling_required_required' }),
 
     /** Phạm vi xử lý (không bắt buộc) */
-    handlingScope: z.string().max(255, { message: 'issue:validation.handling_scope_too_long' }),
+    handlingScope: z
+      .string()
+      .trim()
+      .max(255, { message: 'issue:validation.handling_scope_too_long' }),
 
     /** Kết quả xử lý: số lượng NG (pcs, không bắt buộc, số nguyên >= 0) */
     ngQtyAfterHandling: z
@@ -197,6 +214,7 @@ export const createA5IssueSchema = z
     /** Hướng dẫn xử lý (không bắt buộc) */
     handlingInstruction: z
       .string()
+      .trim()
       .max(500, { message: 'issue:validation.handling_instruction_too_long' }),
   })
   /** Chọn "Tái phát sinh" (firstDetection = false) thì bắt buộc nhập số lần tái phát sinh. */

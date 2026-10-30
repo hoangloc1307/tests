@@ -17,6 +17,40 @@ Dữ liệu đầu vào (request body, params, query) mà **cần validate** đ�
 - Enum/giá trị dùng chung suy từ zod (ví dụ `DocumentType`) cũng đặt ở `shared/src/schemas/`.
 - Message lỗi validation dùng key i18n (ví dụ `'auth:permission.validation.username_required'`).
 
+### Field chuỗi: luôn `.trim()` ngay sau `z.string()`
+
+Mọi field `z.string()` trong `shared/src/schemas/` phải gọi `.trim()` **ngay sau** `z.string()`, trước các check khác (`nonempty`, `min`, `max`, `length`, `refine`...).
+
+```ts
+// ✅ Đúng — trim trước, các check chạy trên giá trị đã trim
+itemCode: z
+  .string()
+  .trim()
+  .nonempty({ message: 'issue:validation.product_code_required' })
+  .max(30, { message: 'issue:validation.product_code_too_long' }),
+
+// ❌ Sai — "   " vượt qua nonempty; " ABC " lưu nguyên khoảng trắng xuống DB
+itemCode: z.string().nonempty().max(30),
+
+// ❌ Sai — trim sau max: chuỗi có khoảng trắng thừa bị báo quá dài dù nội dung hợp lệ
+itemCode: z.string().max(30).trim(),
+```
+
+Vì sao:
+
+- Chỉ nhập khoảng trắng sẽ bị `nonempty` chặn, thay vì lọt qua thành dữ liệu rỗng.
+- `max`/`length` đo trên giá trị thật, khớp với độ dài cột DB (`VarChar(n)`).
+- FE (validate form) và BE (`requestValidator` gán `req.body = result.data`) cùng nhận giá trị đã trim, nên **BE không tự `.trim()` lại input** trong usecase/handler. Chỉ trim ở một chỗ là schema.
+
+Ngoại lệ — **không trim**:
+
+- **Mật khẩu** (`password`, `currentPassword`, `newPassword`, `confirmPassword`...): khoảng trắng đầu/cuối có thể là một phần mật khẩu thật; trim sẽ âm thầm đổi giá trị người dùng nhập. Ghi comment `// Mật khẩu KHÔNG trim` tại field.
+- Field mà khoảng trắng đầu/cuối có nghĩa (hiếm). Phải ghi comment lý do ngay tại field.
+
+`z.enum(...)` / `z.literal(...)` không cần trim (giá trị cố định, không phải text tự do).
+
+Lưu ý: trim ở schema chỉ áp cho **input**. Dữ liệu đọc từ DB có cột `CHAR` đệm khoảng trắng thì vẫn trim ở repository/entity khi map (ví dụ `role.entity.ts`).
+
 ## 2. Response → `shared/src/types/*` (interface)
 
 Dữ liệu API **trả về** mà FE cần đọc/render đặt làm **interface TypeScript thuần** trong `shared/src/types/`.
@@ -43,9 +77,9 @@ Khi FE và BE cần **cùng một shape response giống hệt nhau**, định n
 
 ## Bảng tóm tắt
 
-| Loại dữ liệu                                   | Nơi đặt               | Dạng                   |
-| ---------------------------------------------- | --------------------- | ---------------------- |
-| Input cần validate (dùng chung)                | `shared/src/schemas/` | zod schema + `z.infer` |
-| Response FE được phép đọc (dùng chung)         | `shared/src/types/`   | interface thuần        |
-| Chỉ BE biết (token nội bộ, DTO, adapter ngoài) | `be/src/modules/<x>/` | interface/type thuần   |
-| Chỉ FE biết (view model, UI state)             | `fe/src/`             | interface/type thuần   |
+| Loại dữ liệu                                   | Nơi đặt               | Dạng                                                        |
+| ---------------------------------------------- | --------------------- | ----------------------------------------------------------- |
+| Input cần validate (dùng chung)                | `shared/src/schemas/` | zod schema + `z.infer` (chuỗi luôn `.trim()`, trừ mật khẩu) |
+| Response FE được phép đọc (dùng chung)         | `shared/src/types/`   | interface thuần                                             |
+| Chỉ BE biết (token nội bộ, DTO, adapter ngoài) | `be/src/modules/<x>/` | interface/type thuần                                        |
+| Chỉ FE biết (view model, UI state)             | `fe/src/`             | interface/type thuần                                        |

@@ -35,12 +35,14 @@ export const baseIssueShape = {
   /** Bộ phận phát hành */
   issueSection: z
     .string()
+    .trim()
     .nonempty({ message: 'issue:validation.section_required' })
     .max(4, { message: 'issue:validation.section_too_long' }),
 
   /** Ngày phát hành (yyyyMMdd, phải là ngày có thật). Giữ chuỗi tới lúc insert mới parse Date. */
   issueDate: z
     .string()
+    .trim()
     // abort: rỗng thì dừng, không báo thêm lỗi "không hợp lệ".
     .nonempty({ message: 'issue:validation.issue_date_required', abort: true })
     // isValidYmd kiểm tra cả định dạng 8 chữ số lẫn ngày có thật.
