@@ -143,6 +143,8 @@
     "recurrence_count_invalid": "再発回数は1以上の整数で入力してください",
     "recurrence_count_required": "再発回数を入力してください",
     "handling_scope_too_long": "処理範囲は255文字以内で入力してください",
+    "handling_scope_required": "処理範囲を入力してください",
+    "handling_instruction_required": "処理指示を入力してください",
     "handling_result_qty_invalid": "数量は0以上の整数で入力してください",
     "occurrence_frequency_required": "発生頻度を選択してください"
   }

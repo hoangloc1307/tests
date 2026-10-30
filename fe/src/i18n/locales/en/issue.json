@@ -143,6 +143,8 @@
     "recurrence_count_invalid": "Recurrence count must be a whole number greater than 0",
     "recurrence_count_required": "Please enter recurrence count",
     "handling_scope_too_long": "Handling scope must not exceed 255 characters",
+    "handling_scope_required": "Please enter handling scope",
+    "handling_instruction_required": "Please enter handling instruction",
     "handling_result_qty_invalid": "Quantity must be a non-negative whole number",
     "occurrence_frequency_required": "Please select occurrence frequency"
   }

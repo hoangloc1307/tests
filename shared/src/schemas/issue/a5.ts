@@ -1,5 +1,6 @@
 import { baseIssueShape, DOCUMENT_TYPE } from 'shared/schemas/issue';
 import { isValidYmd } from 'shared/utils/date';
+import { isNonBlankString } from 'shared/utils/string';
 import { z } from 'zod';
 
 /** Phân loại (An toàn / Chất lượng / 2S / Thiết bị) */
@@ -191,7 +192,7 @@ export const createA5IssueSchema = z
     /** Cần xử lý (true = Có / false = Không) */
     isHandlingRequired: z.boolean({ message: 'issue:validation.handling_required_required' }),
 
-    /** Phạm vi xử lý (không bắt buộc) */
+    /** Phạm vi xử lý (bắt buộc khi cần xử lý = Có — xem refine bên dưới) */
     handlingScope: z
       .string()
       .trim()
@@ -211,7 +212,7 @@ export const createA5IssueSchema = z
       .nonnegative({ message: 'issue:validation.handling_result_qty_invalid' })
       .nullable(),
 
-    /** Hướng dẫn xử lý (không bắt buộc) */
+    /** Hướng dẫn xử lý (bắt buộc khi cần xử lý = Có — xem refine bên dưới) */
     handlingInstruction: z
       .string()
       .trim()
@@ -223,7 +224,22 @@ export const createA5IssueSchema = z
     message: 'issue:validation.recurrence_count_required',
     // Luôn chạy, kể cả khi field khác còn lỗi, để lỗi này hiện cùng lúc với các lỗi còn lại.
     when: () => true,
-  });
+  })
+  /** Chọn "Cần xử lý" = Có thì bắt buộc nhập phạm vi xử lý. */
+  .refine((data) => data.isHandlingRequired !== true || isNonBlankString(data.handlingScope), {
+    path: ['handlingScope'],
+    message: 'issue:validation.handling_scope_required',
+    when: () => true,
+  })
+  /** Chọn "Cần xử lý" = Có thì bắt buộc nhập hướng dẫn xử lý. */
+  .refine(
+    (data) => data.isHandlingRequired !== true || isNonBlankString(data.handlingInstruction),
+    {
+      path: ['handlingInstruction'],
+      message: 'issue:validation.handling_instruction_required',
+      when: () => true,
+    },
+  );
 
 /**
  * Dữ liệu FE gửi lên API (kiểu ĐẦU VÀO của schema, chưa transform — vd `abnormalLevel: '2'`).

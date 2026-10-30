@@ -143,6 +143,8 @@
     "recurrence_count_invalid": "Số lần tái phát sinh phải là số nguyên lớn hơn 0",
     "recurrence_count_required": "Vui lòng nhập số lần tái phát sinh",
     "handling_scope_too_long": "Phạm vi xử lý không được vượt quá 255 ký tự",
+    "handling_scope_required": "Vui lòng nhập phạm vi xử lý",
+    "handling_instruction_required": "Vui lòng nhập hướng dẫn xử lý",
     "handling_result_qty_invalid": "Số lượng phải là số nguyên không âm",
     "occurrence_frequency_required": "Vui lòng chọn tần suất phát sinh"
   }

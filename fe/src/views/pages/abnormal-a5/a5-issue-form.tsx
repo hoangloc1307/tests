@@ -35,6 +35,10 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
   );
 
   const isRecurrence = useSelector(form.store, (state) => state.values.firstDetection === false);
+  const isHandlingRequired = useSelector(
+    form.store,
+    (state) => state.values.isHandlingRequired === true,
+  );
   const selectedProcess = useSelector(form.store, (state) => state.values.detectionStage);
   const { errorOptions } = useErrors(selectedProcess);
 
@@ -470,6 +474,7 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
             children={(field) => (
               <field.TextField
                 label={t('issue:handling_scope')}
+                required={isHandlingRequired}
                 placeholder={t('issue:handling_scope_placeholder')}
                 readOnly={readOnly}
               />
@@ -482,6 +487,7 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
               children={(field) => (
                 <field.TextareaField
                   label={t('issue:handling_instruction')}
+                  required={isHandlingRequired}
                   placeholder={t('issue:handling_instruction_placeholder')}
                   rows={4}
                   readOnly={readOnly}
