@@ -145,6 +145,19 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
               />
             )}
           />
+          {/* Phân loại */}
+          <form.AppField
+            name='issueCategory'
+            children={(field) => (
+              <field.SelectField
+                label={t('issue:category')}
+                required
+                options={categoryOptions}
+                placeholder={t('issue:category_placeholder')}
+                readOnly={readOnly}
+              />
+            )}
+          />
           {/* Phát hiện trên */}
           <form.AppField
             name='itemCategory'
@@ -308,50 +321,41 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
             )}
           />
           {/* Bình thường */}
-          <form.AppField
-            name='normalDescription'
-            children={(field) => (
-              <field.TextareaField
-                label={t('issue:normal_condition')}
-                required
-                placeholder={t('issue:normal_condition_placeholder')}
-                rows={4}
-                readOnly={readOnly}
-              />
-            )}
-          />
+          <div className='col-start-1 lg:col-span-2'>
+            <form.AppField
+              name='normalDescription'
+              children={(field) => (
+                <field.TextareaField
+                  label={t('issue:normal_condition')}
+                  required
+                  placeholder={t('issue:normal_condition_placeholder')}
+                  rows={4}
+                  readOnly={readOnly}
+                />
+              )}
+            />
+          </div>
           {/* Bất thường */}
-          <form.AppField
-            name='abnormalDescription'
-            children={(field) => (
-              <field.TextareaField
-                label={t('issue:abnormal_condition')}
-                required
-                placeholder={t('issue:abnormal_condition_placeholder')}
-                rows={4}
-                readOnly={readOnly}
-              />
-            )}
-          />
+          <div className='lg:col-span-2'>
+            <form.AppField
+              name='abnormalDescription'
+              children={(field) => (
+                <field.TextareaField
+                  label={t('issue:abnormal_condition')}
+                  required
+                  placeholder={t('issue:abnormal_condition_placeholder')}
+                  rows={4}
+                  readOnly={readOnly}
+                />
+              )}
+            />
+          </div>
         </div>
       </FormSection>
 
       {/* Chỉ thị xử lý */}
       <FormSection title={t('issue:handling_instruction_title')} openSignal={failedSubmitSignal}>
         <div className='grid grid-cols-2 gap-4 lg:grid-cols-4'>
-          {/* Phân loại */}
-          <form.AppField
-            name='issueCategory'
-            children={(field) => (
-              <field.SelectField
-                label={t('issue:category')}
-                required
-                options={categoryOptions}
-                placeholder={t('issue:category_placeholder')}
-                readOnly={readOnly}
-              />
-            )}
-          />
           {/* Mức độ */}
           <form.AppField
             name='abnormalLevel'
@@ -378,19 +382,7 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
               />
             )}
           />
-          {/* Phát hành A4 */}
-          <form.AppField
-            name='isA4Required'
-            children={(field) => (
-              <field.BooleanRadioField
-                label={t('issue:a4_required')}
-                required
-                trueLabel={t('common:yes')}
-                falseLabel={t('common:no')}
-                readOnly={readOnly}
-              />
-            )}
-          />
+
           {/* Tần suất phát sinh */}
           <form.AppField
             name='firstDetection'
@@ -420,6 +412,19 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
                 placeholder={t('issue:recurrence_count_placeholder')}
                 allowNegative={false}
                 disabled={!readOnly && !isRecurrence}
+                readOnly={readOnly}
+              />
+            )}
+          />
+          {/* Phát hành A4 */}
+          <form.AppField
+            name='isA4Required'
+            children={(field) => (
+              <field.BooleanRadioField
+                label={t('issue:a4_required')}
+                required
+                trueLabel={t('common:yes')}
+                falseLabel={t('common:no')}
                 readOnly={readOnly}
               />
             )}
