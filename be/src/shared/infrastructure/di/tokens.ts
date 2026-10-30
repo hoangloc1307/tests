@@ -6,6 +6,7 @@ export const TOKENS = {
   TemplateRenderer: Symbol.for('TemplateRenderer'),
   PrismaClientSmart: Symbol.for('PrismaClientSmart'),
   PrismaClientA5: Symbol.for('PrismaClientA5'),
+  PrismaClientQim: Symbol.for('PrismaClientQim'),
   FlowableClient: Symbol.for('FlowableClient'),
   SerialGenerator: Symbol.for('SerialGenerator'),
 
@@ -18,6 +19,7 @@ export const TOKENS = {
 
   // Issue services
   A5IssueRepository: Symbol.for('A5IssueRepository'),
+  JobHoldRepository: Symbol.for('JobHoldRepository'),
   DocumentHandler: Symbol.for('DocumentHandler'),
 
   // Task services

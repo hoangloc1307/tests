@@ -1,9 +1,11 @@
 import { DOCUMENT_TYPE } from 'shared/schemas/issue';
+import { ABNORMAL_LEVEL } from 'shared/schemas/issue/a5';
 import type { CreateIssueInput } from 'shared/schemas/issue/create-issue';
 import { inject, injectable } from 'tsyringe';
 import type { A5IssueRepository } from '~/modules/issue/domain/a5-issue.repository';
 import type { DocumentHandler } from '~/modules/issue/domain/document-handler';
 import { DocumentMaster } from '~/modules/issue/domain/issue.entity';
+import type { JobHoldRepository } from '~/modules/issue/domain/job-hold.repository';
 import type { FlowableClient } from '~/shared/application/flowable/flowable-client';
 import { FLOWABLE_VARIABLE_NAME } from '~/shared/application/flowable/flowable-constants';
 import type { SerialGenerator } from '~/shared/application/serial-generator';
@@ -19,6 +21,7 @@ export class A5DocumentHandler implements DocumentHandler {
     @inject(TOKENS.A5IssueRepository) private readonly a5IssueRepo: A5IssueRepository,
     @inject(TOKENS.SerialGenerator) private readonly serialGenerator: SerialGenerator,
     @inject(TOKENS.FlowableClient) private readonly flowableClient: FlowableClient,
+    @inject(TOKENS.JobHoldRepository) private readonly jobHoldRepo: JobHoldRepository,
   ) {}
 
   async create(input: CreateIssueInput, username: string): Promise<DocumentMaster> {
@@ -56,7 +59,7 @@ export class A5DocumentHandler implements DocumentHandler {
           a5Tx,
         );
 
-        return this.a5IssueRepo.create(
+        const document = await this.a5IssueRepo.create(
           {
             ...input,
             documentNo,
@@ -66,6 +69,17 @@ export class A5DocumentHandler implements DocumentHandler {
           },
           a5Tx,
         );
+
+        const jobOrderNo = input.jobOrderNo.trim();
+        if (jobOrderNo && input.abnormalLevel >= ABNORMAL_LEVEL.MAJOR) {
+          await this.jobHoldRepo.hold({
+            jobOrderNo,
+            documentNo: document.documentNo,
+            abnormalLevel: input.abnormalLevel,
+          });
+        }
+
+        return document;
       });
     } catch (err) {
       await this.flowableClient

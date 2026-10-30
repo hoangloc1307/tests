@@ -9,11 +9,13 @@ datasource db {
 
 /// Bảng lưu thông tin các job đang giữ
 model JobTagHold {
-  jobOrderNo String    @id @map("job_order_no") @db.VarChar(12) /// Job no
-  documentNo String    @map("document_no") @db.VarChar(20)      /// Mã phiếu ghi nhận
-  holdAt     DateTime @map("hold_at")                           /// Thời gian bắt đầu giữ
-  releaseAt  DateTime? @map("release_at")                       /// Thời gian hết giữ
-  status     Boolean                                            /// 1: Hold | 0: Release
+  jobOrderNo    String    @map("job_order_no") @db.VarChar(12) /// Job no
+  documentNo    String    @map("document_no") @db.VarChar(20) /// Mã phiếu ghi nhận
+  abnormalLevel Int       @map("abnormal_level") @db.SmallInt /// Mức độ lỗi: 1: Nhẹ | 2: Nặng | 3: Nghiêm trọng
+  holdAt        DateTime  @default(now()) @map("hold_at") /// Thời gian bắt đầu giữ
+  releaseAt     DateTime? @map("release_at") /// Thời gian hết giữ
+  status        Boolean /// 1: Hold | 0: Release
 
+  @@id([jobOrderNo, documentNo])
   @@map("a5_job_tag_hold")
 }

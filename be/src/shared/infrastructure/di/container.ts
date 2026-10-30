@@ -13,7 +13,9 @@ import { PrismaA5RoleRepository } from '~/modules/auth/infrastructure/prisma-a5-
 import { A5DocumentHandler } from '~/modules/issue/application/handlers/a5-document.handler';
 import type { A5IssueRepository } from '~/modules/issue/domain/a5-issue.repository';
 import type { DocumentHandler } from '~/modules/issue/domain/document-handler';
+import type { JobHoldRepository } from '~/modules/issue/domain/job-hold.repository';
 import { PrismaA5IssueRepository } from '~/modules/issue/infrastructure/prisma-a5-issue.repository';
+import { PrismaQimJobHoldRepository } from '~/modules/issue/infrastructure/prisma-qim-job-hold.repository';
 import { A5TaskDetailHandler } from '~/modules/task/application/handlers/a5-task-detail.handler';
 import type { A5TaskDetailRepository } from '~/modules/task/domain/a5-task-detail.repository';
 import type { TaskDetailHandler } from '~/modules/task/domain/task-detail-handler';
@@ -33,6 +35,7 @@ import { PinoLogger } from '~/shared/infrastructure/logger';
 import { NodemailerService } from '~/shared/infrastructure/mail/mailer';
 import { HandlebarsTemplateRenderer } from '~/shared/infrastructure/mail/template-renderer';
 import { prismaA5, type PrismaClientA5 } from '~/shared/infrastructure/prisma-a5';
+import { prismaQim, type PrismaClientQim } from '~/shared/infrastructure/prisma-qim';
 import { prismaSmart, type PrismaClientSmart } from '~/shared/infrastructure/prisma-smart';
 import { PrismaSerialGenerator } from '~/shared/infrastructure/serial/prisma-serial-generator';
 
@@ -45,6 +48,7 @@ container.registerSingleton<FlowableClient>(TOKENS.FlowableClient, HttpFlowableC
 container.registerSingleton<SerialGenerator>(TOKENS.SerialGenerator, PrismaSerialGenerator);
 container.registerInstance<PrismaClientSmart>(TOKENS.PrismaClientSmart, prismaSmart);
 container.registerInstance<PrismaClientA5>(TOKENS.PrismaClientA5, prismaA5);
+container.registerInstance<PrismaClientQim>(TOKENS.PrismaClientQim, prismaQim);
 
 // Register auth services
 container.registerSingleton<AuthClient>(TOKENS.AuthClient, HttpAuthClient);
@@ -55,6 +59,10 @@ container.registerSingleton<RoleRepository>(TOKENS.RoleRepository, PrismaA5RoleR
 
 // Register issue services
 container.registerSingleton<A5IssueRepository>(TOKENS.A5IssueRepository, PrismaA5IssueRepository);
+container.registerSingleton<JobHoldRepository>(
+  TOKENS.JobHoldRepository,
+  PrismaQimJobHoldRepository,
+);
 
 // Register document handlers (một handler cho mỗi documentType)
 container.registerSingleton<DocumentHandler>(TOKENS.DocumentHandler, A5DocumentHandler);
