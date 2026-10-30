@@ -22,6 +22,16 @@ const SKIP_REFRESH_URLS = [
   REFRESH_URL,
 ];
 
+/** Lỗi do hết phiên (refresh thất bại): interceptor đã báo toast + chuyển về login. */
+const sessionExpiredErrors = new WeakSet<object>();
+
+const markSessionExpired = (error: unknown) => {
+  if (typeof error === 'object' && error !== null) sessionExpiredErrors.add(error);
+};
+
+export const isSessionExpiredError = (error: unknown): boolean =>
+  typeof error === 'object' && error !== null && sessionExpiredErrors.has(error);
+
 let isRefreshing = false;
 let failedQueue: Array<{
   resolve: (token: string) => void;
@@ -93,6 +103,9 @@ const api = new HttpClient(
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
           return ins(originalRequest);
         } catch (refreshError) {
+          // Đánh dấu trước khi reject để global error handler không hiện thêm toast;
+          // các request đang chờ trong queue cũng reject bằng chính lỗi này.
+          markSessionExpired(refreshError);
           processQueue(refreshError, null);
           useAuthStore.getState().logout();
           toast.add({ type: 'error', title: 'Phiên đăng nhập hết hạn' });

@@ -1,4 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import type {
   CreateRoleInput,
@@ -11,14 +11,13 @@ import { authApi } from '~/apis/auth';
 import { toast } from '~/components/ui/toast';
 import PATHS from '~/constants/paths';
 import { authQueries } from '~/hooks/queries/auth.queries';
-import { useAppMutation } from '~/hooks/use-app-mutation';
 import { useAuthStore } from '~/stores/auth';
 
 export function useLogin() {
   const navigate = useNavigate();
   const setAuth = useAuthStore((s) => s.setAuth);
 
-  return useAppMutation({
+  return useMutation({
     mutationFn: (payload: LoginInput) => authApi.login(payload),
     onSuccess: (data) => {
       if (data.data) {
@@ -38,7 +37,7 @@ export function useLogin() {
 export function useCreateUserRole() {
   const queryClient = useQueryClient();
 
-  return useAppMutation({
+  return useMutation({
     mutationFn: (payload: CreateRoleInput) => authApi.createUserRole(payload),
     onSuccess: (data) => {
       toast.add({ type: 'success', title: data.message });
@@ -50,7 +49,7 @@ export function useCreateUserRole() {
 export function useUpdateUserRole() {
   const queryClient = useQueryClient();
 
-  return useAppMutation({
+  return useMutation({
     mutationFn: (payload: UpdateRoleInput) => authApi.updateUserRole(payload),
     onSuccess: (data) => {
       toast.add({ type: 'success', title: data.message });
@@ -62,7 +61,7 @@ export function useUpdateUserRole() {
 export function useDeleteUserRole() {
   const queryClient = useQueryClient();
 
-  return useAppMutation({
+  return useMutation({
     mutationFn: (payload: DeleteRoleInput) => authApi.deleteUserRole(payload),
     onSuccess: (data) => {
       toast.add({ type: 'success', title: data.message });
@@ -75,7 +74,7 @@ export function useLoginWithCard() {
   const navigate = useNavigate();
   const setAuth = useAuthStore((s) => s.setAuth);
 
-  return useAppMutation({
+  return useMutation({
     mutationFn: (payload: LoginWithCardInput) => authApi.loginWithCard(payload),
     onSuccess: (data) => {
       if (data.data) {
