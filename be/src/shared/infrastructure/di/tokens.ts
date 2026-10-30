@@ -26,4 +26,6 @@ export const TOKENS = {
   TaskRepository: Symbol.for('TaskRepository'),
   A5TaskDetailRepository: Symbol.for('A5TaskDetailRepository'),
   TaskDetailHandler: Symbol.for('TaskDetailHandler'),
+  // Job services
+  JobRepository: Symbol.for('JobRepository'),
 } as const;

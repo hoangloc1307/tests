@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../../generated/qim"
+  provider        = "prisma-client"
+  output          = "../../generated/qim"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -18,4 +19,15 @@ model JobTagHold {
 
   @@id([jobOrderNo, documentNo])
   @@map("a5_job_tag_hold")
+}
+
+/// View thông tin job (từ tr_cur_job_nbcs)
+view JobInfo {
+  jobOrderNo String  @unique @map("job_order_no") /// Job no
+  itemCode   String? @map("finished_goods_code") /// Mã sản phẩm
+  lineNo     String? @map("line_no") /// Line
+  machineNo  String? @map("press_no") /// Máy
+  lotNo      String? @map("lot_no") /// Lot no rút gọn: fn_convert_short_lot(curing_date || order_type)
+
+  @@map("a5_v_job_info")
 }

@@ -16,6 +16,8 @@ import type { DocumentHandler } from '~/modules/issue/domain/document-handler';
 import type { JobHoldRepository } from '~/modules/issue/domain/job-hold.repository';
 import { PrismaA5IssueRepository } from '~/modules/issue/infrastructure/prisma-a5-issue.repository';
 import { PrismaQimJobHoldRepository } from '~/modules/issue/infrastructure/prisma-qim-job-hold.repository';
+import type { JobRepository } from '~/modules/job/domain/job.repository';
+import { PrismaQimJobRepository } from '~/modules/job/infrastructure/prisma-qim-job.repository';
 import { A5TaskDetailHandler } from '~/modules/task/application/handlers/a5-task-detail.handler';
 import type { A5TaskDetailRepository } from '~/modules/task/domain/a5-task-detail.repository';
 import type { TaskDetailHandler } from '~/modules/task/domain/task-detail-handler';
@@ -76,5 +78,8 @@ container.registerSingleton<A5TaskDetailRepository>(
 
 // Register task detail handlers (một handler cho mỗi documentType)
 container.registerSingleton<TaskDetailHandler>(TOKENS.TaskDetailHandler, A5TaskDetailHandler);
+
+// Register job services
+container.registerSingleton<JobRepository>(TOKENS.JobRepository, PrismaQimJobRepository);
 
 export { container };

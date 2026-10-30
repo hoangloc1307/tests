@@ -5,7 +5,8 @@
     "internal": "Lỗi máy chủ nội bộ",
     "unsupportedDocumentType": "Loại phiếu không được hỗ trợ: {{documentType}}",
     "handlerDocumentTypeMismatch": "Handler không khớp loại phiếu (mong đợi {{expected}}, nhận {{received}})",
-    "sectionNotAllowed": "Bạn không có quyền phát hành cho bộ phận này"
+    "sectionNotAllowed": "Bạn không có quyền phát hành cho bộ phận này",
+    "jobNotFound": "Không tìm thấy Job no: {{jobOrderNo}}"
   },
   "validation": {
     "invalid": "Dữ liệu không hợp lệ"

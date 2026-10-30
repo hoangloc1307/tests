@@ -5,7 +5,8 @@
     "internal": "Internal server error",
     "unsupportedDocumentType": "Unsupported document type: {{documentType}}",
     "handlerDocumentTypeMismatch": "Handler document type mismatch (expected {{expected}}, received {{received}})",
-    "sectionNotAllowed": "You do not have permission to issue for this section"
+    "sectionNotAllowed": "You do not have permission to issue for this section",
+    "jobNotFound": "Job no not found: {{jobOrderNo}}"
   },
   "validation": {
     "invalid": "Invalid input"

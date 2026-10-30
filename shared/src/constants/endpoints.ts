@@ -15,4 +15,8 @@ export const ENDPOINTS = {
     LIST: '/',
     DETAIL: '/:documentId/:taskId',
   },
+  JOB: {
+    PREFIX: '/jobs',
+    DETAIL: '/:jobOrderNo',
+  },
 } as const;
