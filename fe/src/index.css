@@ -28,7 +28,40 @@
   }
 }
 
+[data-slot='toast'][data-type='success'] {
+  --toast-accent: var(--success);
+}
+[data-slot='toast'][data-type='error'] {
+  --toast-accent: var(--destructive);
+}
+[data-slot='toast'][data-type='warning'] {
+  --toast-accent: var(--warning);
+}
+[data-slot='toast'][data-type='info'] {
+  --toast-accent: var(--info);
+}
+[data-slot='toast']:is(
+  [data-type='success'],
+  [data-type='error'],
+  [data-type='warning'],
+  [data-type='info']
+) {
+  /*
+   * Pha trong oklab (không có hue). Không dùng oklch: --popover/--border là màu xám
+   * nhưng khai báo hue = 0 (đỏ), nội suy hue sẽ kéo màu xanh lá thành hồng/cam.
+   */
+  background-color: color-mix(in oklab, var(--toast-accent) 12%, var(--popover));
+  border-color: color-mix(in oklab, var(--toast-accent) 45%, var(--border));
+
+  & [data-slot='toast-icon'] {
+    color: var(--toast-accent);
+  }
+}
+
 @theme inline {
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
   --font-heading: var(--font-sans);
   --font-sans: 'Inter Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -88,6 +121,9 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
+  --success: oklch(0.627 0.194 149.214);
+  --warning: oklch(0.666 0.179 58.318);
+  --info: oklch(0.546 0.245 262.881);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --input-readonly: oklch(70.085% 0.15926 255.2);
@@ -124,6 +160,9 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
+  --success: oklch(0.723 0.219 149.579);
+  --warning: oklch(0.769 0.188 70.08);
+  --info: oklch(0.707 0.165 254.624);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --input-readonly: oklch(70.085% 0.15926 255.2);
