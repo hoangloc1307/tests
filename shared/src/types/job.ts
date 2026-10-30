@@ -5,3 +5,10 @@ export interface JobInfo {
   machineNo: string | null;
   lotNo: string | null;
 }
+
+export interface HoldingJobListItem {
+  jobOrderNo: string;
+  documentNo: string;
+  abnormalLevel: number;
+  holdAt: string;
+}

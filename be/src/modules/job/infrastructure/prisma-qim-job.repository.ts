@@ -1,6 +1,6 @@
 import type { JobInfo } from 'shared/types/job';
 import { inject, injectable } from 'tsyringe';
-import type { JobRepository } from '~/modules/job/domain/job.repository';
+import type { HoldingJob, JobRepository } from '~/modules/job/domain/job.repository';
 import { TOKENS } from '~/shared/infrastructure/di/tokens';
 import type { PrismaClientQim } from '~/shared/infrastructure/prisma-qim';
 
@@ -18,6 +18,19 @@ export class PrismaQimJobRepository implements JobRepository {
         machineNo: true,
         lotNo: true,
       },
+    });
+  }
+
+  async findHoldingJobs(): Promise<HoldingJob[]> {
+    return this.prisma.jobTagHold.findMany({
+      where: { status: true },
+      select: {
+        jobOrderNo: true,
+        documentNo: true,
+        abnormalLevel: true,
+        holdAt: true,
+      },
+      orderBy: { holdAt: 'desc' },
     });
   }
 }

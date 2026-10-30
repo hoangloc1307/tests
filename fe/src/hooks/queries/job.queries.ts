@@ -11,4 +11,12 @@ export const jobQueries = {
       },
       staleTime: 5 * 60 * 1000,
     }),
+  holdingList: () =>
+    queryOptions({
+      queryKey: ['job', 'holding-list'],
+      queryFn: async () => {
+        const res = await jobApi.getHoldingJobs();
+        return res.data ?? [];
+      },
+    }),
 };

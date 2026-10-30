@@ -7,6 +7,7 @@ export const createJobRouter = (): Router => {
   const controller = container.resolve(JobController);
   const router = Router();
 
+  router.get(ENDPOINTS.JOB.HOLDING_LIST, controller.holdingList);
   router.get(ENDPOINTS.JOB.DETAIL, controller.detail);
 
   return router;

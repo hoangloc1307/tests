@@ -1,6 +1,6 @@
 import { ENDPOINTS } from 'shared/constants/endpoints';
 import type { ApiResponse } from 'shared/types/api';
-import type { JobInfo } from 'shared/types/job';
+import type { HoldingJobListItem, JobInfo } from 'shared/types/job';
 import api from '~/lib/axios';
 import { buildUrl } from '~/lib/utils';
 
@@ -11,4 +11,9 @@ const getJobInfo = async (jobOrderNo: string): Promise<ApiResponse<JobInfo>> =>
     }),
   );
 
-export const jobApi = { getJobInfo };
+const getHoldingJobs = async (): Promise<ApiResponse<HoldingJobListItem[]>> =>
+  await api.get<ApiResponse<HoldingJobListItem[]>>(
+    buildUrl(ENDPOINTS.JOB.PREFIX, ENDPOINTS.JOB.HOLDING_LIST),
+  );
+
+export const jobApi = { getJobInfo, getHoldingJobs };

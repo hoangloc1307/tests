@@ -18,6 +18,7 @@ export const ENDPOINTS = {
   },
   JOB: {
     PREFIX: '/jobs',
+    HOLDING_LIST: '/holding',
     DETAIL: '/:jobOrderNo',
   },
 } as const;
