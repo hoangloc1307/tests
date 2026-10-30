@@ -50,7 +50,7 @@
   "quantity": "数量",
   "quantity_placeholder": "数量を入力",
   "job_no": "Job no",
-  "job_no_placeholder": "Job noを入力",
+  "job_no_placeholder": "Job noを入力してEnterキーを押す",
   "detection_process": "検出工程",
   "detection_process_placeholder": "工程を選択",
   "error_name": "エラー名",

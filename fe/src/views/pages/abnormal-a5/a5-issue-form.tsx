@@ -1,4 +1,5 @@
 import { useSelector } from '@tanstack/react-form';
+import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -8,6 +9,7 @@ import {
   ItemCategoryEnum,
 } from 'shared/schemas/issue/a5';
 import { FormSection } from '~/components/form-section';
+import { jobQueries } from '~/hooks/queries/job.queries';
 import { useErrors } from '~/hooks/use-errors';
 import { useProcesses } from '~/hooks/use-processes';
 import { useSections } from '~/hooks/use-sections';
@@ -35,6 +37,22 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
   const isRecurrence = useSelector(form.store, (state) => state.values.firstDetection === false);
   const selectedProcess = useSelector(form.store, (state) => state.values.detectionStage);
   const { errorOptions } = useErrors(selectedProcess);
+
+  const queryClient = useQueryClient();
+  const isLookingUpJob = useIsFetching({ queryKey: ['job', 'detail'] }) > 0;
+
+  const handleJobLookup = async (rawJobOrderNo: string) => {
+    const jobOrderNo = rawJobOrderNo.trim();
+    if (!jobOrderNo || isLookingUpJob) return;
+
+    const job = await queryClient.query(jobQueries.detail(jobOrderNo)).catch(() => null);
+    if (!job) return;
+
+    if (job.itemCode != null) form.setFieldValue('itemCode', job.itemCode);
+    if (job.lineNo != null) form.setFieldValue('lineNo', job.lineNo);
+    if (job.machineNo != null) form.setFieldValue('machineNo', job.machineNo);
+    if (job.lotNo != null) form.setFieldValue('lotNo', job.lotNo);
+  };
 
   const categoryOptions = IssueCategoryEnum.options.map((value) => ({
     value,
@@ -142,6 +160,10 @@ export default function A5IssueForm({ form, title, readOnly = false, actions }: 
                 label={t('issue:job_no')}
                 placeholder={t('issue:job_no_placeholder')}
                 readOnly={readOnly}
+                onKeyDown={(e) => {
+                  if (e.key !== 'Enter' || readOnly || e.nativeEvent.isComposing) return;
+                  void handleJobLookup(field.state.value);
+                }}
               />
             )}
           />

@@ -50,7 +50,7 @@
   "quantity": "Quantity",
   "quantity_placeholder": "Enter quantity",
   "job_no": "Job no",
-  "job_no_placeholder": "Enter job no",
+  "job_no_placeholder": "Enter job no and press Enter",
   "detection_process": "Detection process",
   "detection_process_placeholder": "Select process",
   "error_name": "Error name",

@@ -50,7 +50,7 @@
   "quantity": "Số lượng",
   "quantity_placeholder": "Nhập số lượng",
   "job_no": "Job no",
-  "job_no_placeholder": "Nhập job no",
+  "job_no_placeholder": "Nhập job no rồi nhấn Enter",
   "detection_process": "Công đoạn phát hiện",
   "detection_process_placeholder": "Chọn công đoạn",
   "error_name": "Tên lỗi",
